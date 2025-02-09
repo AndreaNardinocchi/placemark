@@ -1,0 +1,38 @@
+{{#each categories}}
+  <div class="box box-link-hover-shadow">
+    <h2 class="title">
+      {{title}}
+    </h2>
+    <section class="columns pt-2">
+      <section class="column is-8">
+        <div class="card card-content">
+
+          <div class="content">
+            Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis
+            parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
+          </div>
+        </div>
+      </section>
+      <section class="column is-4">
+        <div class="card has-background-black card-image">
+          <figure class="image is-256x256 m-auto">
+            <img src="{{image}}" alt="Mossel Dish Food On Table" border="0" />
+
+          </figure>
+        </div>
+      </section>
+    </section>
+
+    <a href="/category/{{_id}}" class="button">
+      <span class="icon is-small">
+        <i class="fas fa-solid fa-folder-open"></i>
+      </span>
+    </a>
+    <!-- /dashboard/deletecategory/{id} in web-routes.js -->
+    <a href="/dashboard/deletecategory/{{_id}}" class="button">
+      <span class="icon is-small">
+        <i class="fas fa-solid fa-trash"></i>
+      </span>
+    </a>
+  </div>
+{{/each}}

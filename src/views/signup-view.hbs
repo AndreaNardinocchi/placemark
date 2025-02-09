@@ -1,0 +1,66 @@
+{{> welcome-menu active="signup"}}
+<section class="section">
+  <h1 class="title">Sign up</h1>
+  <form action="/register" method="POST">
+    <div class="field is-horizontal">
+      <div class="field-body">
+        <div class="field">
+          <label class="label">First Name</label><input class="input" type="text" placeholder="Enter first name" name="firstName">
+        </div>
+        <div class="field">
+          <label class="label">Last Name</label><input class="input" type="text" placeholder="Enter last name" name="lastName">
+        </div>
+      </div>
+    </div>
+    <div class="field is-horizontal">
+      <div class="field-body">
+        <div class="field">
+          <label class="label">Gender</label><input class ="input mr-3" type="text" name="gender" placeholder = "Enter your gender" list="gender" value="{{gender}}">
+          <datalist id="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </datalist>
+        </div>
+      </div>
+    </div>
+    <div class="field is-horizontal">
+      <div class="field-body">
+        <div class="field">
+          <label class="label">Country</label><input class ="input mr-3" type="text" name="country" placeholder = "Enter your country" list="country" value="{{country}}">
+          <datalist id="country">
+            <option value="Spain">Spain</option>
+            <option value="Italy">Italy</option>
+            <option value="United States" >United States</option>
+            <option value="Portugal">Portugal</option>
+            <option value="Canada" >Canada</option>
+          </datalist>
+        </div>
+        <div class="field">
+          <label class="label">Street</label><input class="input" type="text" placeholder="Enter your street" name="street">
+        </div>
+        <div class="field">
+          <label class="label">Address Code</label><input class="input" type="text" placeholder="Enter your address code" name="addressCode">
+        </div>
+      </div>
+    </div>
+    <div class="field is-horizontal">
+      <div class="field-body">
+        <div class="field">
+          <label class="label">Date of birth</label><input class="input" type="date" placeholder="Enter your date of birth" name="DOB">
+        </div>
+        <div class="field">
+          <label class="label">Phone number</label><input class="input" type="text" placeholder="Enter your phone number" name="phoneNumber">
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Email</label> <input class="input" type="email" placeholder="Enter email" name="email">
+    </div>
+    <div class="field">
+      <label class="label">Password</label> <input class="input" type="password" placeholder="Enter Password" name="password">
+    </div>
+    <div class="field is-grouped">
+      <button class="button is-link">Submit</button>
+    </div>
+  </form>
+</section>

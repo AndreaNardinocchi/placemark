@@ -1,0 +1,10 @@
+User can create and manage placemark, as we want to add maps in the future.
+
+Rubric should be our benchmark.
+
+Category is an example of a playlist
+placemark is a track
+
+Start building a readme.md as we go along
+
+Duplication managing is not a requirement at the moment

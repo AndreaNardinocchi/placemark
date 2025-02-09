@@ -1,0 +1,6 @@
+Assignment1 Issues:
+
+====== Account ===================
+Email address should be unique
+Cookie issue/ Updates work once only
+

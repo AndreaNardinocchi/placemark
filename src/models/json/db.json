@@ -1,0 +1,64 @@
+{
+  "users": [
+    {
+      "firstName": "Andrea",
+      "lastName": "Nardinocchi",
+      "gender": "Male",
+      "country": "Panama",
+      "street": "Campus Waterford",
+      "addressCode": "T12Yne",
+      "DOB": "2025-02-13",
+      "phoneNumber": 1222222222,
+      "email": "mar.pa@gmail.com",
+      "password": "Yoestoy",
+      "_id": "b54c8422-5e3d-40a2-a728-edc1c0716e95"
+    },
+    {
+      "firstName": "Mark",
+      "lastName": "Amatucci",
+      "gender": "Female",
+      "country": "Guatemala",
+      "street": "2 Church Gate",
+      "addressCode": "T12Yne",
+      "DOB": "2025-02-13",
+      "phoneNumber": 894632389,
+      "email": "marisa.amatucci76@gmail.com",
+      "password": "Yoestoy76",
+      "_id": "882b5743-940d-4375-b7ab-e1e8ed791a91"
+    },
+    {
+      "firstName": "Marisa",
+      "lastName": "Nard",
+      "gender": "Male",
+      "country": "Spain",
+      "street": "2 Church Gate",
+      "addressCode": "T12Yne",
+      "DOB": "2025-02-12",
+      "phoneNumber": 894632389,
+      "email": "marisa.amatucci76@gmail.com",
+      "password": "Yoestoy76",
+      "_id": "cdcd14a5-efb3-4363-96b7-a38b547edda0"
+    }
+  ],
+  "categories": [
+    {
+      "userid": "882b5743-940d-4375-b7ab-e1e8ed791a91",
+      "title": "Restaurants",
+      "_id": "36e0dd85-2e56-495f-8064-e8efd7e3a49d"
+    },
+    {
+      "userid": "882b5743-940d-4375-b7ab-e1e8ed791a91",
+      "title": "Parks",
+      "_id": "75755f74-7008-4087-9ec2-5da82efd72cd"
+    }
+  ],
+  "tracks": [
+    {
+      "title": "test",
+      "artist": "test",
+      "duration": 120,
+      "_id": "7121c368-1988-499d-8046-11f49a3815d5",
+      "categoryid": "36e0dd85-2e56-495f-8064-e8efd7e3a49d"
+    }
+  ]
+}
