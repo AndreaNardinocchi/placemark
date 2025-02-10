@@ -1,3 +1,5 @@
+export const serviceUrl = "http://localhost:3000";
+
 export const maggie = {
   firstName: "Maggie",
   lastName: "Simpson",
@@ -9,20 +11,38 @@ export const testUsers = [
   {
     firstName: "Homer",
     lastName: "Simpson",
+    gender: "Male",
+    country: "Panama",
+    street: "Campus Waterford",
+    addressCode: "T12Yne",
+    DOB: "2025-02-13",
+    phoneNumber: 1222222222,
     email: "homer@simpson.com",
-    password: "secret",
+    password: "Yoestoy",
   },
   {
-    firstName: "Marge",
+    firstName: "Margie",
     lastName: "Simpson",
-    email: "marge@simpson.com",
-    password: "secret",
+    gender: "Female",
+    country: "Panama",
+    street: "Campus Waterford",
+    addressCode: "T12Yne",
+    DOB: "2025-02-13",
+    phoneNumber: 1222222222,
+    email: "margie@simpson.com",
+    password: "Yoestoy",
   },
   {
     firstName: "Bart",
     lastName: "Simpson",
+    gender: "Female",
+    country: "Panama",
+    street: "Campus Waterford",
+    addressCode: "T12Yne",
+    DOB: "2025-02-13",
+    phoneNumber: 1222222222,
     email: "bart@simpson.com",
-    password: "secret",
+    password: "Yoestoy",
   },
 ];
 

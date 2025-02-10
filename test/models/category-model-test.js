@@ -1,8 +1,8 @@
 import { EventEmitter } from "events";
 import { assert } from "chai";
-import { db } from "../src/models/db.js";
-import { maggie, testCategories, testUsers, mozart } from "./fixtures.js";
-import { assertSubset } from "./test-utils.js";
+import { db } from "../../src/models/db.js";
+import { maggie, testCategories, testUsers, mozart } from "../fixtures.js";
+import { assertSubset } from "../test-utils.js";
 
 // This should generate a cleaner report
 EventEmitter.setMaxListeners(25);

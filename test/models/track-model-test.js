@@ -1,7 +1,7 @@
 import { assert } from "chai";
-import { db } from "../src/models/db.js";
-import { maggie, testCategories, testUsers, mozart, concerto, testTracks, beethoven } from "./fixtures.js";
-import { assertSubset } from "./test-utils.js";
+import { db } from "../../src/models/db.js";
+import { maggie, testCategories, testUsers, mozart, concerto, testTracks, beethoven } from "../fixtures.js";
+import { assertSubset } from "../test-utils.js";
 
 suite("Track API tests", () => {
   let beethovenList = null;

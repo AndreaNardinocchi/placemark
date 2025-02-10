@@ -22,6 +22,7 @@ export const categoryController = {
         imageCode: imageCode,
       };
       console.log(category.title);
+      console.log(`${imageCode} + categoryControllers`);
       // console.log(imageCode);
       // console.log("Hey");
       return h.view("category-view", viewData); // category-view.hbs is returned

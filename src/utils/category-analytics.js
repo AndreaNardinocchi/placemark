@@ -13,7 +13,7 @@ export const categoryAnalytics = {
           imageCode = null;
         }
       }
-      console.log(`${imageCode} + categoryanalytics`);
+      // console.log(`${imageCode} + categoryanalytics`);
       return imageCode;
     }
     return null;
