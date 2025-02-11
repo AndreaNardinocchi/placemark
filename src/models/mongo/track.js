@@ -4,8 +4,13 @@ const { Schema } = Mongoose;
 
 const trackSchema = new Schema({
   title: String,
-  artist: String,
-  duration: Number,
+  long: String,
+  lat: String,
+  country: String,
+  address: String,
+  phone: Number,
+  website: String,
+  description: String,
   categoryid: {
     type: Schema.Types.ObjectId,
     ref: "Category",

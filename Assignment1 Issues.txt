@@ -4,3 +4,11 @@ Assignment1 Issues:
 Email address should be unique
 Cookie issue/ Updates work once only
 
+====== Category ==================
+
+Sort the image not showing on dashboard-view
+
+
+====== Placemark =============
+
+https://gisgeography.com/poi-gis-data/

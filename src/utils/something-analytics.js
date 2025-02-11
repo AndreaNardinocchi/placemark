@@ -17,23 +17,23 @@ export const somethingAnalytics = {
   https://stackoverflow.com/questions/6439915/how-to-set-a-javascript-object-values-dynamically/6439954#6439954 */
   async getCategoryData(category) {
     // Retrieving the below object values/data from report-store.js
-    const categories = await db.categoryStore.getCategoryById(category._id);
-    console.log(categories);
-    if (categories.length > 0) {
-      const image = dashboardAnalytics.getImageCode(category);
-      console.log(`Updating category data for ${image}`);
+    // const reports = await db.categoryStore.getCategoryById(category._id);
+    // console.log(reports);
+    // if (reports.length > 0) {
+    const image = categoryAnalytics.getImageCode(category);
 
-      // Creating a new object 'newStation' and retrieving values
-      const newCategory = {};
-      // eslint-disable-next-line dot-notation
-      newCategory["image"] = image;
+    console.log(`Updating category data for ${image}`);
 
-      console.log(image);
-      console.log(`Updating category data for ${category.title}`);
-      /* The below action calls a new method 'weatherStation.updateStationDetails' and passes 
+    // Creating a new object 'newStation' and retrieving values
+    const newCategory = {};
+    // eslint-disable-next-line dot-notation
+    newCategory["image"] = image;
+
+    console.log(`Updating category data for ${image}`);
+    console.log(`Updating category data for ${category.title}`);
+    /* The below action calls a new method 'weatherStation.updateStationDetails' and passes 
       both the original stations and the updated ones into the station-store.js model, which then
       will enable the dashboard-view to render them */
-      db.categoryStore.updateCategory(category, newCategory);
-    }
+    db.categoryStore.updateCategory(category, newCategory);
   },
 };

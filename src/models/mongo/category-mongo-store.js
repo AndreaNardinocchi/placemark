@@ -1,3 +1,4 @@
+// import { somethingAnalytics } from "../../utils/something-analytics.js";
 import { Category } from "./category.js";
 import { trackMongoStore } from "./track-mongo-store.js";
 
@@ -26,6 +27,11 @@ export const categoryMongoStore = {
 
   async getUserCategories(id) {
     const category = await Category.find({ userid: id }).lean();
+    // eslint-disable-next-line no-self-assign
+    // const image = await somethingAnalytics.getCategoryData(category);
+    // eslint-disable-next-line no-self-assign
+    // category.image = category.image;
+    // console.log(`Get Mongo ${image}`);
     return category;
   },
 
@@ -43,8 +49,15 @@ export const categoryMongoStore = {
 
   async updateCategory(category, newCategory) {
     await Category.findOne({ _id: category._id });
-    category.title = newCategory.title;
+    // eslint-disable-next-line no-self-assign
+    category.title = category.title;
+    console.log(`Mongo ${category.title}`);
+    // eslint-disable-next-line no-self-assign
+
     category.image = newCategory.image;
-    await category.save();
+
+    console.log(`Mongo ${category.image}`);
+
+    await Category.updateOne();
   },
 };

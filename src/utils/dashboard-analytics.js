@@ -1,9 +1,11 @@
 /* This util js file contains all methods used for the dashboard view */
 import { categoryAnalytics } from "./category-analytics.js";
+import { db } from "../models/db.js";
 
 export const dashboardAnalytics = {
   getImageCode(category) {
     let imageCode = categoryAnalytics.getImageCode(category);
+
     // if (category) {
     //   // Icons changing based upon the weather code
 

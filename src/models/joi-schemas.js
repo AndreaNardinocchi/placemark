@@ -17,7 +17,7 @@ export const UserSpec = {
   country: Joi.string().required(),
   street: Joi.string().required(),
   addressCode: Joi.string().required(),
-  DOB: JoiExtended.date().raw().format().required(),
+  DOB: JoiExtended.date().raw().format().required(), // to comment on the readme.md
   phoneNumber: Joi.number().required(),
   email: Joi.string().email().required(),
   password: Joi.string().required(),
@@ -41,8 +41,15 @@ export const CategorySpec = {
   title: Joi.string().required(),
 };
 
+// https://joi.dev/api/?v=17.13.3
+// https://stackoverflow.com/questions/47873369/joi-validation-string-fails-on-and
 export const TrackSpec = {
-  title: Joi.string().required(),
-  artist: Joi.string().required(),
-  duration: Joi.number().required(),
+  title: Joi.string().min(3).max(30).required(),
+  long: Joi.string().min(3).max(30).required(),
+  lat: Joi.string().min(3).max(30).required(),
+  address: Joi.string().min(3).max(30).required(),
+  country: Joi.string().min(3).max(30).required(),
+  phone: Joi.number().required(),
+  website: Joi.string().required(),
+  description: Joi.string().min(100).max(230).required(),
 };

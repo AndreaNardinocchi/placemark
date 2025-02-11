@@ -38,7 +38,7 @@ export const categoryApi = {
         const category = request.payload;
         const newCategory = await db.categoryStore.addCategory(category);
         if (newCategory) {
-          return h.response(newCategory).code(201);
+          return h.response(newCategory).code(201); // this is an http code which means 'created'
         }
         return Boom.badImplementation("error creating category");
       } catch (err) {

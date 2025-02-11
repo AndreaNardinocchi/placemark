@@ -46,8 +46,13 @@ export const categoryController = {
          * finally we add the track to the database (trackStore) via the category
          * with its specific 'id' */
         title: request.payload.title,
-        artist: request.payload.artist,
-        duration: Number(request.payload.duration),
+        lat: request.payload.lat,
+        long: request.payload.long,
+        address: request.payload.address,
+        country: request.payload.country,
+        phone: Number(request.payload.phone),
+        website: request.payload.website,
+        description: request.payload.description,
       };
       await db.trackStore.addTrack(category._id, newTrack);
       return h.redirect(`/category/${category._id}`);

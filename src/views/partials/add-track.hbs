@@ -1,17 +1,47 @@
 <form class="box" action="/category/{{category._id}}/addtrack" method="POST">
-  <label>Enter Track Details:</label>
+  <label>Enter Placemark Details:</label>
   <div class="field is-horizontal">
     <div class="field-body">
       <div class="field">
-        <input class="input" type="text" placeholder="Enter Title" name="title" />
+        <label class="label">Title</label><input class="input" type="text" placeholder="Enter Title" name="title" />
       </div>
       <div class="field">
-        <input class="input" type="text" placeholder="Enter Artist" name="artist" />
+        <label class="label">Longitude</label><input class="input" type="text" placeholder="Enter Longitude" name="long" />
       </div>
       <div class="field">
-        <input class="input" type="number" placeholder="Enter duration" name="duration" />
+        <label class="label">Latitude</label><input class="input" type="text" placeholder="Enter Latitude" name="lat" />
       </div>
     </div>
   </div>
-  <button class="button is-primary">Add Track</button>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <label class="label">Address</label><input class="input" type="text" placeholder="Enter address" name="address" />
+      </div>
+      <div class="field">
+        <label class="label">Country</label><input class="input" type="text" placeholder="Enter country" name="country" />
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <label class="label">Phone Number</label><input class="input" type="number" placeholder="Enter phone number" name="phone" />
+      </div>
+      <div class="field">
+        <label class="label">Website</label><input class="input" type="text" placeholder="Enter website URL" name="website" />
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" type="text" placeholder="Enter a description" name="description"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="button is-primary">Add your placemark</button>
 </form>

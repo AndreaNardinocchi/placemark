@@ -38,7 +38,7 @@ export const trackApi = {
         const track = await db.trackStore.addTrack(request.params.id, request.payload);
         // await db.trackStore.addTrack(category._id, track);
         if (track) {
-          return h.response(track).code(201);
+          return h.response(track).code(201); // this is an http code which means 'created'
         }
         return Boom.badImplementation("error creating track");
       } catch (err) {

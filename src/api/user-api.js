@@ -35,7 +35,7 @@ export const userApi = {
       try {
         const user = await db.userStore.addUser(request.payload);
         if (user) {
-          return h.response(user).code(201);
+          return h.response(user).code(201); // this is an http code which means 'created'
         }
         return Boom.badImplementation("error creating user");
       } catch (err) {
