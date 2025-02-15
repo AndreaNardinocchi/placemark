@@ -1,6 +1,6 @@
 import { userApi } from "./api/user-api.js";
 import { categoryApi } from "./api/category-api.js";
-import { trackApi } from "./api/track-api.js";
+import { placemarkApi } from "./api/placemark-api.js";
 
 export const apiRoutes = [
   { method: "GET", path: "/api/users", config: userApi.find },
@@ -14,9 +14,9 @@ export const apiRoutes = [
   { method: "GET", path: "/api/categories/{id}", config: categoryApi.findOne },
   { method: "DELETE", path: "/api/categories/{id}", config: categoryApi.deleteOne },
 
-  { method: "GET", path: "/api/tracks", config: trackApi.find },
-  { method: "POST", path: "/api/categories/{id}/tracks", config: trackApi.create },
-  { method: "DELETE", path: "/api/tracks", config: trackApi.deleteAll },
-  { method: "GET", path: "/api/tracks/{id}", config: trackApi.findOne },
-  { method: "DELETE", path: "/api/tracks/{id}", config: trackApi.deleteOne },
+  { method: "GET", path: "/api/placemarks", config: placemarkApi.find },
+  { method: "POST", path: "/api/categories/{id}/placemarks", config: placemarkApi.create },
+  { method: "DELETE", path: "/api/placemarks", config: placemarkApi.deleteAll },
+  { method: "GET", path: "/api/placemarks/{id}", config: placemarkApi.findOne },
+  { method: "DELETE", path: "/api/placemarks/{id}", config: placemarkApi.deleteOne },
 ];

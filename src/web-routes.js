@@ -2,6 +2,7 @@ import { aboutController } from "./controllers/about-controller.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { categoryController } from "./controllers/category-controller.js";
+import { placemarkController } from "./controllers/placemark-controller.js";
 
 export const webRoutes = [
   { method: "GET", path: "/", config: accountsController.index },
@@ -17,14 +18,17 @@ export const webRoutes = [
   { method: "POST", path: "/dashboard/addcategory", config: dashboardController.addCategory },
 
   { method: "GET", path: "/category/{id}", config: categoryController.index },
-  { method: "POST", path: "/category/{id}/addtrack", config: categoryController.addTrack },
+  { method: "POST", path: "/category/{id}/addplacemark", config: categoryController.addPlacemark },
   { method: "GET", path: "/dashboard/deletecategory/{id}", config: dashboardController.deleteCategory },
 
-  { method: "POST", path: "/category/{categoryid}/deletetrack/{id}", config: categoryController.deleteTrack },
-  { method: "GET", path: "/category/{id}/deletetrack/{trackid}", config: categoryController.deleteTrack },
+  { method: "POST", path: "/category/{categoryid}/deleteplacemark/{id}", config: categoryController.deletePlacemark },
+  { method: "GET", path: "/category/{id}/deleteplacemark/{placemarkid}", config: categoryController.deletePlacemark },
 
   { method: "GET", path: "/account", config: accountsController.showAccount },
   { method: "GET", path: "/account/deleteuser/{id}", config: accountsController.deleteAccount },
   { method: "GET", path: "/account/edituser/", config: accountsController.showAccount },
   { method: "POST", path: "/account/updateuser/", config: accountsController.updateAccount },
+
+  { method: "GET", path: "/category/{categoryid}/editplacemark/{placemarkid}", config: placemarkController.index },
+  { method: "POST", path: "/category/{categoryid}/updateplacemark/{placemarkid}", config: placemarkController.updatePlacemark },
 ];

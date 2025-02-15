@@ -1,12 +1,12 @@
-<form class="box" action="/category/{{category._id}}/addtrack" method="POST">
+<form class="box" action="/category/{{category._id}}/addplacemark" method="POST">
   <label>Enter Placemark Details:</label>
   <div class="field is-horizontal">
     <div class="field-body">
       <div class="field">
-        <label class="label">Title</label><input class="input" type="text" placeholder="Enter Title" name="title" />
+        <label class="label">Title</label><input class="input" type="text" placeholder="Enter Title" name="title" value="{{category.title}}" />
       </div>
       <div class="field">
-        <label class="label">Longitude</label><input class="input" type="text" placeholder="Enter Longitude" name="long" />
+        <label class="label">Longitude</label><input class="input" type="text" placeholder="Enter Longitude" name="long" value="{{category.long}}" />
       </div>
       <div class="field">
         <label class="label">Latitude</label><input class="input" type="text" placeholder="Enter Latitude" name="lat" />

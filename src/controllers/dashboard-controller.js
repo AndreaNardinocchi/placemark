@@ -23,7 +23,7 @@ export const dashboardController = {
       const sortedCategories = somethingAnalytics.getSortedCategories(categories);
 
       const viewData = {
-        title: "Category Dashboard",
+        title: "Placemark Dashboard",
         user: loggedInUser,
         categories: sortedCategories,
       };

@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { db } from "./store-utils.js";
-import { trackJsonStore } from "./track-json-store.js";
+import { placemarkJsonStore } from "./placemark-json-store.js";
 
 export const categoryJsonStore = {
   async getAllCategories() {
@@ -21,7 +21,7 @@ export const categoryJsonStore = {
     let list = db.data.categories.find((category) => category._id === id);
     // The 'if' condition will fix the bug
     if (list) {
-      list.tracks = await trackJsonStore.getTracksByCategoryId(list._id);
+      list.placemarks = await placemarkJsonStore.getplacemarksByCategoryId(list._id);
     } else {
       list = null;
     }

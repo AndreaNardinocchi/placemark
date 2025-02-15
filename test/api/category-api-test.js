@@ -19,6 +19,7 @@ suite("Category API tests", () => {
   teardown(async () => {});
 
   test("create a category", async () => {
+    db.init("json");
     const categoryNew = await placemarkService.createCategory(mozart);
     assert.isNotNull(categoryNew);
     assertSubset(mozart, categoryNew);

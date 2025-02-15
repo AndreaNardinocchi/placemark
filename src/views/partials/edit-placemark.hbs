@@ -1,0 +1,48 @@
+<form class="box" action="/category/{{category._id}}/updateplacemark/{{placemark._id}}" method="POST">
+  {{!-- {{placemark._id}} --}}
+  <label>Update Placemark Details:</label>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <label class="label">Title</label><input class="input" type="text" placeholder="Enter Title" name="title" value="{{placemark.title}}" />
+      </div>
+      <div class="field">
+        <label class="label">Longitude</label><input class="input" type="text" placeholder="Enter Longitude" name="long" value="{{placemark.long}}" />
+      </div>
+      <div class="field">
+        <label class="label">Latitude</label><input class="input" type="text" placeholder="Enter Latitude" name="lat" value="{{placemark.lat}}" />
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <label class="label">Address</label><input class="input" type="text" placeholder="Enter address" name="address" value="{{placemark.address}}" />
+      </div>
+      <div class="field">
+        <label class="label">Country</label><input class="input" type="text" placeholder="Enter country" name="country" value="{{placemark.country}}" />
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <label class="label">Phone Number</label><input class="input" type="number" placeholder="Enter phone number" name="phone" value="{{placemark.phone}}" />
+      </div>
+      <div class="field">
+        <label class="label">Website</label><input class="input" type="text" placeholder="Enter website URL" name="website" value="{{placemark.website}}" />
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" type="text" placeholder="Enter a description" name="description" value="{{placemark.description}}"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="button is-primary">Update your placemark</button>
+</form>

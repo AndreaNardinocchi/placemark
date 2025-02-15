@@ -43,7 +43,7 @@ export const CategorySpec = {
 
 // https://joi.dev/api/?v=17.13.3
 // https://stackoverflow.com/questions/47873369/joi-validation-string-fails-on-and
-export const TrackSpec = {
+export const placemarkSpec = {
   title: Joi.string().min(3).max(30).required(),
   long: Joi.string().min(3).max(30).required(),
   lat: Joi.string().min(3).max(30).required(),
@@ -52,4 +52,15 @@ export const TrackSpec = {
   phone: Joi.number().required(),
   website: Joi.string().required(),
   description: Joi.string().min(100).max(230).required(),
+};
+
+export const updatedPlacemarkSpec = {
+  title: Joi.string().min(3).max(30).required(),
+  long: Joi.string().min(3).max(30).required(),
+  lat: Joi.string().min(3).max(30).required(),
+  address: Joi.string().min(3).max(30).required(),
+  country: Joi.string().min(3).max(30).required(),
+  phone: Joi.number().required(),
+  website: Joi.string().required(),
+  description: Joi.string().min(100).max(230),
 };

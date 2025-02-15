@@ -1,9 +1,24 @@
 {{> menu}}
 
+
 <section class="section">
-  <div class="title">
-    {{category.title}}
+  <div class="{{backgroundColor}}">
+    <div class="card-image">
+        <figure class="image 264x264 m-auto">
+          <img src="{{imageCode}}" alt="placeholder" style="border-radius: 15px;"  border="0"> 
+        </figure>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <article class="card-content pt-2">
+            <p class="card-header-title"> - {{category.title}} - </p>
+            <p></p>
+          </article>
+        </div>
+      </div>
+      
+    {{!-- {{category.title}} --}}
   </div>
-  {{> list-tracks}}
-  {{> add-track}}
+  {{> list-placemarks}}
+  {{> add-placemark}}
 </section>

@@ -78,7 +78,7 @@ export const testCategories = [
   },
 ];
 
-export const testTracks = [
+export const testPlacemarks = [
   {
     title: "Piano Sonata No. 3",
     artist: "Beethoven",

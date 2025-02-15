@@ -1,6 +1,7 @@
-// import { somethingAnalytics } from "../../utils/something-analytics.js";
+import { categoryAnalytics } from "../../utils/category-analytics.js";
+import { somethingAnalytics } from "../../utils/something-analytics.js";
 import { Category } from "./category.js";
-import { trackMongoStore } from "./track-mongo-store.js";
+import { placemarkMongoStore } from "./placemark-mongo-store.js";
 
 export const categoryMongoStore = {
   async getAllCategories() {
@@ -12,7 +13,7 @@ export const categoryMongoStore = {
     if (id) {
       const category = await Category.findOne({ _id: id }).lean();
       if (category) {
-        category.tracks = await trackMongoStore.getTracksByCategoryId(category._id);
+        category.placemarks = await placemarkMongoStore.getPlacemarksByCategoryId(category._id);
       }
       return category;
     }
@@ -29,7 +30,7 @@ export const categoryMongoStore = {
     const category = await Category.find({ userid: id }).lean();
     // eslint-disable-next-line no-self-assign
     // const image = await somethingAnalytics.getCategoryData(category);
-    // eslint-disable-next-line no-self-assign
+    // // eslint-disable-next-line no-self-assign
     // category.image = category.image;
     // console.log(`Get Mongo ${image}`);
     return category;
@@ -46,17 +47,17 @@ export const categoryMongoStore = {
   async deleteAllCategories() {
     await Category.deleteMany({});
   },
-
   async updateCategory(category, newCategory) {
     await Category.findOne({ _id: category._id });
     // eslint-disable-next-line no-self-assign
-    category.title = category.title;
-    console.log(`Mongo ${category.title}`);
+    // const image = categoryAnalytics.getImageCode(category);
     // eslint-disable-next-line no-self-assign
-
+    category.title = category.title;
+    console.log(`Mongo title ${category.title}`);
+    // eslint-disable-next-line no-self-assign
     category.image = newCategory.image;
 
-    console.log(`Mongo ${category.image}`);
+    console.log(`Mongo image ${category.image}`);
 
     await Category.updateOne();
   },

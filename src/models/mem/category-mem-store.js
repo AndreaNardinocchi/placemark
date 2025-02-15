@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { trackMemStore } from "./track-mem-store.js";
+import { placemarkMemStore } from "./placemark-mem-store.js";
 
 let categories = [];
 
@@ -14,13 +14,13 @@ export const categoryMemStore = {
     return category;
   },
 
-  // This was updated to ensure the list-tracks.hbs would work
+  // This was updated to ensure the list-placemarks.hbs would work
   async getCategoryById(id) {
     let list = categories.find((category) => category._id === id);
-    // Retrieving all tracks of the category
+    // Retrieving all placemarks of the category
     // The 'if' condition will fix the bug
     if (list) {
-      list.tracks = await trackMemStore.getTracksByCategoryId(list._id);
+      list.placemarks = await placemarkMemStore.getPlacemarksByCategoryId(list._id);
     } else {
       list = null;
     }
