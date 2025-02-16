@@ -1,7 +1,7 @@
 {{> menu}}
 
 
-<section class="section">
+<section class="section mt-6">
   <div class="{{backgroundColor}}">
     <div class="card-image">
         <figure class="image 264x264 m-auto">
@@ -11,7 +11,7 @@
       <div class="columns">
         <div class="column">
           <article class="card-content pt-2">
-            <p class="card-header-title"> - {{category.title}} - </p>
+            <p class="card-header-title"> - {{category.title}} - {{#each category.placemarks}}{{country}}{{/each}}</p>
             <p></p>
           </article>
         </div>

@@ -3,6 +3,8 @@ import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { categoryController } from "./controllers/category-controller.js";
 import { placemarkController } from "./controllers/placemark-controller.js";
+import { newsController } from "./controllers/news-controller.js";
+import { lifestyleController } from "./controllers/lifestyle-controller.js";
 
 export const webRoutes = [
   { method: "GET", path: "/", config: accountsController.index },
@@ -31,4 +33,7 @@ export const webRoutes = [
 
   { method: "GET", path: "/category/{categoryid}/editplacemark/{placemarkid}", config: placemarkController.index },
   { method: "POST", path: "/category/{categoryid}/updateplacemark/{placemarkid}", config: placemarkController.updatePlacemark },
+
+  { method: "GET", path: "/lifestyle", config: lifestyleController.index },
+  { method: "GET", path: "/news", config: newsController.index },
 ];

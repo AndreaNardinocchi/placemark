@@ -10,6 +10,7 @@ const placemarkSchema = new Schema({
   address: String,
   phone: Number,
   website: String,
+  visited: String,
   description: String,
   categoryid: {
     type: Schema.Types.ObjectId,

@@ -31,17 +31,26 @@
       <div class="field">
         <label class="label">Website</label><input class="input" type="text" placeholder="Enter website URL" name="website" />
       </div>
+      <div class="field">
+        <label class="label">Visited?</label><input class="input" type="text" placeholder="Enter your answer" name="visited" value="{{placemark.visited}}" />
+        {{!-- <label class="label">Visited?</label><input class="input" type="text" placeholder="Select your answer" name="visit" list="visit" value="{{visit}}" />
+        <datalist id="visit">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </datalist> --}}
+      </div>
     </div>
   </div>
   <div class="field is-horizontal">
     <div class="field-body">
       <div class="field">
-        <label class="label">Description</label>
         <div class="control">
-          <textarea class="textarea" type="text" placeholder="Enter a description" name="description"></textarea>
+          <label class="label">Description</label><textarea class="textarea" type="text" placeholder="Enter a description" name="description"></textarea>
         </div>
       </div>
     </div>
   </div>
-  <button class="button is-primary">Add your placemark</button>
+  <button class="button is-info has-text-white">
+    Add your placemark
+  </button>
 </form>

@@ -14,12 +14,18 @@ export const placemarkController = {
       const categoryId = request.params.categoryid; // await db.categoryStore.getCategoryById(request.params.id);
       const placemarkId = request.params.placemarkid;
       console.log(`Index Editing Placemark ${placemarkId} from Category ${categoryId}`);
+      const category = await db.categoryStore.getCategoryById(categoryId);
+      const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
+      const yesNoIcon = categoryAnalytics.getYesNoIcon(placemarkId);
+      // console.log(placemark.yesNoIcon);
+      // console.log(`${yesNoIcon} + categoryControllers`);
 
       // We are showing/passing the category in the view
       const viewData = {
-        title: "Edit Placemark ", // ${category}
-        category: await db.categoryStore.getCategoryById(categoryId),
-        placemark: await db.placemarkStore.getPlacemarkById(placemarkId),
+        title: `Edit Placemark ${placemark.title} ${yesNoIcon}`, // ${category}
+        category: category,
+        placemark: placemark,
+        yesNoIcon: yesNoIcon,
       };
 
       return h.view("placemark-view", viewData); // category-view.hbs is returned
@@ -42,11 +48,12 @@ export const placemarkController = {
 
       const updatedTitle = request.payload.title;
       const updatedLong = request.payload.long;
-      const updatedLat = request.payload.Lat;
+      const updatedLat = request.payload.lat;
       const updatedAddress = request.payload.address;
       const updatedCountry = request.payload.country;
       const updatedPhone = Number(request.payload.phone);
       const updatedWebsite = request.payload.website;
+      const updatedVisited = request.payload.visited;
       const updatedDescription = request.payload.description;
       const updatedPlacemark = {
         title: updatedTitle,
@@ -56,23 +63,27 @@ export const placemarkController = {
         country: updatedCountry,
         phone: updatedPhone,
         website: updatedWebsite,
+        visited: updatedVisited,
         description: updatedDescription,
       };
-      // request.cookieAuth.set(
-      //   "placemark",
-      //   { title: updatedTitle },
-      //   { long: updatedLong },
-      //   { lat: updatedLat },
-      //   { address: updatedAddress },
-      //   { country: updatedCountry },
-      //   { address: updatedAddress },
-      //   { website: updatedWebsite },
-      //   { description: updatedDescription }
-      // );
+      request.cookieAuth.set(
+        "placemark",
+        // { id: user._id },
+        { title: updatedTitle },
+        { long: updatedLong },
+        { lat: updatedLat },
+        { address: updatedAddress },
+        { country: updatedCountry },
+        { address: updatedAddress },
+        { website: updatedWebsite },
+        { visited: updatedVisited },
+        { description: updatedDescription }
+      );
 
       await db.placemarkStore.updatePlacemark(placemark, updatedPlacemark);
-      console.log(`Editing Placemark ${placemarkId} from Category ${categoryId}`);
-      console.log(`updating ${updatedWebsite}`);
+      // console.log(`Editing Placemark ${placemarkId} from Category ${categoryId}`);
+      console.log(`updating ${updatedVisited}`);
+      console.log(`updating placemark.visited ${placemark.visited}`);
       return h.redirect(`/category/${categoryId}`);
     },
   },

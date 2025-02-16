@@ -47,17 +47,19 @@ export const categoryMongoStore = {
   async deleteAllCategories() {
     await Category.deleteMany({});
   },
+
   async updateCategory(category, newCategory) {
     await Category.findOne({ _id: category._id });
     // eslint-disable-next-line no-self-assign
-    // const image = categoryAnalytics.getImageCode(category);
+    // const placemarkSum = somethingAnalytics.getCategoryData(category);
     // eslint-disable-next-line no-self-assign
-    category.title = category.title;
-    console.log(`Mongo title ${category.title}`);
+    // category.title = category.title;
+    // console.log(`Mongo title ${category.title}`);
     // eslint-disable-next-line no-self-assign
-    category.image = newCategory.image;
+    // category.image = newCategory.image;
+    category.placemarkSum = newCategory.placemarkSum;
 
-    console.log(`Mongo image ${category.image}`);
+    // console.log(`Mongo image ${category.image}`);
 
     await Category.updateOne();
   },

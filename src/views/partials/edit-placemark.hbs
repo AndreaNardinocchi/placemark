@@ -32,6 +32,14 @@
       <div class="field">
         <label class="label">Website</label><input class="input" type="text" placeholder="Enter website URL" name="website" value="{{placemark.website}}" />
       </div>
+      <div class="field">
+        <label class="label">Visited?</label><input class="input" type="text" placeholder="Enter your answer" name="visited" value="{{placemark.visited}}" />
+        {{!-- <label class="label">Visited?</label><input class="input" type="text" placeholder="Select your answer" name="visit" list="visit" value="{{placemark.visit}}" />
+        <datalist id="visit">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </datalist> --}}
+      </div>
     </div>
   </div>
   <div class="field is-horizontal">
@@ -44,5 +52,5 @@
       </div>
     </div>
   </div>
-  <button class="button is-primary">Update your placemark</button>
+  <button class="button is-info has-text-white">Update your placemark</button>
 </form>

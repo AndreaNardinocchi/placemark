@@ -153,7 +153,7 @@ export const accountsController = {
         _id: user._id,
       };
       // The below 'updateUser()' function from the 'user-store.js' file will update the user's data
-      await db.userStore.updateUser(user, updatedUser);
+
       // The cookie 'user' will be created and will contain the user's email
       // console.log(request.cookieAuth);
 
@@ -172,6 +172,8 @@ export const accountsController = {
 
       // request.cookieAuth.set("user", { id: user._id }, user.country, user.addressCode, user.street, user.phoneNumber, user.email, user.password);
       // request.cookieAuth.clear();
+
+      await db.userStore.updateUser(user, updatedUser);
       console.log(`updating ${user.email}`);
       return h.redirect("/");
     },

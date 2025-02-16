@@ -8,9 +8,13 @@ How many times have they logged in?
 ====== Category ==================
 
 Sort the image not showing on dashboard-view
-
+Implement update for json and mem too.
+Implement: how many places you visited, the furthest place, each country number of POI.
+in the top banner.
 
 ====== Placemark =============
+
+if in Ireland show a car icon, if abroad show an airplane icon.
 
 https://gisgeography.com/poi-gis-data/
 TextArea

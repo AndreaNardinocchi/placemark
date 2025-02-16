@@ -1,4 +1,4 @@
-<nav class="navbar">
+{{!-- <nav class="navbar">
   <div class="navbar-brand">
     {{> category-brand}}
   </div>
@@ -7,11 +7,65 @@
       <div class="navbar-item">
         <div class="buttons">
           <a id="dashboard" class="button" href="/dashboard"> Dashboard </a>
-          <a id="dashboard" class="button" href="/about"> About </a>
-          <a id="dashboard" class="button" href="/account"> Account </a>
+          <a id="about" class="button" href="/about"> About </a>
+          <a id="account" class="button" href="/account"> Account </a>
+          <a id="logout" class="button" href="/logout"> Logout </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav> --}}
+
+
+<nav class="navbar mb-6 is-fixed-top " role="navigation" aria-label="account navigation">
+  <div class="navbar-brand pl-4">
+    <a  href="/dashboard">
+      {{> category-brand}}
+    </a>
+    <span class="navbar-burger" data-target="navbarMenu" aria-expanded="false">
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    </span>
+  </div>
+  <div id="navbarMenu" class="navbar-menu pr-4 ">
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a id="dashboard" class="button" href="/dashboard"> Dashboard </a>
+          <a class="button" id="lifestyle" href="/lifestyle"> Lifestyle </a>
+          <a class="button" id="news" href="/news"> News </a>
+          <a id="about" class="button" href="/about"> About </a>
+          <a id="account" class="button" href="/account"> Account </a>
           <a id="logout" class="button" href="/logout"> Logout </a>
         </div>
       </div>
     </div>
   </div>
 </nav>
+<script>
+  document.getElementById("{{active}}").classList.add("is-info");
+</script>
+<script>
+                          document.addEventListener('DOMContentLoaded', () => {
+
+      // Get all "navbar-burger" elements
+      const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+      // Add a click event on each of them
+      $navbarBurgers.forEach(el => {
+        el.addEventListener('click', () => {
+
+          // Get the target from the "data-target" attribute
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+
+        });
+      });
+    });
+</script>

@@ -51,6 +51,7 @@ export const placemarkSpec = {
   country: Joi.string().min(3).max(30).required(),
   phone: Joi.number().required(),
   website: Joi.string().required(),
+  visited: Joi.string().required(),
   description: Joi.string().min(100).max(230).required(),
 };
 
@@ -62,5 +63,6 @@ export const updatedPlacemarkSpec = {
   country: Joi.string().min(3).max(30).required(),
   phone: Joi.number().required(),
   website: Joi.string().required(),
+  visited: Joi.string().required(),
   description: Joi.string().min(100).max(230),
 };

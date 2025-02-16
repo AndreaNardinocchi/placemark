@@ -44,25 +44,27 @@ export const placemarkMongoStore = {
   },
 
   async updatePlacemark(placemark, updatedPlacemark) {
-    // const placemarkDoc = await Placemark.findOne({ _id: placemark._id });
-    // console.log(placemarkDoc);
-    // placemarkDoc.title = updatedPlacemark.title;
-    // placemarkDoc.long = updatedPlacemark.long;
-    // placemarkDoc.lat = updatedPlacemark.lat;
-    // placemarkDoc.address = updatedPlacemark.address;
-    // placemarkDoc.country = updatedPlacemark.country;
-    // placemarkDoc.phone = updatedPlacemark.phone;
-    // placemarkDoc.website = updatedPlacemark.website;
-    // placemarkDoc.description = updatedPlacemark.description;
-    // await placemarkDoc.save();
-
-    await Placemark.findOne(placemark);
-    try {
-      const updatePlacemark = await Placemark.updateOne(placemark, updatedPlacemark);
-      console.log(updatePlacemark);
-      console.log(`${updatePlacemark.matchedCount} document(s) matched the filter, updated ${updatePlacemark.modifiedCount} document(s)`);
-    } catch (error) {
-      console.error("Error updating record:", error);
-    }
+    const placemarkDoc = await Placemark.findOne({ _id: placemark._id });
+    console.log(placemarkDoc);
+    placemarkDoc.title = updatedPlacemark.title;
+    placemarkDoc.long = updatedPlacemark.long;
+    placemarkDoc.lat = updatedPlacemark.lat;
+    placemarkDoc.address = updatedPlacemark.address;
+    placemarkDoc.country = updatedPlacemark.country;
+    placemarkDoc.phone = updatedPlacemark.phone;
+    placemarkDoc.website = updatedPlacemark.website;
+    placemarkDoc.visited = updatedPlacemark.visited;
+    placemarkDoc.description = updatedPlacemark.description;
+    await placemarkDoc.save();
   },
+
+  //   await Placemark.findOne(placemark);
+  //   try {
+  //     const updatePlacemark = await Placemark.updateOne(placemark, updatedPlacemark);
+  //     console.log(updatePlacemark);
+  //     console.log(`${updatePlacemark.matchedCount} document(s) matched the filter, updated ${updatePlacemark.modifiedCount} document(s)`);
+  //   } catch (error) {
+  //     console.error("Error updating record:", error);
+  //   }
+  // },
 };

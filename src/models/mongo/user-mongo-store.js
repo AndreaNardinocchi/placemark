@@ -41,13 +41,25 @@ export const userMongoStore = {
 
   // https://endgrate.com/blog/using-the-mongodb-api-to-create-or-update-records-(with-javascript-examples)
   async updateUser(user, updatedUser) {
-    await User.findOne(user);
-    try {
-      const updateUser = await User.updateOne(user, updatedUser);
-      console.log(updateUser);
-      console.log(`${updateUser.matchedCount} document(s) matched the filter, updated ${updateUser.modifiedCount} document(s)`);
-    } catch (error) {
-      console.error("Error updating record:", error);
-    }
+    const userDoc = await User.findOne({ _id: user._id });
+    console.log(userDoc);
+    user._id = updatedUser._id;
+    userDoc.country = updatedUser.country;
+    userDoc.street = updatedUser.street;
+    userDoc.addressCode = updatedUser.addressCode;
+    userDoc.phoneNumber = updatedUser.phoneNumber;
+    userDoc.email = updatedUser.email;
+    userDoc.password = updatedUser.password;
+
+    await userDoc.save();
+
+    // await User.findOne(user);
+    // try {
+    //   const updateUser = await User.updateOne(user, updatedUser);
+    //   console.log(updateUser);
+    //   console.log(`${updateUser.matchedCount} document(s) matched the filter, updated ${updateUser.modifiedCount} document(s)`);
+    // } catch (error) {
+    //   console.error("Error updating record:", error);
+    // }
   },
 };
