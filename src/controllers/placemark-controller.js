@@ -13,16 +13,16 @@ export const placemarkController = {
       // We are retrieving/extracting the placemark
       const categoryId = request.params.categoryid; // await db.categoryStore.getCategoryById(request.params.id);
       const placemarkId = request.params.placemarkid;
-      console.log(`Index Editing Placemark ${placemarkId} from Category ${categoryId}`);
+      // console.log(`Index Editing Placemark ${placemarkId} from Category ${categoryId}`);
       const category = await db.categoryStore.getCategoryById(categoryId);
       const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
-      const yesNoIcon = categoryAnalytics.getYesNoIcon(placemarkId);
+      const yesNoIcon = categoryAnalytics.getYesNoIcon(category);
       // console.log(placemark.yesNoIcon);
-      // console.log(`${yesNoIcon} + categoryControllers`);
+      console.log(`${yesNoIcon} + yesNoIcon placemarkControllers`);
 
       // We are showing/passing the category in the view
       const viewData = {
-        title: `Edit Placemark ${placemark.title} ${yesNoIcon}`, // ${category}
+        title: `Edit Placemark ${placemark.title}`, // ${yesNoIcon}, // ${category}
         category: category,
         placemark: placemark,
         yesNoIcon: yesNoIcon,

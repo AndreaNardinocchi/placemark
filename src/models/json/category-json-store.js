@@ -21,7 +21,7 @@ export const categoryJsonStore = {
     let list = db.data.categories.find((category) => category._id === id);
     // The 'if' condition will fix the bug
     if (list) {
-      list.placemarks = await placemarkJsonStore.getplacemarksByCategoryId(list._id);
+      list.placemarks = await placemarkJsonStore.getPlacemarksByCategoryId(list._id);
     } else {
       list = null;
     }

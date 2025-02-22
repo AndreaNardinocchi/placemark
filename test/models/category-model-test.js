@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 import { assert } from "chai";
 import { db } from "../../src/models/db.js";
-import { maggie, testCategories, testUsers, mozart } from "../fixtures.js";
+import { maggie, testCategories, testUsers, restaurant } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 
 // This should generate a cleaner report
@@ -18,9 +18,9 @@ suite("Category API tests", () => {
   });
 
   test("create a category", async () => {
-    const newCategory = await db.categoryStore.addCategory(mozart);
-    // assert.equal(newCategory, mozart);
-    assertSubset(mozart, newCategory);
+    const newCategory = await db.categoryStore.addCategory(restaurant);
+    // assert.equal(newCategory, restaurant);
+    assertSubset(restaurant, newCategory);
   });
 
   test("delete all categories", async () => {
@@ -32,7 +32,7 @@ suite("Category API tests", () => {
   });
 
   test("get a category - success", async () => {
-    const category = await db.categoryStore.addCategory(mozart);
+    const category = await db.categoryStore.addCategory(restaurant);
     const returnedCategory = await db.categoryStore.getCategoryById(category._id);
     assertSubset(category, returnedCategory);
   });

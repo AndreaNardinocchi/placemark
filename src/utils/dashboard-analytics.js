@@ -1,6 +1,5 @@
 /* This util js file contains all methods used for the dashboard view */
 import { categoryAnalytics } from "./category-analytics.js";
-import { db } from "../models/db.js";
 
 export const dashboardAnalytics = {
   getImageCode(category) {
@@ -22,5 +21,31 @@ export const dashboardAnalytics = {
     return imageCode;
     // }
     //  return null;
+  },
+
+  getTravelIcon(category) {
+    // const icon = [];
+    let destination = "";
+    let travelIcon = "";
+    if (category.placemarks) {
+      // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
+      for (let i = 0; i < category.placemarks.length; i += 1) {
+        destination = category.placemarks[i].country;
+        if (destination === "Ireland") {
+          // yesNoIcon = visit.concat("fas fa-solid fa-flag");
+          travelIcon = "fas fa-solid fa-car";
+          // icon.length = [];
+          // icon.push(yesNoIcon);
+        } else if (destination === "France") {
+          travelIcon = "fas fa-solid fa-plane";
+          // icon.length = [];
+          // icon.push(yesNoIcon);
+        } else {
+          travelIcon = null;
+        }
+      }
+    }
+    console.log(`This is ${travelIcon} on yesNoIcon `);
+    return travelIcon;
   },
 };

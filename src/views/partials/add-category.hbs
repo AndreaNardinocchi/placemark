@@ -1,7 +1,13 @@
 <form action="/dashboard/addcategory" method="POST">
   <div class="field">
     <label class="label">Category Title</label>
-    <input class="input" id="commandInput" type="text" placeholder="Enter category title" name="title" />
+    <input class="input" name="title" list="title" type="text" placeholder="Select your Category" name="title" />
+    <datalist id="title">
+      <option value="Restaurants">Restaurants</option>
+      <option value="Museums">Museums</option>
+      <option value="Parks">Parks</option>
+      <option value="Beaches">Beaches</option>
+    </datalist>
   </div>
   <button class="button is-info has-text-white">Add Category</button>
 </form>

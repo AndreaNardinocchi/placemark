@@ -52,46 +52,71 @@ export const testUsers = [
   },
 ];
 
-export const mozart = {
-  title: "Mozart Favourites",
+export const restaurant = {
+  title: "Restaurants",
 };
 
-export const concerto = {
-  title: "Violin Concerto No. 3",
-  artist: "Mozart",
-  duration: 15,
+export const elPradoMuseum = {
+  title: "El Prado",
+  lat: "25.00",
+  long: "90.22",
+  address: "Calle del luchador, 24",
+  country: "Spain",
+  phone: 1978882,
+  website: "https://www.loveholidays.ie/sem/santa-monica.html",
+  visited: "Yes",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 };
 
-export const beethoven = {
-  title: "Beethoven Favourites",
+export const parks = {
+  title: "Museums",
 };
 
 export const testCategories = [
   {
-    title: "Beethoven Sonatas",
+    title: "Restaurants",
   },
   {
-    title: "Beethoven Concertos",
+    title: "Museums",
   },
   {
-    title: "Beethoven Symphonies",
+    title: "Beaches",
   },
 ];
 
 export const testPlacemarks = [
   {
-    title: "Piano Sonata No. 3",
-    artist: "Beethoven",
-    duration: 5,
+    title: "Le Fragre",
+    lat: "5.00",
+    long: "0.22",
+    address: "Main Campus Waterford",
+    country: "Ireland",
+    phone: 1992222,
+    website: "https://www.loveholidays.ie/sem/santa-monica.html",
+    visited: "No",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  },
+
+  {
+    title: "Marsille Museum",
+    lat: "25.00",
+    long: "10.22",
+    address: "Main Campus Marsille",
+    country: "France",
+    phone: 1220022,
+    website: "https://www.loveholidays.ie/sem/santa-monica.html",
+    visited: "Yes",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
-    title: "Piano Sonata No. 7",
-    artist: "Beethoven",
-    duration: 6,
-  },
-  {
-    title: "Piano Sonata No. 10",
-    artist: "Beethoven",
-    duration: 4,
+    title: "Santa Monica",
+    lat: "35.00",
+    long: "-10.22",
+    address: "Main Campus Marsille",
+    country: "United States",
+    phone: 1256789,
+    website: "https://www.loveholidays.ie/sem/santa-monica.html",
+    visited: "No",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
 ];

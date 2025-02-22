@@ -1,7 +1,7 @@
 <section class = "box has-background-dark">
   <section class = "content p-6">
-    <p class = "title has-text-white has-text-centered ">
-      - User Profile -
+    <p class = "title is-size-1 has-text-white has-text-centered ">
+      - {{firstName}}'s profile -
     </p>
   </section>
 </section>
@@ -11,17 +11,18 @@
   <div class="column is-6 pr-6">
     <div class="about-avatar is-size-5">
       <img src = "https://bootdey.com/img/Content/avatar/avatar7.png"; class = "mb-6" title="" alt="" />
-      <p class = "is-size-4 pb-2">Hi <span class = "has-text-weight-bold">{{firstName}}</span>!!</p>
+      <p class = "is-size-4 pb-2">Hi <span class = "has-text-weight-bold">{{firstName}} </span>!!</p>
       <p>Welcome to your user profile page!</p>
       <p>Please, take a moment to check your details in the box...</p>
+      
     </div>
   </div>
   <div class = "column is-6 is-size-5 box p-6">
-  <p class="subtitle is-1 has-text-weight-bold">{{firstName}}'s account</p>
+  <p class="subtitle is-3 has-text-weight-bold has-text-centered">{{firstName}}'s account details</p>
   <hr>
   <div class="columns">
     <div class = "column is-6 is-size-6">
-      <p><span class=" has-text-weight-bold">First Name:</span><br> {{firstName}} </p>
+      <p><span class="has-text-weight-bold">First Name:</span><br> {{firstName}} </p>
       <hr>
       <p><span class="has-text-weight-bold">Last Name:</span><br> {{lastName}} </p>
       <hr>
@@ -104,10 +105,14 @@
       <button class="button is-light">Update User</button>
     </div>
   </form>
+  
       </section>
+      
       </div>
+      
     </div>
     <button class="modal-close is-large" aria-label="close"></button>
+    
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -153,4 +158,5 @@
     });
     });
   </script>
+
 </section>

@@ -11,31 +11,43 @@ export const categoryController = {
       const category = await db.categoryStore.getCategoryById(request.params.id);
       const placemark = await db.placemarkStore.getAllPlacemarks(category);
 
-      await somethingAnalytics.getCategoryData(category);
+      // await somethingAnalytics.getCategoryData(category);
       // const placemarkId = await db.placemarkStore.getPlacemarkById(request.params.id);
       // const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
-      // const yesNoIcon = categoryAnalytics.getYesNoIcon(placemark);
+      // const yesNoIcon = categoryAnalytics.getYesNoIcon(category);
       // console.log(`${yesNoIcon} + categoryControllers`);
 
       const imageCode = categoryAnalytics.getImageCode(category);
       const backgroundColor = categoryAnalytics.getBackgroundColor(category);
       const placemarkSum = categoryAnalytics.countPlacemarks(category);
-      console.log(`${placemark.placemarkSum} checking placemarkSum`);
+      const yesCounting = categoryAnalytics.getYesCounting(category);
+      const noCounting = categoryAnalytics.getNoCounting(category);
+      const travelIcon = categoryAnalytics.getTravelIcon(category);
+      const maxDistance = categoryAnalytics.getMaxPOIdistance(category);
+      const minDistance = categoryAnalytics.getMinPOIdistance(category);
+      const localCounting = categoryAnalytics.getLocal(category);
+      const abroadCounting = categoryAnalytics.getAbroad(category);
+      const localIcon = categoryAnalytics.getLocalIcon(category);
+      const abroadIcon = categoryAnalytics.getAbroadIcon(category);
 
       // We are showing/passing the category in the view
       const viewData = {
-        title: " Placemark ", // ${category}
+        title: `Placemark ${category.title}`, // ${category}
         category: category,
         imageCode: imageCode,
         backgroundColor: backgroundColor,
         placemarkSum: placemarkSum,
+        yesCounting: yesCounting,
+        noCounting: noCounting,
         // yesNoIcon: yesNoIcon,
+        travelIcon: travelIcon,
+        maxDistance: maxDistance,
+        minDistance: minDistance,
+        localCounting: localCounting,
+        abroadCounting: abroadCounting,
+        localIcon: localIcon,
+        abroadIcon: abroadIcon,
       };
-      //     console.log(category.title);
-      // console.log(`${imageCode} + categoryControllers`);
-
-      // console.log(imageCode);
-      // console.log("Hey");
       return h.view("category-view", viewData); // category-view.hbs is returned
     },
   },
@@ -53,6 +65,9 @@ export const categoryController = {
       const loggedInUser = request.auth.credentials;
       const user = await db.userStore.getUserById(loggedInUser._id);
       const category = await db.categoryStore.getCategoryById(request.params.id);
+      const placemark = await db.placemarkStore.getAllPlacemarks(category);
+      // const yesNoIcon = categoryAnalytics.getYesNoIcon(placemark);
+      // console.log(`${yesNoIcon} checking yesNoIcon`);
       const newPlacemark = {
         /** The inputted data from the form will get here (payload),
          * and we stick them to a placemark object (title, artist, duration), and
@@ -68,6 +83,7 @@ export const categoryController = {
         website: request.payload.website,
         visited: request.payload.visited,
         description: request.payload.description,
+        // yesNoIcon: yesNoIcon,
       };
       await db.placemarkStore.addPlacemark(category._id, newPlacemark);
       return h.redirect(`/category/${category._id}`);

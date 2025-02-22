@@ -2,6 +2,8 @@
 
 import { db } from "../models/db.js";
 import { updatedUserSpec, UserCredentialsSpec, UserSpec } from "../models/joi-schemas.js";
+import { categoryAnalytics } from "../utils/category-analytics.js";
+import { somethingAnalytics } from "../utils/something-analytics.js";
 
 export const accountsController = {
   index: {
@@ -93,7 +95,21 @@ export const accountsController = {
   showAccount: {
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
-      // console.log(loggedInUser);
+
+      const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
+      const categoryId = request.params.categoryid;
+      console.log(`ID ${categoryId}`);
+      const lamb0 = somethingAnalytics.getAccountCategories0(categories);
+      const lambId0 = somethingAnalytics.getAccountCategoriesId0(categories);
+      const lamb1 = somethingAnalytics.getAccountCategories1(categories);
+      const lambId1 = somethingAnalytics.getAccountCategoriesId1(categories);
+      const lamb2 = somethingAnalytics.getAccountCategories2(categories);
+      const lambId2 = somethingAnalytics.getAccountCategoriesId2(categories);
+      const lamb3 = somethingAnalytics.getAccountCategories3(categories);
+      const lambId3 = somethingAnalytics.getAccountCategoriesId3(categories);
+      // console.log(`Account categories ${JSON.stringify(categories)}`);
+
+      //  console.log(`Account categories ${lamb}`);
       const userDetails = await db.userStore.getUserById(loggedInUser._id);
       const viewData = {
         title: "Your Account details | App",
@@ -108,8 +124,18 @@ export const accountsController = {
         phoneNumber: userDetails.phoneNumber,
         email: userDetails.email,
         password: userDetails.password,
+        lamb0: lamb0,
+        lambId0: lambId0,
+        lamb1: lamb1,
+        lambId1: lambId1,
+        lamb2: lamb2,
+        lambId2: lambId2,
+        lamb3: lamb3,
+        lambId3: lambId3,
         _id: userDetails._id,
+        categoryId: categoryId,
       };
+
       return h.view("account-view", viewData);
     },
   },

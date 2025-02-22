@@ -16,10 +16,15 @@
 
      <div class="card has-text-dark-grey">
   <header class="card-header has-text-centered">
+  
    
 
 
-    <p class="card-header-title">{{title}}</p>
+    <p class="card-header-title">{{title}}<span class="has-text-right"></p>
+ 
+  <p class="has-text-right mr-3 mt-2"><i class="{{../yesNoIcon}}"></i> <i class="{{../travelIcon}}"></i></p>
+    
+    
     <button class="card-header-icon" aria-label="more options">
       <span class="icon">
         <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -31,7 +36,7 @@
     <div class="content">
   <div class="columns">
     <div class = "column is-3 ">
-      <p><span class=" has-text-weight-bold">Location Name:</span><br>{{title}} </p>
+      <p><span class="has-text-weight-bold">Location Name:</span><br>{{title}} </p>
       <p><span class="has-text-weight-bold">Geolocation (long/lat):</span><br>{{long}} / {{lat}}  </p>
       <p><span class="has-text-weight-bold">Address:</span><br> {{address}} </p>
       <p><span class="has-text-weight-bold">Phone number:</span><br> {{phone}} </p>
@@ -41,11 +46,9 @@
       <p><span class="has-text-weight-bold">Country:</span><br> {{country}} </p>
       <p><span class="has-text-weight-bold">Website:</span><br><span style = "word-wrap: break-word;">  <a href="{{website}}" target="_blank" class="has-text-grey">{{website}}</a>  </span> </p>
       <p><span class="has-text-weight-bold">Description:</span><br> {{description}} </p>
-      <p><span class="has-text-weight-bold">Visited:</span> {{visited}}
+      <p><span class="has-text-weight-bold">Visited:</span> {{visited}} {{yesNoIcon}}
       </p>
-      <span class="icon is-small"> 
-          <i class="{{yesNoIcon }}"></i>
-        </span>
+      
         </div>
     <div class = "column is-4 ">
       <p><span class="has-text-weight-bold ">Map Placeholder:</span><br> 

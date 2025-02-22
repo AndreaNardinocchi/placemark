@@ -1,47 +1,47 @@
 import { assert } from "chai";
 import { db } from "../../src/models/db.js";
-import { maggie, testCategories, testUsers, mozart, concerto, testPlacemarks, beethoven } from "../fixtures.js";
+import { maggie, testCategories, testUsers, restaurant, elPradoMuseum, testPlacemarks, parks } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 
 suite("placemark API tests", () => {
-  let beethovenList = null;
+  let parksList = null;
 
   setup(async () => {
     db.init("mongo");
     await db.categoryStore.deleteAllCategories();
     await db.placemarkStore.deleteAllPlacemarks(); // Each test should generally start from an empty data store
-    beethovenList = await db.categoryStore.addCategory(beethoven);
+    parksList = await db.categoryStore.addCategory(parks);
     for (let i = 0; i < testPlacemarks.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      testPlacemarks[i] = await db.placemarkStore.addPlacemark(beethovenList._id, testPlacemarks[i]);
+      testPlacemarks[i] = await db.placemarkStore.addPlacemark(parksList._id, testPlacemarks[i]);
     }
   });
 
   test("create a placemark", async () => {
-    const newCategory = await db.categoryStore.addCategory(mozart);
-    const newPlacemark = await db.placemarkStore.addPlacemark(newCategory._id, concerto);
+    const newCategory = await db.categoryStore.addCategory(restaurant);
+    const newPlacemark = await db.placemarkStore.addPlacemark(newCategory._id, elPradoMuseum);
     assert.isNotNull(newPlacemark._id);
-    assertSubset(mozart.concerto, newCategory.newPlacemark);
+    assertSubset(restaurant.elPradoMuseum, newCategory.newPlacemark);
   });
 
   test("get multiple placemarks", async () => {
-    const placemarks = await db.placemarkStore.getplacemarksByCategoryId(beethovenList._id);
+    const placemarks = await db.placemarkStore.getPlacemarksByCategoryId(parksList._id);
     assert.equal(placemarks.length, testPlacemarks.length);
   });
 
   test("delete all placemarks", async () => {
-    const placemarks = await db.placemarkStore.getAllplacemarks();
+    const placemarks = await db.placemarkStore.getAllPlacemarks();
     assert.equal(placemarks.length, testPlacemarks.length);
-    await db.placemarkStore.deleteAllplacemarks();
-    const newPlacemarks = await db.placemarkStore.getAllplacemarks();
+    await db.placemarkStore.deleteAllPlacemarks();
+    const newPlacemarks = await db.placemarkStore.getAllPlacemarks();
     assert.equal(newPlacemarks.length, 0);
   });
 
   test("get a placemark - success", async () => {
-    const category = await db.categoryStore.addCategory(mozart);
-    const placemark = await db.placemarkStore.addplacemark(category._id, concerto);
-    const newPlacemark = await db.placemarkStore.getplacemarkById(placemark._id);
-    assertSubset(category.newPlacemark, mozart.concerto);
+    const category = await db.categoryStore.addCategory(restaurant);
+    const placemark = await db.placemarkStore.addPlacemark(category._id, elPradoMuseum);
+    const newPlacemark = await db.placemarkStore.getPlacemarkById(placemark._id);
+    assertSubset(category.newPlacemark, restaurant.elPradoMuseum);
   });
 
   test("delete One placemark - success", async () => {

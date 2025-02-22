@@ -48,8 +48,14 @@ export const placemarkJsonStore = {
 
   async updatePlacemark(placemark, updatedPlacemark) {
     placemark.title = updatedPlacemark.title;
-    placemark.artist = updatedPlacemark.artist;
-    placemark.duration = updatedPlacemark.duration;
+    placemark.long = updatedPlacemark.long;
+    placemark.lat = updatedPlacemark.lat;
+    placemark.address = updatedPlacemark.address;
+    placemark.country = updatedPlacemark.country;
+    placemark.phone = updatedPlacemark.phone;
+    placemark.website = updatedPlacemark.website;
+    placemark.visited = updatedPlacemark.visited;
+    placemark.description = updatedPlacemark.description;
     await db.write();
   },
 };

@@ -11,10 +11,119 @@
       <div class="columns">
         <div class="column">
           <article class="card-content pt-2">
-            <p class="card-header-title"> - {{category.title}} - {{#each category.placemarks}}{{country}}{{/each}}</p>
+            <p class="card-header-title"> - {{category.title}} - </span></p> 
+            
+            
+            
+            {{!-- {{#each category.placemarks}}{{placemarkSum}}{{/each}} - {{yesNoIcon}}  --}}
             <p></p>
           </article>
         </div>
+      </div>
+      
+    {{!-- {{category.title}} --}}
+  </div>
+
+  <div class="box has-background-white">
+      <div class="columns">
+        <div class="column is-6">
+
+<section class="">
+      <header class="card-header ">
+        
+      </header>
+      
+      <div class="columns has-text-left">
+        <div class="column is-6">
+          <div class="card-image">
+        <figure class="image is-264x264 m-auto p-2">
+          <img src="https://i.ibb.co/G42MNvjz/placemark.jpg" alt="placemark" border="0">
+        </figure>
+      </div>
+      </div>
+      <div class="column is-6 ml-3">
+         <header class="card-header pt-5">
+          <p class="subtitle has-text-weight-bold is-5">Your placemarks stats</p>
+        
+      </header>
+      <hr class="mr-6 pr-4">
+          <article class="card-content">
+            <p class="content is-size-6 pt-1">
+              <span class=" has-text-weight-bold is-size-6">Placemarks:</span> {{placemarkSum}}<br>
+              <span class=" has-text-weight-bold is-size-6">Visited:</span> {{yesCounting}}<br>
+              <span class="has-text-weight-bold is-size-6"> To visit:</span> {{noCounting}}<br>
+              <span class=" has-text-weight-bold is-size-6">Furthest placemark:</span><br> {{maxDistance}}<br> 
+              <span class=" has-text-weight-bold is-size-6">Closest placemark:</span><br> {{minDistance}}</p> 
+
+              </p>
+            </p>
+            <p></p>
+          </article>
+          </div>
+          </div>
+        
+      
+    </section>
+    </div>
+
+    
+
+
+        {{!-- <div class="column is-3">
+          <article class="card-content pt-2">
+            <p><span class=" has-text-weight-bold is-size-6">Placemarks:</span> {{placemarkSum}}</p> 
+            
+            
+            
+            {{!-- {{#each category.placemarks}}{{placemarkSum}}{{/each}} - {{yesNoIcon}}  --}}
+            {{!-- <p></p>
+          </article>
+        </div> --}} 
+
+
+         <div class="column is-6">
+
+<section class="">
+      <header class="card-header ">
+        
+      </header>
+      
+      <div class="columns has-text-left">
+        <div class="column is-6">
+          <div class="card-image">
+        <figure class="image is-264x264 m-auto pt-5">
+          <img src="https://i.ibb.co/s98MdtnM/travel.jpg" alt="travel"  border="0">
+        </figure>
+      </div>
+      </div>
+      <div class="column is-6 ml-3">
+        <header class="card-header pt-5">
+          <p class="subtitle has-text-weight-bold is-5">Placemarks locations</p>
+        
+      </header>
+          <hr class="mr-6 pr-6">
+          <article class="card-content">
+            <p class="content is-size-6 pt-1">
+               <p><span class=" has-text-weight-bold is-size-6">Local:</span> {{localCounting}} <img src="{{localIcon}}" alt="" style="width: 8%;"  border="0"> </p> 
+            
+          
+     
+            
+            <p><span class=" has-text-weight-bold is-size-6">Abroad:</span> {{abroadCounting}} <img src="{{abroadIcon}}" alt="" style="width: 8%;"  border="0"> </p> 
+            
+
+              </p>
+            </p>
+            <p></p>
+          </article>
+          </div>
+          </div>
+        
+      
+    </section>
+    </div>
+        
+        
       </div>
       
     {{!-- {{category.title}} --}}

@@ -1,0 +1,153 @@
+{
+  "users": [
+    {
+      "firstName": "Joan",
+      "lastName": "Mangan",
+      "gender": "Male",
+      "country": "Ireland",
+      "street": "Main Campus Waterford",
+      "addressCode": "Blackrock",
+      "DOB": "2025-01-07",
+      "phoneNumber": 4632389,
+      "email": "marisa.amatucci76@gmail.com",
+      "password": "Yoestoy76",
+      "_id": "2a125ccc-2e38-4a5e-838d-ce57851cf86a"
+    },
+    {
+      "firstName": "Andrea",
+      "lastName": "Nardinocchi",
+      "gender": "Male",
+      "country": "Ireland",
+      "street": "2 Church Gate",
+      "addressCode": "Blackrock",
+      "DOB": "2025-02-10",
+      "phoneNumber": 894632389,
+      "email": "andrea.nardinocchi76@gmail.com",
+      "password": "Yoestoy76",
+      "_id": "a73815df-fab9-43fe-b3d1-8ba73a2b2939"
+    }
+  ],
+  "categories": [
+    {
+      "userid": "2a125ccc-2e38-4a5e-838d-ce57851cf86a",
+      "title": "Restaurants",
+      "_id": "4513790c-59e5-44aa-9c72-137b8db6d3e2"
+    },
+    {
+      "userid": "2a125ccc-2e38-4a5e-838d-ce57851cf86a",
+      "title": "Beaches",
+      "_id": "9b0f7e92-41bc-4f21-aebc-387f7b85b9cb"
+    },
+    {
+      "userid": "a73815df-fab9-43fe-b3d1-8ba73a2b2939",
+      "title": "Museums",
+      "_id": "edb57eb7-5e71-4b63-8643-13d2b2a7b08c"
+    }
+  ],
+  "placemarks": [
+    {
+      "user": {
+        "firstName": "Joan",
+        "lastName": "Mangan",
+        "gender": "Male",
+        "country": "Ireland",
+        "street": "Main Campus Waterford",
+        "addressCode": "Blackrock",
+        "DOB": "2025-01-07",
+        "phoneNumber": 4632389,
+        "email": "marisa.amatucci76@gmail.com",
+        "password": "Yoestoy76",
+        "_id": "2a125ccc-2e38-4a5e-838d-ce57851cf86a"
+      },
+      "title": "Cork",
+      "lat": "55.00",
+      "long": "8.22",
+      "address": "Main Campus Waterford",
+      "country": "Ireland",
+      "phone": 1222222,
+      "website": "https://www.loveholidays.ie/sem/santa-monica.html",
+      "visited": "Yes",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "_id": "ad553d70-08eb-4745-b2cf-fe868b50e98f",
+      "categoryid": "4513790c-59e5-44aa-9c72-137b8db6d3e2"
+    },
+    {
+      "user": {
+        "firstName": "Joan",
+        "lastName": "Mangan",
+        "gender": "Male",
+        "country": "Ireland",
+        "street": "Main Campus Waterford",
+        "addressCode": "Blackrock",
+        "DOB": "2025-01-07",
+        "phoneNumber": 4632389,
+        "email": "marisa.amatucci76@gmail.com",
+        "password": "Yoestoy76",
+        "_id": "2a125ccc-2e38-4a5e-838d-ce57851cf86a"
+      },
+      "title": "Paris",
+      "lat": "5.00",
+      "long": "0.22",
+      "address": "Main Campus Waterford",
+      "country": "France",
+      "phone": 1222222,
+      "website": "https://www.loveholidays.ie/sem/santa-monica.html",
+      "visited": "No",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "_id": "e95cb7c4-d8a2-40f2-84d8-aa5c751bcc3c",
+      "categoryid": "4513790c-59e5-44aa-9c72-137b8db6d3e2"
+    },
+    {
+      "user": {
+        "firstName": "Joan",
+        "lastName": "Mangan",
+        "gender": "Male",
+        "country": "Ireland",
+        "street": "Main Campus Waterford",
+        "addressCode": "Blackrock",
+        "DOB": "2025-01-07",
+        "phoneNumber": 4632389,
+        "email": "marisa.amatucci76@gmail.com",
+        "password": "Yoestoy76",
+        "_id": "2a125ccc-2e38-4a5e-838d-ce57851cf86a"
+      },
+      "title": "Cork",
+      "lat": "55.00",
+      "long": "8.22",
+      "address": "Main Campus Waterford",
+      "country": "Ireland",
+      "phone": 1222222,
+      "website": "https://www.loveholidays.ie/sem/santa-monica.html",
+      "visited": "Yes",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "_id": "eb06b2ca-196b-4e5e-abf5-52dbafcd1deb",
+      "categoryid": "9b0f7e92-41bc-4f21-aebc-387f7b85b9cb"
+    },
+    {
+      "user": {
+        "firstName": "Andrea",
+        "lastName": "Nardinocchi",
+        "gender": "Male",
+        "country": "Ireland",
+        "street": "2 Church Gate",
+        "addressCode": "Blackrock",
+        "DOB": "2025-02-10",
+        "phoneNumber": 894632389,
+        "email": "andrea.nardinocchi76@gmail.com",
+        "password": "Yoestoy76",
+        "_id": "a73815df-fab9-43fe-b3d1-8ba73a2b2939"
+      },
+      "title": "Guggheneim",
+      "lat": "12.09",
+      "long": "23.50",
+      "address": "Main Campus Waterford",
+      "country": "United Kingdom",
+      "phone": 1222222,
+      "website": "https://www.loveholidays.ie/sem/santa-monica.html",
+      "visited": "Yes",
+      "description": "ssssssssssssssssssss sssssssssssssssssssssssssssssssss sssssssssssssssssssssssssssssssssssssssssss sssssssssssssssssssssssssssssssssssssssss",
+      "_id": "26e60f77-fb9d-4dcb-a6f1-c2d55dda0b65",
+      "categoryid": "edb57eb7-5e71-4b63-8643-13d2b2a7b08c"
+    }
+  ]
+}
