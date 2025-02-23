@@ -52,8 +52,8 @@ export const testUsers = [
   },
 ];
 
-export const restaurant = {
-  title: "Restaurants",
+export const museums = {
+  title: "Museums",
 };
 
 export const elPradoMuseum = {
@@ -69,7 +69,7 @@ export const elPradoMuseum = {
 };
 
 export const parks = {
-  title: "Museums",
+  title: "Parks",
 };
 
 export const testCategories = [
@@ -86,27 +86,29 @@ export const testCategories = [
 
 export const testPlacemarks = [
   {
-    title: "Le Fragre",
-    lat: "5.00",
-    long: "0.22",
-    address: "Main Campus Waterford",
-    country: "Ireland",
-    phone: 1992222,
-    website: "https://www.loveholidays.ie/sem/santa-monica.html",
-    visited: "No",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    title: "El Parque del Buen Retiro",
+    lat: "40.41541290283203",
+    long: "-3.684231996536255",
+    address: "Plaza de la Independencia, 728001",
+    country: "Spain",
+    phone: "89672435",
+    website: "https://bit.ly/3bGwJUl",
+    visited: "Yes",
+    description:
+      "Covering over 125 hectares and comprising more than 15,000 trees, El Retiro Park–recently named a UNESCO World Heritage Site–is a green oasis in the heart of the city. And more!!!",
   },
 
   {
-    title: "Marsille Museum",
-    lat: "25.00",
-    long: "10.22",
-    address: "Main Campus Marsille",
-    country: "France",
-    phone: 1220022,
-    website: "https://www.loveholidays.ie/sem/santa-monica.html",
-    visited: "Yes",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    title: "Central Park, New York",
+    lat: "40.79431915283203",
+    long: "-73.9548110961914",
+    address: "102nd Street Crossing, New York, NY 10026",
+    country: "United States",
+    phone: "212.310.6600",
+    website: "https://www.centralparknyc.org",
+    visited: "No",
+    description:
+      "When it comes to having the perfect Park day, preparation is key—especially when there are 843 acres to explore. Whether you're a seasoned regular or a first-time visitor, familiarize yourself with the ins and outs....",
   },
   {
     title: "Santa Monica",

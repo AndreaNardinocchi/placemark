@@ -21,10 +21,33 @@ export const categoryMongoStore = {
   },
 
   async addCategory(category) {
+    // Check if the category already exists in the database
+    const existingCategory = await Category.findOne(category);
+
+    if (existingCategory) {
+      // If a category already exists, return an error or a message
+      // throw new Error("Category already exists");
+      // eslint-disable-next-line no-alert
+
+      category = null;
+      return category;
+    }
+
+    // If no duplicate, create a new category
     const newCategory = new Category(category);
+
+    // Save the new category to the database
     const categoryObj = await newCategory.save();
+
+    // Return the saved category
     return this.getCategoryById(categoryObj._id);
   },
+
+  // async addCategory(category) {
+  //   const newCategory = new Category(category);
+  //   const categoryObj = await newCategory.save();
+  //   return this.getCategoryById(categoryObj._id);
+  // },
 
   async getUserCategories(id) {
     const category = await Category.find({ userid: id }).lean();

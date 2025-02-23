@@ -65,6 +65,11 @@ export const categoryController = {
       const loggedInUser = request.auth.credentials;
       const user = await db.userStore.getUserById(loggedInUser._id);
       const category = await db.categoryStore.getCategoryById(request.params.id);
+      console.log(`This is category.title ${category.title}`);
+
+      if (request.payload.title === category.title) {
+        return h.redirect("/");
+      }
       const placemark = await db.placemarkStore.getAllPlacemarks(category);
       // const yesNoIcon = categoryAnalytics.getYesNoIcon(placemark);
       // console.log(`${yesNoIcon} checking yesNoIcon`);
@@ -79,7 +84,7 @@ export const categoryController = {
         long: request.payload.long,
         address: request.payload.address,
         country: request.payload.country,
-        phone: Number(request.payload.phone),
+        phone: request.payload.phone,
         website: request.payload.website,
         visited: request.payload.visited,
         description: request.payload.description,

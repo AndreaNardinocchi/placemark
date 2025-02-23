@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import { db } from "../../src/models/db.js";
-import { maggie, testCategories, testUsers, restaurant, elPradoMuseum, testPlacemarks, parks } from "../fixtures.js";
+import { maggie, testCategories, testUsers, museums, elPradoMuseum, testPlacemarks, parks } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 
 suite("placemark API tests", () => {
@@ -18,10 +18,10 @@ suite("placemark API tests", () => {
   });
 
   test("create a placemark", async () => {
-    const newCategory = await db.categoryStore.addCategory(restaurant);
+    const newCategory = await db.categoryStore.addCategory(museums);
     const newPlacemark = await db.placemarkStore.addPlacemark(newCategory._id, elPradoMuseum);
     assert.isNotNull(newPlacemark._id);
-    assertSubset(restaurant.elPradoMuseum, newCategory.newPlacemark);
+    assertSubset(museums.elPradoMuseum, newCategory.newPlacemark);
   });
 
   test("get multiple placemarks", async () => {
@@ -38,10 +38,10 @@ suite("placemark API tests", () => {
   });
 
   test("get a placemark - success", async () => {
-    const category = await db.categoryStore.addCategory(restaurant);
+    const category = await db.categoryStore.addCategory(museums);
     const placemark = await db.placemarkStore.addPlacemark(category._id, elPradoMuseum);
     const newPlacemark = await db.placemarkStore.getPlacemarkById(placemark._id);
-    assertSubset(category.newPlacemark, restaurant.elPradoMuseum);
+    assertSubset(category.newPlacemark, museums.elPradoMuseum);
   });
 
   test("delete One placemark - success", async () => {

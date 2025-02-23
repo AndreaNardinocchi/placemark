@@ -11,25 +11,25 @@ import JoiDate from "@joi/date";
 const JoiExtended = Joi.extend(JoiDate);
 
 export const UserSpec = {
-  firstName: Joi.string().required(),
-  lastName: Joi.string().required(),
-  gender: Joi.string().required(),
-  country: Joi.string().required(),
-  street: Joi.string().required(),
-  addressCode: Joi.string().required(),
+  firstName: Joi.string().min(3).max(30).required(),
+  lastName: Joi.string().min(3).max(30).required(),
+  gender: Joi.string().min(3).max(10).required(),
+  country: Joi.string().min(3).max(30).required(),
+  street: Joi.string().min(3).max(50).required(),
+  addressCode: Joi.string().min(3).max(15).required(),
   DOB: JoiExtended.date().raw().format().required(), // to comment on the readme.md
-  phoneNumber: Joi.number().required(),
+  phoneNumber: Joi.string().min(8).max(12).required(),
   email: Joi.string().email().required(),
-  password: Joi.string().required(),
+  password: Joi.string().min(6).max(12).required(),
 };
 
 export const updatedUserSpec = {
-  country: Joi.string().required(),
-  street: Joi.string().required(),
-  addressCode: Joi.string().required(),
-  phoneNumber: Joi.number().required(),
+  country: Joi.string().min(3).max(30).required(),
+  street: Joi.string().min(3).max(50).required(),
+  addressCode: Joi.string().min(3).max(15).required(),
+  phoneNumber: Joi.string().min(8).max(12).required(),
   email: Joi.string().email().required(),
-  password: Joi.string().required(),
+  password: Joi.string().min(6).max(12).required(),
 };
 
 export const UserCredentialsSpec = {
@@ -45,24 +45,24 @@ export const CategorySpec = {
 // https://stackoverflow.com/questions/47873369/joi-validation-string-fails-on-and
 export const placemarkSpec = {
   title: Joi.string().min(3).max(30).required(),
-  long: Joi.string().min(3).max(30).required(),
   lat: Joi.string().min(3).max(30).required(),
-  address: Joi.string().min(3).max(30).required(),
+  long: Joi.string().min(3).max(30).required(),
+  address: Joi.string().min(3).max(150).required(),
   country: Joi.string().min(3).max(30).required(),
-  phone: Joi.number().required(),
+  phone: Joi.string().min(8).max(20).required(),
   website: Joi.string().required(),
-  visited: Joi.string().required(),
-  description: Joi.string().min(100).max(230).required(),
+  visited: Joi.string().min(2).max(3).required(),
+  description: Joi.string().min(100).max(250).required(),
 };
 
 export const updatedPlacemarkSpec = {
   title: Joi.string().min(3).max(30).required(),
-  long: Joi.string().min(3).max(30).required(),
   lat: Joi.string().min(3).max(30).required(),
-  address: Joi.string().min(3).max(30).required(),
+  long: Joi.string().min(3).max(30).required(),
+  address: Joi.string().min(3).max(150).required(),
   country: Joi.string().min(3).max(30).required(),
-  phone: Joi.number().required(),
+  phone: Joi.string().min(8).max(20).required(),
   website: Joi.string().required(),
-  visited: Joi.string().required(),
-  description: Joi.string().min(100).max(230),
+  visited: Joi.string().min(2).max(3).required(),
+  description: Joi.string().min(100).max(250),
 };

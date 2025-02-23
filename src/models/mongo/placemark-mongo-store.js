@@ -46,16 +46,23 @@ export const placemarkMongoStore = {
   async updatePlacemark(placemark, updatedPlacemark) {
     const placemarkDoc = await Placemark.findOne({ _id: placemark._id });
     console.log(placemarkDoc);
-    placemarkDoc.title = updatedPlacemark.title;
-    placemarkDoc.long = updatedPlacemark.long;
-    placemarkDoc.lat = updatedPlacemark.lat;
-    placemarkDoc.address = updatedPlacemark.address;
-    placemarkDoc.country = updatedPlacemark.country;
-    placemarkDoc.phone = updatedPlacemark.phone;
-    placemarkDoc.website = updatedPlacemark.website;
-    placemarkDoc.visited = updatedPlacemark.visited;
-    placemarkDoc.description = updatedPlacemark.description;
-    await placemarkDoc.save();
+    if (placemarkDoc) {
+      placemarkDoc.title = updatedPlacemark.title;
+      placemarkDoc.lat = updatedPlacemark.lat;
+      placemarkDoc.long = updatedPlacemark.long;
+      placemarkDoc.address = updatedPlacemark.address;
+      placemarkDoc.country = updatedPlacemark.country;
+      placemarkDoc.phone = updatedPlacemark.phone;
+      placemarkDoc.website = updatedPlacemark.website;
+      placemarkDoc.visited = updatedPlacemark.visited;
+      placemarkDoc.description = updatedPlacemark.description;
+      await placemarkDoc.save();
+      // Or throw an error depending on your needs
+    } else {
+      placemarkNotFound = "Placemark not found";
+      console.log(`Updating placemark ${placemarkDoc}`);
+    }
+    return placemarkDoc;
   },
 
   //   await Placemark.findOne(placemark);

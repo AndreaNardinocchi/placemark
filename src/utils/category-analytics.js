@@ -216,41 +216,18 @@ export const categoryAnalytics = {
         c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         distance = R * c;
         maxDistance.push(distance);
-        // eslint-disable-next-line no-const-assign, prefer-const
-        // let some = `[${distance}, ${title}, ${country}]`;
-        // maxDistance.push(some);
-        // console.log(`The lis ${maxDistance}`);
-
-        // // https://jscurious.com/a-guide-to-array-reduce-method-in-javascript/
-        // largest = maxDistance.reduce(
-        //   (result, current) => {
-        //     if (current > result.max) {
-        //       return { max: current };
-        //     }
-        //     return result;
-        //   },
-        //   { max: maxDistance[0] }
-        // );
-        // // Extrapolating values
-        // const maxValue = largest.max;
-
-        // // Remove the square brackets and split by the commas
-        // const splitResult = maxValue.slice(1, -1).split(", ");
-
-        // // Now you can access the individual values
-        // distance = parseFloat(splitResult[0]); // 8216.436185463102
-        // // eslint-disable-next-line prefer-destructuring
-        // title = splitResult[1]; // Cork
-        // // eslint-disable-next-line prefer-destructuring
-        // country = splitResult[2]; // Ireland
-
-        // console.log(distance, title, country);
-        // // largest = Math.max(...maxDistance.map((item) => item[0]));
-        // console.log(largest);
       }
     }
     // https://www.w3schools.com/howto/howto_js_remove_decimals.asp
-    return `${Math.trunc(Math.max(...maxDistance))} km away`; // km away, ${title}, ${country}`;
+
+    let resultMax = Math.trunc(Math.max(...maxDistance));
+    if (resultMax === -Infinity) {
+      resultMax = 0;
+    } else {
+      resultMax = `${resultMax} km away`;
+    }
+    console.log(resultMax);
+    return resultMax; // `${Math.trunc(Math.max(...maxDistance))} km away`; // km away, ${title}, ${country}`;
   },
 
   // https://www.bing.com/search?q=calculate%20distance%20between%20geolocations%20node.js&qs=n&form=QBRE&sp=-1&lq=0&pq=calculate%20distance%20between%20geolocations%20node.js&sc=5-47&sk=&cvid=D62AA82E014D4729832525BD82DFBE20&ghsh=0&ghacc=0&ghpl=&ntref=1
@@ -287,44 +264,19 @@ export const categoryAnalytics = {
         c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         distance = R * c;
         minDistance.push(distance);
-        // eslint-disable-next-line no-const-assign, prefer-const
-        // let someList = `[${distance}, ${title}, ${country}]`;
-        // minDistance.push(someList);
-
-        // https://jscurious.com/a-guide-to-array-reduce-method-in-javascript/
-        // smallest = minDistance.reduce(
-        //   (result, current) => {
-        //     if (current < result.min) {
-        //       return { min: current };
-        //     }
-        //     return result;
-        //   },
-        //   { min: minDistance[0] }
-        // );
-
-        // // Extrapolating values
-        // const minValue = smallest.min;
-
-        // // Remove the square brackets and split by the commas
-        // const splitResult = minValue.slice(1, -1).split(", ");
-
-        // // Now you can access the individual values
-        // distance = parseFloat(splitResult[0]); // 8216.436185463102
-        // // eslint-disable-next-line prefer-destructuring
-        // title = splitResult[1]; // Cork
-        // // eslint-disable-next-line prefer-destructuring
-        // country = splitResult[2]; // Ireland
-
-        // console.log(distance, title, country);
-        // // largest = Math.max(...maxDistance.map((item) => item[0]));
-        // console.log(smallest);
       }
     }
-    // console.log(`${Math.trunc(distance)} km away, ${title}, ${country}`);
+
     // https://www.w3schools.com/howto/howto_js_remove_decimals.asp
 
     console.log(minDistance);
-    return `${Math.trunc(Math.min(...minDistance))} km away`;
+    let resultMin = Math.trunc(Math.min(...minDistance));
+    if (resultMin === Infinity) {
+      resultMin = 0;
+    } else {
+      resultMin = `${resultMin} km away`;
+    }
+    return resultMin; // `${Math.trunc(Math.min(...minDistance))} km away`;
     //  return `${Math.trunc(distance)} km away, ${title}, ${country}`;
   },
 
@@ -343,10 +295,10 @@ export const categoryAnalytics = {
         gyn += 1;
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
-          localIcon = "https://i.ibb.co/PZ9rVhpD/ireland-1.png";
+          localIcon = "https://i.ibb.co/ZpbKJrwP/ireland-mini.png";
           local.push(localIcon);
         } else {
-          abroadIcon = "https://i.ibb.co/gFjbN27B/international.png";
+          abroadIcon = "https://i.ibb.co/tygp5m2/international-mini.png";
           abroad.push(abroadIcon);
         }
       }
@@ -372,10 +324,12 @@ export const categoryAnalytics = {
         gyn += 1;
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
-          localIcon = "https://i.ibb.co/PZ9rVhpD/ireland-1.png";
+          // eslint-disable-next-line quotes
+          localIcon = "https://i.ibb.co/ZpbKJrwP/ireland-mini.png";
+
           local.push(localIcon);
         } else {
-          abroadIcon = "https://i.ibb.co/gFjbN27B/international.png";
+          abroadIcon = "https://i.ibb.co/tygp5m2/international-mini.png";
           abroad.push(abroadIcon);
         }
       }
@@ -401,10 +355,10 @@ export const categoryAnalytics = {
         gyn += 1;
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
-          localIcon = "https://i.ibb.co/PZ9rVhpD/ireland-1.png";
+          localIcon = "https://i.ibb.co/ZpbKJrwP/ireland-mini.png";
           local.push(localIcon);
         } else {
-          abroadIcon = "https://i.ibb.co/gFjbN27B/international.png";
+          abroadIcon = "https://i.ibb.co/tygp5m2/international-mini.png";
           abroad.push(abroadIcon);
         }
       }
@@ -430,10 +384,10 @@ export const categoryAnalytics = {
         gyn += 1;
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
-          localIcon = "https://i.ibb.co/PZ9rVhpD/ireland-1.png";
+          localIcon = "https://i.ibb.co/ZpbKJrwP/ireland-mini.png";
           local.push(localIcon);
         } else if (destination !== "Ireland") {
-          abroadIcon = "https://i.ibb.co/gFjbN27B/international.png";
+          abroadIcon = "https://i.ibb.co/tygp5m2/international-mini.png";
           abroad.push(abroadIcon);
         } else {
           abroadIcon = null;
@@ -445,4 +399,21 @@ export const categoryAnalytics = {
       return abroadIcon;
     }
   },
+
+  // // eslint-disable-next-line consistent-return
+  // placemarksOnAccount(category) {
+  //   let showPlacemark = "";
+  //   const showPlacemarks = [];
+  //   if (category.placemarks) {
+  //     // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
+
+  //     // Loop through all placemarks in the category
+  //     for (let i = 0; i < category.placemarks.length; i += 1) {
+  //       showPlacemark = category.placemarks[i].title;
+  //       showPlacemarks.push(showPlacemark);
+  //     }
+  //   }
+  //   console.log(`This is ${showPlacemarksyesCounting}`);
+  //   return showPlacemarks; // Visited: ${yesCounting} Not Visited: ${noCounting} `;
+  // },
 };

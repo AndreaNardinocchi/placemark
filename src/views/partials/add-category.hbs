@@ -1,13 +1,26 @@
 <form action="/dashboard/addcategory" method="POST">
   <div class="field">
-    <label class="label">Category Title</label>
-    <input class="input" name="title" list="title" type="text" placeholder="Select your Category" name="title" />
+    <label class="label">Category Title - ** Only 4 Placemark categories are allowed 👮‍♂️**</label>
+
+    <select
+      class="p-4"
+      name="title"
+      type="text"
+      placeholder="Select your Category"
+      style="font-size:100%; width: 100%; border-radius: 10px;   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.01), 0 6px 20px 0 rgba(0, 0, 0, 0.13); border-color: #d9d9d9 "
+    >
+      <option value="Restaurants">Restaurants</option>
+      <option value="Museums">Museums</option>
+      <option value="Parks">Parks</option>
+      <option value="Beaches">Beaches</option>
+    </select>
+    {{! <input class="input" name="title" list="title" type="text" placeholder="Select your Category" name="title" />
     <datalist id="title">
       <option value="Restaurants">Restaurants</option>
       <option value="Museums">Museums</option>
       <option value="Parks">Parks</option>
       <option value="Beaches">Beaches</option>
-    </datalist>
+    </datalist> }}
   </div>
   <button class="button is-info has-text-white">Add Category</button>
 </form>

@@ -1,153 +1,153 @@
 {
   "users": [
     {
-      "firstName": "Joan",
-      "lastName": "Mangan",
-      "gender": "Male",
-      "country": "Ireland",
-      "street": "Main Campus Waterford",
-      "addressCode": "Blackrock",
-      "DOB": "2025-01-07",
-      "phoneNumber": 4632389,
-      "email": "marisa.amatucci76@gmail.com",
-      "password": "Yoestoy76",
-      "_id": "2a125ccc-2e38-4a5e-838d-ce57851cf86a"
+      "firstName": "Maggie",
+      "lastName": "Simpson",
+      "gender": "Female",
+      "country": "Panama",
+      "street": "Waterford",
+      "addressCode": "T12BNE",
+      "DOB": "1990-01-13",
+      "phoneNumber": 122224444,
+      "email": "maggie@simpson.com",
+      "password": "Yoestoy",
+      "_id": "f1cd1dca-107d-4ba9-bfd6-552d0c58dba9"
     },
     {
       "firstName": "Andrea",
-      "lastName": "Nardinocchi",
+      "lastName": "Amatucci",
       "gender": "Male",
-      "country": "Ireland",
-      "street": "2 Church Gate",
-      "addressCode": "Blackrock",
-      "DOB": "2025-02-10",
+      "country": "United States",
+      "street": "2 Freaking Fucking",
+      "addressCode": "T12YNE",
+      "DOB": "2025-02-04",
       "phoneNumber": 894632389,
       "email": "andrea.nardinocchi76@gmail.com",
       "password": "Yoestoy76",
-      "_id": "a73815df-fab9-43fe-b3d1-8ba73a2b2939"
+      "_id": "0e2dfe60-cbf9-448b-8137-f8227471f724"
     }
   ],
   "categories": [
     {
-      "userid": "2a125ccc-2e38-4a5e-838d-ce57851cf86a",
-      "title": "Restaurants",
-      "_id": "4513790c-59e5-44aa-9c72-137b8db6d3e2"
-    },
-    {
-      "userid": "2a125ccc-2e38-4a5e-838d-ce57851cf86a",
-      "title": "Beaches",
-      "_id": "9b0f7e92-41bc-4f21-aebc-387f7b85b9cb"
-    },
-    {
-      "userid": "a73815df-fab9-43fe-b3d1-8ba73a2b2939",
       "title": "Museums",
-      "_id": "edb57eb7-5e71-4b63-8643-13d2b2a7b08c"
+      "userid": "f1cd1dca-107d-4ba9-bfd6-552d0c58dba9",
+      "_id": "70f336b0-ace9-49b0-933f-970ab4e70249"
+    },
+    {
+      "userid": "0e2dfe60-cbf9-448b-8137-f8227471f724",
+      "title": "Parks",
+      "_id": "6ed35179-ea8d-4ae6-82fc-b61fff9bac34"
+    },
+    {
+      "userid": "0e2dfe60-cbf9-448b-8137-f8227471f724",
+      "title": "Restaurants",
+      "_id": "a4f58374-a043-4caf-852f-309fd6a900b8"
     }
   ],
   "placemarks": [
     {
       "user": {
-        "firstName": "Joan",
-        "lastName": "Mangan",
+        "firstName": "Andrea",
+        "lastName": "Amatucci",
         "gender": "Male",
-        "country": "Ireland",
-        "street": "Main Campus Waterford",
-        "addressCode": "Blackrock",
-        "DOB": "2025-01-07",
-        "phoneNumber": 4632389,
-        "email": "marisa.amatucci76@gmail.com",
+        "country": "United States",
+        "street": "2 Freaking Fucking",
+        "addressCode": "T12YNE",
+        "DOB": "2025-02-04",
+        "phoneNumber": 894632389,
+        "email": "andrea.nardinocchi76@gmail.com",
         "password": "Yoestoy76",
-        "_id": "2a125ccc-2e38-4a5e-838d-ce57851cf86a"
+        "_id": "0e2dfe60-cbf9-448b-8137-f8227471f724"
       },
-      "title": "Cork",
-      "lat": "55.00",
-      "long": "8.22",
-      "address": "Main Campus Waterford",
-      "country": "Ireland",
-      "phone": 1222222,
-      "website": "https://www.loveholidays.ie/sem/santa-monica.html",
+      "title": "El Parque del Buen Retiro",
+      "lat": "40.41541290283203",
+      "long": "-3.684231996536255",
+      "address": "Plaza de la Independencia, 728001",
+      "country": "Spain",
+      "phone": "89672435",
+      "website": "https://bit.ly/3bGwJUl",
       "visited": "Yes",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "_id": "ad553d70-08eb-4745-b2cf-fe868b50e98f",
-      "categoryid": "4513790c-59e5-44aa-9c72-137b8db6d3e2"
-    },
-    {
-      "user": {
-        "firstName": "Joan",
-        "lastName": "Mangan",
-        "gender": "Male",
-        "country": "Ireland",
-        "street": "Main Campus Waterford",
-        "addressCode": "Blackrock",
-        "DOB": "2025-01-07",
-        "phoneNumber": 4632389,
-        "email": "marisa.amatucci76@gmail.com",
-        "password": "Yoestoy76",
-        "_id": "2a125ccc-2e38-4a5e-838d-ce57851cf86a"
-      },
-      "title": "Paris",
-      "lat": "5.00",
-      "long": "0.22",
-      "address": "Main Campus Waterford",
-      "country": "France",
-      "phone": 1222222,
-      "website": "https://www.loveholidays.ie/sem/santa-monica.html",
-      "visited": "No",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "_id": "e95cb7c4-d8a2-40f2-84d8-aa5c751bcc3c",
-      "categoryid": "4513790c-59e5-44aa-9c72-137b8db6d3e2"
-    },
-    {
-      "user": {
-        "firstName": "Joan",
-        "lastName": "Mangan",
-        "gender": "Male",
-        "country": "Ireland",
-        "street": "Main Campus Waterford",
-        "addressCode": "Blackrock",
-        "DOB": "2025-01-07",
-        "phoneNumber": 4632389,
-        "email": "marisa.amatucci76@gmail.com",
-        "password": "Yoestoy76",
-        "_id": "2a125ccc-2e38-4a5e-838d-ce57851cf86a"
-      },
-      "title": "Cork",
-      "lat": "55.00",
-      "long": "8.22",
-      "address": "Main Campus Waterford",
-      "country": "Ireland",
-      "phone": 1222222,
-      "website": "https://www.loveholidays.ie/sem/santa-monica.html",
-      "visited": "Yes",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "_id": "eb06b2ca-196b-4e5e-abf5-52dbafcd1deb",
-      "categoryid": "9b0f7e92-41bc-4f21-aebc-387f7b85b9cb"
+      "description": "Covering over 125 hectares and comprising more than 15,000 trees, El Retiro Park–recently named a UNESCO World Heritage Site–is a green oasis in the heart of the city. And more!!!",
+      "_id": "dcf2f6aa-bcb9-4f10-be5d-5d89c5d082fe",
+      "categoryid": "6ed35179-ea8d-4ae6-82fc-b61fff9bac34"
     },
     {
       "user": {
         "firstName": "Andrea",
-        "lastName": "Nardinocchi",
+        "lastName": "Amatucci",
         "gender": "Male",
-        "country": "Ireland",
-        "street": "2 Church Gate",
-        "addressCode": "Blackrock",
-        "DOB": "2025-02-10",
+        "country": "United States",
+        "street": "2 Freaking Fucking",
+        "addressCode": "T12YNE",
+        "DOB": "2025-02-04",
         "phoneNumber": 894632389,
         "email": "andrea.nardinocchi76@gmail.com",
         "password": "Yoestoy76",
-        "_id": "a73815df-fab9-43fe-b3d1-8ba73a2b2939"
+        "_id": "0e2dfe60-cbf9-448b-8137-f8227471f724"
       },
-      "title": "Guggheneim",
-      "lat": "12.09",
-      "long": "23.50",
-      "address": "Main Campus Waterford",
-      "country": "United Kingdom",
-      "phone": 1222222,
-      "website": "https://www.loveholidays.ie/sem/santa-monica.html",
-      "visited": "Yes",
-      "description": "ssssssssssssssssssss sssssssssssssssssssssssssssssssss sssssssssssssssssssssssssssssssssssssssssss sssssssssssssssssssssssssssssssssssssssss",
-      "_id": "26e60f77-fb9d-4dcb-a6f1-c2d55dda0b65",
-      "categoryid": "edb57eb7-5e71-4b63-8643-13d2b2a7b08c"
+      "title": "Central Park, New York",
+      "lat": "40.79431915283203",
+      "long": "-73.9548110961914",
+      "address": "102nd Street Crossing, New York, NY 10026",
+      "country": "United States",
+      "phone": "212.310.6600",
+      "website": "https://www.centralparknyc.org",
+      "visited": "No",
+      "description": "When it comes to having the perfect Park day, preparation is key—especially when there are 843 acres to explore. Whether you're a seasoned regular or a first-time visitor, familiarize yourself with the ins and outs....",
+      "_id": "58f0f8b4-0648-454e-a95f-4b81f23b0aab",
+      "categoryid": "6ed35179-ea8d-4ae6-82fc-b61fff9bac34"
+    },
+    {
+      "user": {
+        "firstName": "Andrea",
+        "lastName": "Amatucci",
+        "gender": "Male",
+        "country": "United States",
+        "street": "2 Freaking Fucking",
+        "addressCode": "T12YNE",
+        "DOB": "2025-02-04",
+        "phoneNumber": 894632389,
+        "email": "andrea.nardinocchi76@gmail.com",
+        "password": "Yoestoy76",
+        "_id": "0e2dfe60-cbf9-448b-8137-f8227471f724"
+      },
+      "title": "Restaurantsddddddddddd",
+      "lat": "23.79431915283203",
+      "long": "-73.9548110961914",
+      "address": "102nd Street Crossing, New York, NY 10026",
+      "country": "Ireland",
+      "phone": "212.310.6600",
+      "website": "www.centralparknyc.org",
+      "visited": "No",
+      "description": "ddddddddddddddddd ddddddddddddddddddddddddddddddddddddddddd ddddddddddddddddddddddddddddddddddddddddddddddd",
+      "_id": "4fc8b939-e6e6-4a18-a714-41c90caa93fb",
+      "categoryid": "a4f58374-a043-4caf-852f-309fd6a900b8"
+    },
+    {
+      "user": {
+        "firstName": "Andrea",
+        "lastName": "Amatucci",
+        "gender": "Male",
+        "country": "United States",
+        "street": "2 Freaking Fucking",
+        "addressCode": "T12YNE",
+        "DOB": "2025-02-04",
+        "phoneNumber": 894632389,
+        "email": "andrea.nardinocchi76@gmail.com",
+        "password": "Yoestoy76",
+        "_id": "0e2dfe60-cbf9-448b-8137-f8227471f724"
+      },
+      "title": "Restaurantsddddddddddd",
+      "lat": "-73.9548110961914",
+      "long": "67.79431915283203",
+      "address": "102nd Street Crossing, New York, NY 10026",
+      "country": "Australia",
+      "phone": "212.310.6600",
+      "website": "www.centralparknyc.org",
+      "visited": "No",
+      "description": "ssssssssssssssssssssssssssssss ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+      "_id": "cc9c848b-73b8-45b2-b879-cc16107478a8",
+      "categoryid": "a4f58374-a043-4caf-852f-309fd6a900b8"
     }
   ]
 }

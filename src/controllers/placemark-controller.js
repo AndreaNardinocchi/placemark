@@ -47,18 +47,18 @@ export const placemarkController = {
       const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
 
       const updatedTitle = request.payload.title;
-      const updatedLong = request.payload.long;
       const updatedLat = request.payload.lat;
+      const updatedLong = request.payload.long;
       const updatedAddress = request.payload.address;
       const updatedCountry = request.payload.country;
-      const updatedPhone = Number(request.payload.phone);
+      const updatedPhone = request.payload.phone;
       const updatedWebsite = request.payload.website;
       const updatedVisited = request.payload.visited;
       const updatedDescription = request.payload.description;
       const updatedPlacemark = {
         title: updatedTitle,
-        long: updatedLong,
         lat: updatedLat,
+        long: updatedLong,
         address: updatedAddress,
         country: updatedCountry,
         phone: updatedPhone,
@@ -66,24 +66,48 @@ export const placemarkController = {
         visited: updatedVisited,
         description: updatedDescription,
       };
-      request.cookieAuth.set(
-        "placemark",
-        // { id: user._id },
-        { title: updatedTitle },
-        { long: updatedLong },
-        { lat: updatedLat },
-        { address: updatedAddress },
-        { country: updatedCountry },
-        { address: updatedAddress },
-        { website: updatedWebsite },
-        { visited: updatedVisited },
-        { description: updatedDescription }
-      );
+
+      // request.cookieAuth.set(
+      //   "placemark",
+      //   // { id: user._id },
+      //   { title: updatedTitle },
+      //   { lat: updatedLat },
+      //   { long: updatedLong },
+      //   { address: updatedAddress },
+      //   { country: updatedCountry },
+      //   { address: updatedAddress },
+      //   { website: updatedWebsite },
+      //   { visited: updatedVisited },
+      //   { description: updatedDescription }
+      // );
 
       await db.placemarkStore.updatePlacemark(placemark, updatedPlacemark);
+
+      request.cookieAuth.set({
+        placemarkId: placemark._id,
+        title: updatedTitle,
+        lat: updatedLat,
+        long: updatedLong,
+        address: updatedAddress,
+        country: updatedCountry,
+        website: updatedWebsite,
+        visited: updatedVisited,
+        description: updatedDescription,
+        ttl: 1000 * 60 * 60 * 24, // Cookie expires in 1 day
+        isHttpOnly: true, // Make cookie inaccessible to JavaScript
+        isSecure: true,
+      });
+
+      request.cookieAuth.set({
+        ...updatedPlacemark,
+        ttl: 1000 * 60 * 60 * 24, // Cookie expires in 1 day
+        isHttpOnly: true, // Make cookie inaccessible to JavaScript
+        isSecure: true, // Use secure cookies
+      });
+
       // console.log(`Editing Placemark ${placemarkId} from Category ${categoryId}`);
-      console.log(`updating ${updatedVisited}`);
-      console.log(`updating placemark.visited ${placemark.visited}`);
+      // console.log(`updating ${updatedVisited}`);
+      // console.log(`updating placemark.visited ${placemark.visited}`);
       return h.redirect(`/category/${categoryId}`);
     },
   },

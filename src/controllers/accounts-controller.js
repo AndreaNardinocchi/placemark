@@ -97,8 +97,7 @@ export const accountsController = {
       const loggedInUser = request.auth.credentials;
 
       const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
-      const categoryId = request.params.categoryid;
-      console.log(`ID ${categoryId}`);
+
       const lamb0 = somethingAnalytics.getAccountCategories0(categories);
       const lambId0 = somethingAnalytics.getAccountCategoriesId0(categories);
       const lamb1 = somethingAnalytics.getAccountCategories1(categories);
@@ -107,6 +106,14 @@ export const accountsController = {
       const lambId2 = somethingAnalytics.getAccountCategoriesId2(categories);
       const lamb3 = somethingAnalytics.getAccountCategories3(categories);
       const lambId3 = somethingAnalytics.getAccountCategoriesId3(categories);
+      // const categoryId = request.params.categoryid;
+      // console.log(`ID ${categoryId}`);
+      // const category = await db.categoryStore.getCategoryById(categoryId);
+      // const yesCounting = categoryAnalytics.getYesCounting(category);
+      // const categoryId = request.params.categoryid;
+      // console.log(`ID ${categoryId}`);
+      // const category = await db.categoryStore.getCategoryById(categoryId);
+      // const showPlacemarks = categoryAnalytics.placemarksOnAccount(category);
       // console.log(`Account categories ${JSON.stringify(categories)}`);
 
       //  console.log(`Account categories ${lamb}`);
@@ -132,8 +139,10 @@ export const accountsController = {
         lambId2: lambId2,
         lamb3: lamb3,
         lambId3: lambId3,
+        // yesCounting: yesCounting,
         _id: userDetails._id,
-        categoryId: categoryId,
+        // categoryId: categoryId,
+        // showPlacemarks: showPlacemarks,
       };
 
       return h.view("account-view", viewData);

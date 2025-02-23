@@ -4,18 +4,20 @@ Assignment1 Issues:
 Email address should be unique
 Cookie issue/ Updates work once only
 How many times have they logged in?
+Add your coordinates, then add them to formula in somehow.
 
 ====== Category ==================
 
 Sort the image not showing on dashboard-view
-Implement update for json and mem too.
-
+Show a message saying that only 4 categories are allowed.
 
 ====== Placemark =============
 
 if in Ireland show a car icon, if abroad show an airplane icon.
-Visited not updating
-Check address
+
+======= Account ===============
+
+
 
 https://gisgeography.com/poi-gis-data/
 TextArea
@@ -33,3 +35,72 @@ https://tutors.dev/topic/placement-project/topic-02-project
 
 
 mongod -dbpath db
+
+
+Sources
+https://www.freepik.com/
+https://imgbb.com/ 
+shadow
+https://www.w3schools.com/csS/css3_shadows_box.asp
+
+
+
+
+=============== Placemarks samples ======================================
+
+Contemporary Irish Art Gallery
+
+
+
+Location Name:
+Contemporary Irish Art Gallery
+
+Geolocation (lat/long):
+53.34149932861328 / -6.258684158325195
+
+Address:
+Unit 8-9, Royal Hibernian Way, Dawson Street, Dublin 2, D02 HP82, Ireland
+
+Phone number:
+35316612558
+
+Country:
+Ireland
+
+Website:
+https://rhagallery.ie/
+
+Description:
+The RHA is Ireland’s powerhouse of the Arts, steered by an artist-run academy of our time. Our mission is to support artists. We stage free public exhibitions and provide artist-led training in the visual arts.
+
+Visited: No
+
+Map Placeholder:
+
+
+Crawford Art Gallery
+
+
+
+Location Name:
+Crawford Art Gallery
+
+Geolocation (lat/long):
+51.89972686767578 / -8.473248481750488
+
+Address:
+Emmett Place, Cork, T12 TNE6
+
+Phone number:
++353 (0)21 480 5042
+
+Country:
+Ireland
+
+Website:
+https://crawfordartgallery.ie/
+
+Description:
+Crawford Art Gallery is one of Ireland’s National Cultural Institutions, charged with the care of over 3,500 diverse artworks from the National Collection, from 18th century Irish and European painting and sculpture, to contemporary ones.
+
+Visited: Yes
