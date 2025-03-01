@@ -5,21 +5,29 @@
     </h2>
     <section class="columns pt-2">
       <section class="column is-8">
-        <div class="card card-content">
+        <div class="notes">
 
-          <div class="content">
-            Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis
-            parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
+          <div class="content card-content">
+            <p class="subtitle"> {{notes}} </p>
+            {{! Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis
+            parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. }}
           </div>
         </div>
       </section>
+
       <section class="column is-4">
-        <div class="card has-background-black card-image">
+
+        <div class="card has-background-info card-image pl-6 pr-6 pt-5 pb-5">
+
           <figure class="image is-256x256 m-auto">
-            <img src="{{image}}" alt="" border="0" />
+            {{!-- <img src="{{image}}" alt="" border="0" /> --}}
+            <p class="title has-text-centered has-text-white">{{title}}</p>
           </figure>
+
         </div>
+
       </section>
+
     </section>
 
     <a href="/category/{{_id}}" class="button">

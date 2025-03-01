@@ -2,7 +2,7 @@ import { EventEmitter } from "events";
 import { assert } from "chai";
 import { assertSubset } from "../test-utils.js";
 import { placemarkService } from "./placemark-service.js";
-import { museums, testCategories, maggie } from "../fixtures.js";
+import { museums, testCategories, maggie, maggieCredentials } from "../fixtures.js";
 import { db } from "../../src/models/db.js";
 
 EventEmitter.setMaxListeners(25);
@@ -10,16 +10,20 @@ EventEmitter.setMaxListeners(25);
 suite("Category API tests", () => {
   let user = null;
   setup(async () => {
+    placemarkService.clearAuth();
+    user = await placemarkService.createUser(maggie);
+    await placemarkService.authenticate(maggieCredentials);
     await placemarkService.deleteAllCategories();
     await placemarkService.deleteAllUsers();
     user = await placemarkService.createUser(maggie);
+    await placemarkService.authenticate(maggieCredentials);
     // await placemarkService.authenticate(maggieCredentials);
     museums.userid = user._id;
   });
   teardown(async () => {});
 
   test("create a category", async () => {
-    db.init("mongo");
+    // db.init("mongo");
     const categoryNew = await placemarkService.createCategory(museums);
     assert.isNotNull(categoryNew);
     assertSubset(museums, categoryNew);

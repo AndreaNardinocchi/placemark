@@ -47,6 +47,8 @@ export const userJsonStore = {
     console.log(updatedUser);
     // await db.read();
     user._id = updatedUser._id;
+    user.userLat = updatedUser.userLat;
+    user.userLong = updatedUser.userLong;
     user.country = updatedUser.country;
     user.street = updatedUser.street;
     user.addressCode = updatedUser.addressCode;

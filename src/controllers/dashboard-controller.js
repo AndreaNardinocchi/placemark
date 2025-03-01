@@ -6,6 +6,7 @@ import { CategorySpec } from "../models/joi-schemas.js";
 import { dashboardAnalytics } from "../utils/dashboard-analytics.js";
 import { categoryController } from "./category-controller.js";
 import { somethingAnalytics } from "../utils/something-analytics.js";
+import { categoryAnalytics } from "../utils/category-analytics.js";
 
 export const dashboardController = {
   index: {
@@ -22,10 +23,16 @@ export const dashboardController = {
       // The 'sortedStations' object invokes a method contained in the 'weatherstationAnalytics' utility to sort the stations in alhabetical order
       const sortedCategories = somethingAnalytics.getSortedCategories(categories);
 
+      // const bodyCopy = somethingAnalytics.getBodyCopy(categories);
+      // const copy1 = somethingAnalytics.getBodyCopy1(categories);
+
       const viewData = {
         title: "Placemark Dashboard",
         user: loggedInUser,
         categories: sortedCategories,
+        // bodyCopy: bodyCopy,
+        // copy0: copy0,
+        // copy1: copy1,
       };
       return h.view("dashboard-view", viewData);
     },
@@ -44,6 +51,9 @@ export const dashboardController = {
       const newCategory = {
         userid: loggedInUser._id,
         title: request.payload.title,
+        userLat: request.payload.userLat,
+        userLong: request.payload.userLong,
+        notes: request.payload.notes,
       };
       await db.categoryStore.addCategory(newCategory);
       return h.redirect("/dashboard");

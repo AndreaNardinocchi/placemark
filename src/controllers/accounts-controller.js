@@ -1,7 +1,9 @@
 // MVC Model View Controller: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 
+// eslint-disable-next-line import/no-cycle
 import { db } from "../models/db.js";
 import { updatedUserSpec, UserCredentialsSpec, UserSpec } from "../models/joi-schemas.js";
+// import { accountAnalytics } from "../utils/account-analytics.js";
 import { categoryAnalytics } from "../utils/category-analytics.js";
 import { somethingAnalytics } from "../utils/something-analytics.js";
 
@@ -95,35 +97,25 @@ export const accountsController = {
   showAccount: {
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
-
+      // const lat1 = accountAnalytics.getCoordinates(loggedInUser);
       const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
-
-      const lamb0 = somethingAnalytics.getAccountCategories0(categories);
-      const lambId0 = somethingAnalytics.getAccountCategoriesId0(categories);
-      const lamb1 = somethingAnalytics.getAccountCategories1(categories);
-      const lambId1 = somethingAnalytics.getAccountCategoriesId1(categories);
-      const lamb2 = somethingAnalytics.getAccountCategories2(categories);
-      const lambId2 = somethingAnalytics.getAccountCategoriesId2(categories);
-      const lamb3 = somethingAnalytics.getAccountCategories3(categories);
-      const lambId3 = somethingAnalytics.getAccountCategoriesId3(categories);
-      // const categoryId = request.params.categoryid;
-      // console.log(`ID ${categoryId}`);
-      // const category = await db.categoryStore.getCategoryById(categoryId);
-      // const yesCounting = categoryAnalytics.getYesCounting(category);
-      // const categoryId = request.params.categoryid;
-      // console.log(`ID ${categoryId}`);
-      // const category = await db.categoryStore.getCategoryById(categoryId);
-      // const showPlacemarks = categoryAnalytics.placemarksOnAccount(category);
-      // console.log(`Account categories ${JSON.stringify(categories)}`);
-
-      //  console.log(`Account categories ${lamb}`);
+      const accCat0 = somethingAnalytics.getAccountCategories0(categories);
+      const accCatId0 = somethingAnalytics.getAccountCategoriesId0(categories);
+      const accCat1 = somethingAnalytics.getAccountCategories1(categories);
+      const accCatId1 = somethingAnalytics.getAccountCategoriesId1(categories);
+      const accCat2 = somethingAnalytics.getAccountCategories2(categories);
+      const accCatId2 = somethingAnalytics.getAccountCategoriesId2(categories);
+      const accCat3 = somethingAnalytics.getAccountCategories3(categories);
+      const accCatId3 = somethingAnalytics.getAccountCategoriesId3(categories);
       const userDetails = await db.userStore.getUserById(loggedInUser._id);
       const viewData = {
         title: "Your Account details | App",
         user: loggedInUser,
+        //  lat1: userDetails.lat1,
         firstName: userDetails.firstName,
         lastName: userDetails.lastName,
-        gender: userDetails.gender,
+        userLat: userDetails.userLat,
+        userLong: userDetails.userLong,
         country: userDetails.country,
         street: userDetails.street,
         addressCode: userDetails.addressCode,
@@ -131,19 +123,21 @@ export const accountsController = {
         phoneNumber: userDetails.phoneNumber,
         email: userDetails.email,
         password: userDetails.password,
-        lamb0: lamb0,
-        lambId0: lambId0,
-        lamb1: lamb1,
-        lambId1: lambId1,
-        lamb2: lamb2,
-        lambId2: lambId2,
-        lamb3: lamb3,
-        lambId3: lambId3,
+        accCat0: accCat0,
+        accCatId0: accCatId0,
+        accCat1: accCat1,
+        accCatId1: accCatId1,
+        accCat2: accCat2,
+        accCatId2: accCatId2,
+        accCat3: accCat3,
+        accCatId3: accCatId3,
         // yesCounting: yesCounting,
         _id: userDetails._id,
         // categoryId: categoryId,
         // showPlacemarks: showPlacemarks,
       };
+
+      console.log("Max POI Distance:", userDetails.userLat); // You can log the result for debugging
 
       return h.view("account-view", viewData);
     },
@@ -171,6 +165,8 @@ export const accountsController = {
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
       const user = await db.userStore.getUserById(loggedInUser._id);
+      const newUserLat = request.payload.userLat;
+      const newUserLong = request.payload.userLong;
       const newCountry = request.payload.country;
       const newStreet = request.payload.street;
       const newAddressCode = request.payload.addressCode;
@@ -179,6 +175,8 @@ export const accountsController = {
       const newPassword = request.payload.password;
       const updatedUser = {
         user: loggedInUser,
+        userLat: newUserLat,
+        userLong: newUserLong,
         country: newCountry,
         street: newStreet,
         addressCode: newAddressCode,
@@ -188,15 +186,15 @@ export const accountsController = {
         _id: user._id,
       };
       // The below 'updateUser()' function from the 'user-store.js' file will update the user's data
-
       // The cookie 'user' will be created and will contain the user's email
       // console.log(request.cookieAuth);
-
       // h.cookieAuth.set("user", { id: user._id });
       request.cookieAuth.set(
         "user",
         { id: user._id },
         { country: newCountry },
+        { userLat: newUserLat },
+        { userLong: newUserLong },
         { addressCode: newAddressCode },
         { street: newStreet },
         { email: newEmail },
@@ -204,10 +202,8 @@ export const accountsController = {
         { password: newPassword }
       );
       // request.cookieAuth.clear(user);
-
       // request.cookieAuth.set("user", { id: user._id }, user.country, user.addressCode, user.street, user.phoneNumber, user.email, user.password);
       // request.cookieAuth.clear();
-
       await db.userStore.updateUser(user, updatedUser);
       console.log(`updating ${user.email}`);
       return h.redirect("/");

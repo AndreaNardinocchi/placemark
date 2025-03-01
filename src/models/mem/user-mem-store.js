@@ -38,6 +38,8 @@ export const userMemStore = {
   async updateUser(user, updatedUser) {
     console.log(updatedUser);
     user._id = updatedUser._id;
+    user.userLat = updatedUser.userLat;
+    user.userLong = updatedUser.userLong;
     user.country = updatedUser.country;
     user.street = updatedUser.street;
     user.addressCode = updatedUser.addressCode;

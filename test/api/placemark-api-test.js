@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { assertSubset } from "../test-utils.js";
 import { placemarkService } from "./placemark-service.js";
-import { testPlacemarks, museums, testCategories, maggie, elPradoMuseum } from "../fixtures.js";
+import { testPlacemarks, museums, testCategories, maggie, elPradoMuseum, maggieCredentials } from "../fixtures.js";
 import { db } from "../../src/models/db.js";
 
 suite("Placemark API tests API", () => {
@@ -9,12 +9,15 @@ suite("Placemark API tests API", () => {
   let louvre = null;
 
   setup(async () => {
-    db.init("mongo");
-
-    await placemarkService.deleteAllCategories();
-    await placemarkService.deleteAllUsers();
-    await placemarkService.deleteAllPlacemarks();
+    // db.init("mongo");
+    placemarkService.clearAuth();
     user = await placemarkService.createUser(maggie);
+    await placemarkService.authenticate(maggieCredentials);
+    await placemarkService.deleteAllCategories();
+    await placemarkService.deleteAllPlacemarks();
+    await placemarkService.deleteAllUsers();
+    user = await placemarkService.createUser(maggie);
+    await placemarkService.authenticate(maggieCredentials);
     museums.userid = user._id;
     louvre = await placemarkService.createCategory(museums);
   });
@@ -23,6 +26,7 @@ suite("Placemark API tests API", () => {
 
   test("create Placemark", async () => {
     const returnedCategory = await placemarkService.createPlacemark(louvre._id, elPradoMuseum);
+    console.log(returnedCategory);
     // assert.isNotNull(placemarkNew);
     assertSubset(elPradoMuseum, returnedCategory);
   });

@@ -44,6 +44,8 @@ export const userMongoStore = {
     const userDoc = await User.findOne({ _id: user._id });
     console.log(userDoc);
     user._id = updatedUser._id;
+    userDoc.userLat = updatedUser.userLat;
+    userDoc.userLong = updatedUser.userLong;
     userDoc.country = updatedUser.country;
     userDoc.street = updatedUser.street;
     userDoc.addressCode = updatedUser.addressCode;
@@ -61,5 +63,15 @@ export const userMongoStore = {
     // } catch (error) {
     //   console.error("Error updating record:", error);
     // }
+  },
+
+  // Assuming you have a function to fetch a user by their ID
+  async getUserLat(user) {
+    // Fetch user from DB or mock data
+    const userDoc = await db.users.findOne({ _id: user._id });
+    userLat = userDoc.userLat;
+    console.log(`This is ${userLat}`);
+    return userLat;
+    // return user ? user.userLat : null;
   },
 };

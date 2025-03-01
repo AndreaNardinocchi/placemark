@@ -15,6 +15,16 @@
     <div class="field is-horizontal">
       <div class="field-body">
         <div class="field">
+          <label class="label">Your location latitude</label><input class="input" type="text" placeholder="Enter your location latitude" name="userLat">
+        </div>
+        <div class="field">
+          <label class="label">Your location longitude</label><input class="input" type="text" placeholder="Enter your location longitude" name="userLong">
+        </div>
+      </div>
+    </div>
+    {{!-- <div class="field is-horizontal">
+      <div class="field-body">
+        <div class="field">
           <label class="label">Gender</label><input class ="input mr-3" type="text" name="gender" placeholder = "Enter your gender" list="gender" value="{{gender}}">
           <datalist id="gender">
             <option value="Male">Male</option>
@@ -22,7 +32,7 @@
           </datalist>
         </div>
       </div>
-    </div>
+    </div> --}}
     <div class="field is-horizontal">
       <div class="field-body">
         <div class="field">
@@ -46,8 +56,19 @@
     <div class="field is-horizontal">
       <div class="field-body">
         <div class="field">
-          <label class="label">Date of birth</label><input class="input" type="date" placeholder="Enter your date of birth" name="DOB">
+          <label class="label">Date of birth</label><input class="input" type="date" id="date" 
+        min="1930-01-01" max="2012-01-01" placeholder="Enter your date of birth" name="DOB">
         </div>
+        <script>
+        // https://www.geeksforgeeks.org/how-to-set-minimum-and-maximum-date-in-html-date-picker/
+        const datePicker =
+            document.getElementById('date');
+        datePicker.addEventListener('change',
+            function () {
+                const selectedDate = datePicker.value;
+                {{!-- alert('Selected Date: ' + selectedDate); --}}
+            });
+    </script>
         <div class="field">
           <label class="label">Phone number</label><input class="input" type="text" placeholder="Enter your phone number" name="phoneNumber">
         </div>

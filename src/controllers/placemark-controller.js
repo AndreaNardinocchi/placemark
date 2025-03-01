@@ -1,7 +1,7 @@
 /* This controller enables the 'report' rendering and updates on the 'station' page view. */
 
 import { db } from "../models/db.js";
-import { placemarkSpec, updatedPlacemarkSpec } from "../models/joi-schemas.js";
+import { PlacemarkSpec, updatedPlacemarkSpec } from "../models/joi-schemas.js";
 import { dashboardAnalytics } from "../utils/dashboard-analytics.js";
 import { categoryAnalytics } from "../utils/category-analytics.js";
 import { somethingAnalytics } from "../utils/something-analytics.js";
@@ -45,7 +45,6 @@ export const placemarkController = {
       const category = await db.categoryStore.getCategoryById(categoryId);
       const placemarkId = request.params.placemarkid;
       const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
-
       const updatedTitle = request.payload.title;
       const updatedLat = request.payload.lat;
       const updatedLong = request.payload.long;

@@ -5,7 +5,8 @@ const { Schema } = Mongoose;
 const userSchema = new Schema({
   firstName: String,
   lastName: String,
-  gender: String,
+  userLat: String,
+  userLong: String,
   country: String,
   street: String,
   addressCode: String,

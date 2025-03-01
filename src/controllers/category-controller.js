@@ -1,15 +1,21 @@
 import { db } from "../models/db.js";
-import { placemarkSpec, updatedPlacemarkSpec } from "../models/joi-schemas.js";
+import { PlacemarkSpec, updatedPlacemarkSpec } from "../models/joi-schemas.js";
 import { dashboardAnalytics } from "../utils/dashboard-analytics.js";
 import { categoryAnalytics } from "../utils/category-analytics.js";
 import { somethingAnalytics } from "../utils/something-analytics.js";
+import { accountsController } from "./accounts-controller.js";
 
 export const categoryController = {
   index: {
     handler: async function (request, h) {
+      const loggedInUser = request.auth.credentials;
+      // const user = await db.userStore.getUserById(loggedInUser._id);
       // We are retrieving/extracting the placemark
       const category = await db.categoryStore.getCategoryById(request.params.id);
       const placemark = await db.placemarkStore.getAllPlacemarks(category);
+      // const userDetails = await accountsController.showAccount.handler.viewData;
+      // const { userLat } = userDetails;
+      //  console.log("UserLat", userLat);
 
       // await somethingAnalytics.getCategoryData(category);
       // const placemarkId = await db.placemarkStore.getPlacemarkById(request.params.id);
@@ -30,6 +36,8 @@ export const categoryController = {
       const localIcon = categoryAnalytics.getLocalIcon(category);
       const abroadIcon = categoryAnalytics.getAbroadIcon(category);
 
+      // const userLat = somethingAnalytics.getUserLatitudes(user);
+
       // We are showing/passing the category in the view
       const viewData = {
         title: `Placemark ${category.title}`, // ${category}
@@ -47,14 +55,17 @@ export const categoryController = {
         abroadCounting: abroadCounting,
         localIcon: localIcon,
         abroadIcon: abroadIcon,
+        // userLat: userLat,
       };
+
+      // console.log("UserLat", userLat);
       return h.view("category-view", viewData); // category-view.hbs is returned
     },
   },
 
   addPlacemark: {
     validate: {
-      payload: placemarkSpec,
+      payload: PlacemarkSpec,
       options: { abortEarly: false },
       failAction: function (request, h, error) {
         return h.view("category-view", { title: "Add placemark error", errors: error.details }).takeover().code(400);

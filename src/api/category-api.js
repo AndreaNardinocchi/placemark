@@ -1,10 +1,13 @@
 import Boom from "@hapi/boom";
-import { CategorySpec } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
+import { CategorySpec, CategoryArraySpec, CategorySpecPlus, IdSpec } from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const categoryApi = {
   find: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const categories = await db.categoryStore.getAllCategories();
@@ -13,10 +16,16 @@ export const categoryApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    response: { schema: CategoryArraySpec, failAction: validationError },
+    description: "Get all categoryApi",
+    notes: "Returns details of all categoryApi",
   },
 
   findOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     // handler: async function (request, h) {
     async handler(request) {
       try {
@@ -29,10 +38,17 @@ export const categoryApi = {
         return Boom.serverUnavailable("No category with this id");
       }
     },
+    tags: ["api"],
+    description: "Get a specific category",
+    notes: "Returns category details",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: CategorySpecPlus, failAction: validationError },
   },
 
   create: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const category = request.payload;
@@ -45,10 +61,17 @@ export const categoryApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Create a Category",
+    notes: "Returns the newly created category",
+    validate: { payload: CategorySpec, failAction: validationError },
+    response: { schema: CategorySpecPlus, failAction: validationError },
   },
 
   deleteOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const category = await db.categoryStore.getCategoryById(request.params.id);
@@ -61,10 +84,16 @@ export const categoryApi = {
         return Boom.serverUnavailable("No category with this id");
       }
     },
+    tags: ["api"],
+    description: "Delete a Category",
+    notes: "Returns the deleted category",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         await db.categoryStore.deleteAllCategories();
@@ -73,5 +102,8 @@ export const categoryApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete all categoryApi",
+    notes: "All categoryApi removed from Category",
   },
 };

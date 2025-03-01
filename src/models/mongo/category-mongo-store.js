@@ -1,4 +1,3 @@
-import { categoryAnalytics } from "../../utils/category-analytics.js";
 // import { somethingAnalytics } from "../../utils/something-analytics.js";
 import { Category } from "./category.js";
 import { placemarkMongoStore } from "./placemark-mongo-store.js";
@@ -80,7 +79,7 @@ export const categoryMongoStore = {
     // console.log(`Mongo title ${category.title}`);
     // eslint-disable-next-line no-self-assign
     // category.image = newCategory.image;
-    category.placemarkSum = newCategory.placemarkSum;
+    // category.placemarkSum = newCategory.placemarkSum;
 
     // console.log(`Mongo image ${category.image}`);
 

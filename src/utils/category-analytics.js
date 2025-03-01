@@ -1,5 +1,24 @@
+/* eslint-disable import/no-cycle */
+import { db } from "../models/db.js";
+// import { accountsController } from "../controllers/accounts-controller.js";
+import { UserSpec } from "../models/joi-schemas.js";
+import { userMongoStore } from "../models/mongo/user-mongo-store.js";
+
 /* This util js file contains all methods used for the dashboard view */
 export const categoryAnalytics = {
+  //   // eslint-disable-next-line consistent-return
+  //   getUserLat(user) {
+  //     if (user) {
+  //       let lat1 = null;
+  //       for (let i = 0; i < 1; i += 1) {
+  //         if (user.userLat) {
+  //           lat1 = user[i].userLat;
+  //         }
+  //       }
+  //       return lat1;
+  //     }
+  //   },
+
   getImageCode(category) {
     if (category) {
       let imageCode = null;
@@ -184,11 +203,23 @@ export const categoryAnalytics = {
   },
 
   // https://www.bing.com/search?q=calculate%20distance%20between%20geolocations%20node.js&qs=n&form=QBRE&sp=-1&lq=0&pq=calculate%20distance%20between%20geolocations%20node.js&sc=5-47&sk=&cvid=D62AA82E014D4729832525BD82DFBE20&ghsh=0&ghacc=0&ghpl=&ntref=1
+
+  // https://www.bing.com/search?q=calculate%20distance%20between%20geolocations%20node.js&qs=n&form=QBRE&sp=-1&lq=0&pq=calculate%20distance%20between%20geolocations%20node.js&sc=5-47&sk=&cvid=D62AA82E014D4729832525BD82DFBE20&ghsh=0&ghacc=0&ghpl=&ntref=1
   getMaxPOIdistance(category) {
+    // const loggedInUser = request.auth.credentials;
+    const lat1 = category.userLat;
+    const long1 = category.userLong;
+    // console.log("This is the title", lat3);
     const toRadians = (degrees) => degrees * (Math.PI / 180);
-    const R = 6371; // Radius of the Earth in kilometers
-    const lat1 = 51.89;
-    const long1 = -8.48;
+    const R = 6371; // Radius of the Earth in
+    // Ensure coordinates are retrieved first
+    // this.getCoordinatesLat1();
+    // console.log(`This getCoord ${this.getCoordinatesLat1()}`);
+    // this.getUserLat();
+    // console.log(`This getCoord ${this.getUserLat()}`);
+
+    // const lat1 = 51.89;
+    // const long1 = -8.48;
     // eslint-disable-next-line prefer-const
     let long2 = 0;
     // eslint-disable-next-line prefer-const
@@ -234,8 +265,8 @@ export const categoryAnalytics = {
   getMinPOIdistance(category) {
     const toRadians = (degrees) => degrees * (Math.PI / 180);
     const R = 6371; // Radius of the Earth in kilometers
-    const lat1 = 51.89;
-    const long1 = -8.48;
+    const lat1 = category.userLat;
+    const long1 = category.userLong;
     const something = "";
     // eslint-disable-next-line prefer-const
     let long2 = 0;

@@ -36,4 +36,6 @@ export const webRoutes = [
 
   { method: "GET", path: "/lifestyle", config: lifestyleController.index },
   { method: "GET", path: "/news", config: newsController.index },
+
+  { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } },
 ];

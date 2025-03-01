@@ -1,14 +1,20 @@
 export const serviceUrl = "http://localhost:3000";
 
+export const maggieCredentials = {
+  email: "maggie@simpson.com",
+  password: "Yoestoy",
+};
+
 export const maggie = {
   firstName: "Maggie",
   lastName: "Simpson",
-  gender: "Female",
-  country: "Panama",
+  userLat: "51.8985136",
+  userLong: "-8.4726423",
+  country: "Ireland",
   street: "Waterford",
   addressCode: "T12BNE",
   DOB: "1990-01-13",
-  phoneNumber: 122224444,
+  phoneNumber: "122224444",
   email: "maggie@simpson.com",
   password: "Yoestoy",
 };
@@ -17,36 +23,39 @@ export const testUsers = [
   {
     firstName: "Homer",
     lastName: "Simpson",
-    gender: "Male",
-    country: "Puerto Rico",
+    userLat: "39.9527237",
+    userLong: "-75.1635262",
+    country: "United States",
     street: "Campus",
     addressCode: "T12Yne",
     DOB: "1976-02-13",
-    phoneNumber: 1222222222,
+    phoneNumber: "1222222222",
     email: "homer@simpson.com",
     password: "Yoestoy",
   },
   {
     firstName: "Margie",
     lastName: "Simpson",
-    gender: "Female",
+    userLat: "36.7213028",
+    userLong: "-4.4216366",
     country: "Spain",
-    street: "2 Church Gate",
+    street: "2 La calle Iglesia",
     addressCode: "B12YNOK",
     DOB: "1980-02-13",
-    phoneNumber: 1995627281,
+    phoneNumber: "1995627281",
     email: "margie@simpson.com",
     password: "Yoestoy",
   },
   {
     firstName: "Bart",
     lastName: "Simpson",
-    gender: "Male",
+    userLat: "40.7127281",
+    userLong: "-74.0060152",
     country: "United States",
     street: "3 Wonderful Days",
     addressCode: "LO78UO",
     DOB: "1992-02-13",
-    phoneNumber: 125622222,
+    phoneNumber: "125622222",
     email: "bart@simpson.com",
     password: "Yoestoy",
   },
@@ -54,6 +63,9 @@ export const testUsers = [
 
 export const museums = {
   title: "Museums",
+  userLat: "40.7127281",
+  userLong: "-74.0060152",
+  notes: "This category is used to note down all museums I would like to visit",
 };
 
 export const elPradoMuseum = {
@@ -62,7 +74,7 @@ export const elPradoMuseum = {
   long: "90.22",
   address: "Calle del luchador, 24",
   country: "Spain",
-  phone: 1978882,
+  phone: "197888290",
   website: "https://www.loveholidays.ie/sem/santa-monica.html",
   visited: "Yes",
   description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -70,17 +82,29 @@ export const elPradoMuseum = {
 
 export const parks = {
   title: "Parks",
+  userLat: "10.7127281",
+  userLong: "-34.0060152",
+  notes: "This category is used to note down all parks I would like to visit",
 };
 
 export const testCategories = [
   {
     title: "Restaurants",
+    userLat: "10.7127281",
+    userLong: "-24.0060152",
+    notes: "This category is used to note down all restaurants I would like to try out",
   },
   {
     title: "Museums",
+    userLat: "-10.7127281",
+    userLong: "74.0060152",
+    notes: "This category is used to note down all museums I would like to visit",
   },
   {
     title: "Beaches",
+    userLat: "-3.7127281",
+    userLong: "14.0060152",
+    notes: "This category is used to note down all beaches I would like to go to",
   },
 ];
 
@@ -97,7 +121,6 @@ export const testPlacemarks = [
     description:
       "Covering over 125 hectares and comprising more than 15,000 trees, El Retiro Park–recently named a UNESCO World Heritage Site–is a green oasis in the heart of the city. And more!!!",
   },
-
   {
     title: "Central Park, New York",
     lat: "40.79431915283203",
@@ -116,7 +139,7 @@ export const testPlacemarks = [
     long: "-10.22",
     address: "Main Campus Marsille",
     country: "United States",
-    phone: 1256789,
+    phone: "1256789569",
     website: "https://www.loveholidays.ie/sem/santa-monica.html",
     visited: "No",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",

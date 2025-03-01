@@ -1,4 +1,14 @@
-<form action="/dashboard/addcategory" method="POST">
+<section class="content mt-6 mb-6 ">
+  <article>
+    <p class = "subtitle has-text-weight-bold">About your geocoordinates</p>
+    <p>Ensure that your location geocoordinates are correct. Your location is the place where you currently are, and from which you are using the PlaceMark app. Vivamus lacinia odio vitae vestibulum vestibulum.
+      </p>
+  </article>
+</section>
+
+
+<form action="/dashboard/addcategory" method="POST" class="box">
+  <div class="field is-horizontal"></div>
   <div class="field">
     <label class="label">Category Title - ** Only 4 Placemark categories are allowed 👮‍♂️**</label>
 
@@ -14,6 +24,15 @@
       <option value="Parks">Parks</option>
       <option value="Beaches">Beaches</option>
     </select>
+    <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <label class="label">Notes</label><textarea class="textarea" type="text" placeholder="Enter a description" name="notes"></textarea>
+        </div>
+      </div>
+    </div>
+  </div> 
     {{! <input class="input" name="title" list="title" type="text" placeholder="Select your Category" name="title" />
     <datalist id="title">
       <option value="Restaurants">Restaurants</option>
@@ -22,5 +41,26 @@
       <option value="Beaches">Beaches</option>
     </datalist> }}
   </div>
-  <button class="button is-info has-text-white">Add Category</button>
+  <div class="field-body">
+    <div class="field">
+      <label class="label">Your location latitude</label><input class="input" type="text" placeholder="Enter your location latitude" name="userLat" />
+    </div>
+    <div class="field">
+      <label class="label">Your location longitude</label><input class="input" type="text" placeholder="Enter your location longitude" name="userLong" />
+    </div>
+  </div>
+ <div class = "columns">
+    <div class = "column is-3">
+  <button class="button is-info has-text-white mt-3">Add Category</button>
+   </div>
+  <div class = "column is-9 mt-5 pr-4">
+  <p class="has-text-right is-size-7">
+    *Find your exact location coordinates on
+    <a href="https://www.gps-coordinates.net/" target="_blank" class="has-text-grey">https://www.gps-coordinates.net/ </a>
+    <span class="ml-1 icon is-small">
+      <i class="fas fa-solid fa-folder-open"></i>
+    </span>
+  </span>
+  </div>
+  </div>
 </form>
