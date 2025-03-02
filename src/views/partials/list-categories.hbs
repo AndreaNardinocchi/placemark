@@ -6,36 +6,48 @@
     <section class="columns pt-2">
       <section class="column is-8">
         <div class="notes">
-
           <div class="content card-content">
-            <p class="subtitle"> {{notes}} </p>
-            {{! Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis
-            parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. }}
+            <p class="subtitle"> {{../bodyCopy}} {{notes}} </p>
           </div>
         </div>
       </section>
-
       <section class="column is-4">
-
-        <div class="card has-background-info card-image pl-6 pr-6 pt-5 pb-5">
-
+        <div class="card has-background-grey card-image pl-6 pr-6 pt-5 pb-5">
           <figure class="image is-256x256 m-auto">
             {{!-- <img src="{{image}}" alt="" border="0" /> --}}
-            <p class="title has-text-centered has-text-white">{{title}}</p>
+            <p class="subtitle has-text-centered has-text-white is-size-5 ">You location coordinates </p>
+            <div class="columns">
+              <div class="column is-2">
+                <p class="has-text-white is-size-6">lat
+                </p>
+              </div>
+              <div class="column is-10">
+                <p class="title has-text-centered has-text-white is-size-4 ">
+                  {{userLat}}
+                  
+              </div>
+            </div>
+             <div class="columns">
+              <div class="column is-2">
+                <p class="has-text-white is-size-6">long
+                </p>
+              </div>
+              <div class="column is-10">
+                <p class="title has-text-centered has-text-white is-size-4 ">
+                  {{userLong}}
+                  
+              </div>
+            </div>
+
           </figure>
-
         </div>
-
       </section>
-
     </section>
-
     <a href="/category/{{_id}}" class="button">
       <span class="icon is-small">
         <i class="fas fa-solid fa-folder-open"></i>
       </span>
     </a>
-    <!-- /dashboard/deletecategory/{id} in web-routes.js -->
     <a href="/dashboard/deletecategory/{{_id}}" class="button">
       <span class="icon is-small">
         <i class="fas fa-solid fa-trash"></i>

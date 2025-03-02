@@ -1,234 +1,58 @@
-<table class="table is-fullwidth">
-  <thead>
-    <tr>
-      <th>placemark</th>
-      <th>Artist</th>
-      <th>Duration</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Each placemark will be shown here -->
- 
-
-
-    {{#each category.placemarks}}
-
-     <div class="card has-text-dark-grey">
+<!-- Each placemark will be shown here -->
+{{#each category.placemarks}}
+<div class="card has-text-dark-grey">
   <header class="card-header has-text-centered">
-  
-   
-
-
     <p class="card-header-title">{{title}}<span class="has-text-right"></p>
- 
-  <p class="has-text-right mr-3 mt-2"><i class="{{../yesNoIcon}}"></i> <i class="{{../travelIcon}}"></i></p>
-    
-    
+    <p class="has-text-right  mt-4"><i class="fas fa-solid fa-plane"></i></p>
     <button class="card-header-icon" aria-label="more options">
-      <span class="icon">
-        <i class="fas fa-angle-down" aria-hidden="true"></i>
-      </span>
+    <span class="icon">
+    <i class="fas fa-angle-down" aria-hidden="true"></i>  {{!-- <i class="{{../yesNoIcon}}"></i> 
+    </span> --}}
     </button>
   </header>
-
-<div class="card-content">
+  <div class="card-content">
     <div class="content">
-  <div class="columns">
-    <div class = "column is-3 ">
-      <p><span class="has-text-weight-bold">Location Name:</span><br>{{title}} </p>
-      <p><span class="has-text-weight-bold">Geolocation (lat/long):</span><br> {{lat}} / {{long}}  </p>
-      <p><span class="has-text-weight-bold">Address:</span><br> {{address}} </p>
-      <p><span class="has-text-weight-bold">Phone number:</span><br> {{phone}} </p>
-      
-    </div>
-    <div class = "column is-5 pr-5 pb-4 ">
-      <p><span class="has-text-weight-bold">Country:</span><br> {{country}} </p>
-      <p><span class="has-text-weight-bold">Website:</span><br><span style = "word-wrap: break-word;">  <a href="{{website}}" target="_blank" class="has-text-grey">{{website}}</a>  </span> </p>
-      <p><span class="has-text-weight-bold">Description:</span><br> {{description}} </p>
-      <p><span class="has-text-weight-bold">Visited:</span> {{visited}} {{yesNoIcon}}
-      </p>
-      
+      <div class="columns">
+        <div class = "column is-3 ">
+          <p><span class="has-text-weight-bold">Location Name:</span><br>{{title}} </p>
+          <p><span class="has-text-weight-bold">Geolocation (lat/long):</span><br> {{lat}} / {{long}}  </p>
+          <p><span class="has-text-weight-bold">Address:</span><br> {{address}} </p>
+          <p><span class="has-text-weight-bold">Phone number:</span><br> {{phone}} </p>
         </div>
-    <div class = "column is-4 ">
-      <p><span class="has-text-weight-bold ">Map Placeholder:</span><br> 
-      <iframe class="mt-2" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d19694.431967599397!2d-8.4167813!3d51.901040949999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48449bee2f866ab1%3A0x4b0e792b7b212ab7!2sDistrict%20Health%20%26%20Leisure!5e0!3m2!1sen!2sie!4v1739290933254!5m2!1sen!2sie" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade
-"  height="200"style="border:0; white; box-shadow:
-  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-  0 12.5px 10px rgba(0, 0, 0, 0.06),
-  0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-  0 100px 80px rgba(0, 0, 0, 0.12);border-radius: 15px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </p>
-      
-
+        <div class = "column is-5 pr-5 pb-4 ">
+          <p><span class="has-text-weight-bold">Country:</span><br> {{country}} </p>
+          <p><span class="has-text-weight-bold">Website:</span><br><span style = "word-wrap: break-word;">  <a href="{{website}}" target="_blank" class="has-text-grey">{{website}}</a>  </span> </p>
+          <p><span class="has-text-weight-bold">Description:</span><br> {{description}} </p>
+          <p><span class="has-text-weight-bold">Visited:</span> {{visited}} {{yesNoIcon}}
+          </p>
+        </div>
+        <div class = "column is-4 ">
+          <p><span class="has-text-weight-bold ">Map Placeholder:</span><br> 
+            <iframe class="mt-2" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d19694.431967599397!2d-8.4167813!3d51.901040949999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48449bee2f866ab1%3A0x4b0e792b7b212ab7!2sDistrict%20Health%20%26%20Leisure!5e0!3m2!1sen!2sie!4v1739290933254!5m2!1sen!2sie" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade
+              "  height="200"style="border:0; white; box-shadow:
+              0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+              0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+              0 12.5px 10px rgba(0, 0, 0, 0.06),
+              0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+              0 100px 80px rgba(0, 0, 0, 0.12);border-radius: 15px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
+          </p>
+    
+        </div>
+      </div>
     </div>
-   
-  </div>
-  </div>
   </div>
   <footer class="card-footer">
     <a href="/category/{{../category._id}}/editplacemark/{{_id}}" class="button card-footer-item">
     <span class="icon is-small">
-          <i class="fas fa-solid fa-edit"></i>
-        </span>
+    <i class="fas fa-solid fa-edit"></i>
+    </span>
     </a>
-
-
-<!-- Update placemark -->
-
-
-  <button class="button is-light m-2 js-modal-trigger" data-target="modal-js-example">
-    Update placemark
-    </button>
-    <div id="modal-js-example" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-content">
-      <div class="box">
-        <p>Update your details</p>
-        <!-- Your content -->
-        <section class = "column is-12  pt-2">
-  <form class="box" action="/category/{{../category._id}}/updateplacemark/{{placemark._id}}" method="POST">   {{!-- {{../placemark._id}} --}}
-    {{!-- /category/{{category._id}}/updateplacemark/{{placemark._id}} --}}
-     <label>Update Placemark Details:</label>
-    <div class="field is-horizontal">
-      <div class="field-body">
-        <div class="field">
-          <label class="label">Title</label><input class="input" type="text" placeholder="Enter Title" name="title" value="{{title}}" />
-        </div>
-        <div class="field">
-          <label class="label">Latitude</label><input class="input" type="text" placeholder="Enter Latitude" name="lat" value="{{lat}}"/>
-        </div>
-        <div class="field">
-          <label class="label">Longitude</label><input class="input" type="text" placeholder="Enter Longitude" name="long" value="{{long}}" />
-        </div>
-        
-      </div>
-    </div>
-    <div class="field is-horizontal">
-      <div class="field-body">
-        <div class="field">
-          <label class="label">Address</label><input class="input" type="text" placeholder="Enter address" name="address" value="{{address}}" />
-        </div>
-        <div class="field">
-          <label class="label">Country</label><input class="input" type="text" placeholder="Enter country" name="country" value="{{country}}"  />
-        </div>
-      </div>
-    </div>
-    <div class="field is-horizontal">
-      <div class="field-body">
-        <div class="field">
-          <label class="label">Phone Number</label><input class="input" type="number" placeholder="Enter phone number" name="phone" value="{{phone}}"  />
-        </div>
-        <div class="field">
-          <label class="label">Website</label><input class="input" type="text" placeholder="Enter website URL" name="website" value="{{website}}" />
-        </div>
-      </div>
-    </div>
-    <div class="field is-horizontal">
-      <div class="field-body">
-        <div class="field">
-          <label class="label">Description</label>
-          <div class="control">
-            <textarea class="textarea" type="text" placeholder="Enter a description" name="description" value="{{description}}" ></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button class="button is-info has-text-white">Update your placemark</button>
-  </form>
-  </section>
-        </div>
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-  
- <script>
-    document.addEventListener('DOMContentLoaded', () => {
-    // Functions to open and close a modal
-    function openModal($el) {
-      $el.classList.add('is-active');
-    }
-    
-    function closeModal($el) {
-      $el.classList.remove('is-active');
-    }
-    
-    function closeAllModals() {
-      (document.querySelectorAll('.modal') || []).forEach(($modal) => {
-        closeModal($modal);
-      });
-    }
-    
-    // Add a click event on buttons to open a specific modal
-    (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
-      const modal = $trigger.dataset.target;
-      const $target = document.getElementById(modal);
-    
-      $trigger.addEventListener('click', () => {
-        openModal($target);
-      });
-    });
-    
-    // Add a click event on various child elements to close the parent modal
-    (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
-      const $target = $close.closest('.modal');
-    
-      $close.addEventListener('click', () => {
-        closeModal($target);
-      });
-    });
-    
-    // Add a keyboard event to close all modals
-    document.addEventListener('keydown', (event) => {
-      if(event.key === "Escape") {
-        closeAllModals();
-      }
-    });
-    });
-  </script> 
-
-
-
-
-
+   
     <a href="/category/{{../category._id}}/deleteplacemark/{{_id}}" class="button card-footer-item">
     <span class="icon is-small">
-          <i class="fas fa-solid fa-trash"></i>
-        </span>
+    <i class="fas fa-solid fa-trash"></i>
+    </span>
     </a>
   </footer>
-  </div>
-
-
-
-
-      <tr>
-        <td>
-          {{title}}
-        </td>
-        <td>
-          {{artist}}
-        </td>
-        <td>
-          {{duration}}
-        </td>
-        <td>
-          <div class="card has-background-black card-image">
-          <figure class="image is-256-256 m-auto">
-            <img src="{{../imageCode}}" alt="Mossel Dish Food On Table" border="0"/>
-          </figure>
-        </div>
-        </td>
-        <td>
-          <!-- Since we are inside the placemark env, we need to go up of one level to its parent category,
-          that is why we use the {{../category._id}}-->
-        <a href="/category/{{../category._id}}/deleteplacemark/{{_id}}" class="button">
-        <span class="icon is-small">
-          <i class="fas fa-solid fa-trash"></i>
-        </span>
-        </a>
-      </td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+</div>
+{{/each}}

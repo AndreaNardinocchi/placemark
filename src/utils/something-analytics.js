@@ -35,61 +35,59 @@ export const somethingAnalytics = {
   //   return userLat; // or return the entire userLats array, depending on your use case
   // },
 
-  // getBodyCopy(categories) {
-  //   let bodyCopy = "";
-  //   // const copy = [];
-  //   categories.forEach((category) => {
-  //     if (category.title === "Restaurants") {
-  //       bodyCopy = category.bodyCopy;
-  //       bodyCopy =
-  //         "A cozy, stylish ambiance with warm lighting and elegant decor. The menu features a variety of expertly crafted dishes made from fresh, locally sourced ingredients. Friendly staff provide impeccable service, ensuring a memorable dining experience. It's the perfect spot for any occasion.";
-  //       // copy.push(bodyCopy);
-  //     } else if (category.title === "Museums") {
-  //       bodyCopy =
-  //         "A captivating journey through history, art, and culture. Its thoughtfully curated exhibits showcase a diverse collection of artifacts, paintings, and sculptures, creating an immersive experience. With interactive displays and knowledgeable staff, it’s a place for discovery, learning, and inspiration.";
-  //     } else if (category.title === "Beaches") {
-  //       bodyCopy =
-  //         "A serene escape, with soft golden sand stretching under the bright sun. Waves gently lap at the shore, creating a soothing rhythm. The air is filled with the salty scent of the sea, while the turquoise water sparkles under the sunlight, inviting relaxation and a peaceful retreat.";
-  //     } else if (category.title === "Parks") {
-  //       bodyCopy =
-  //         "A peaceful retreat, offering lush green lawns, towering trees, and winding pathways. Birds chirp in the trees, while visitors enjoy picnics or leisurely strolls. Playgrounds hum with children's laughter, and serene ponds reflect the sky, creating a perfect blend of nature and relaxation.";
-  //     }
-  //   });
-  //   console.log("This is the body copy", bodyCopy);
-  //   // const copy0 = copy[0];
-  //   // console.log("This is the body copy", copy0);
-  //   return bodyCopy;
-  // },
-  // return null;
+  getBodyCopy(categories) {
+    let bodyCopy = "";
+    // const copy = [];
+    categories.forEach((category) => {
+      if (category.title === "Restaurants") {
+        bodyCopy =
+          "A cozy, stylish ambiance with warm lighting and elegant decor. The menu features a variety of expertly crafted dishes made from fresh, locally sourced ingredients. Friendly staff provide impeccable service, ensuring a memorable dining experience. It's the perfect spot for any occasion.";
+        // copy.push(bodyCopy);
+      } else if (category.title === "Museums") {
+        bodyCopy =
+          "A captivating journey through history, art, and culture. Its thoughtfully curated exhibits showcase a diverse collection of artifacts, paintings, and sculptures, creating an immersive experience. With interactive displays and knowledgeable staff, it’s a place for discovery, learning, and inspiration.";
+      } else if (category.title === "Beaches") {
+        bodyCopy =
+          "A serene escape, with soft golden sand stretching under the bright sun. Waves gently lap at the shore, creating a soothing rhythm. The air is filled with the salty scent of the sea, while the turquoise water sparkles under the sunlight, inviting relaxation and a peaceful retreat.";
+      } else if (category.title === "Parks") {
+        bodyCopy =
+          "A peaceful retreat, offering lush green lawns, towering trees, and winding pathways. Birds chirp in the trees, while visitors enjoy picnics or leisurely strolls. Playgrounds hum with children's laughter, and serene ponds reflect the sky, creating a perfect blend of nature and relaxation.";
+      }
+    });
+    console.log("This is the body copy", bodyCopy);
+    // const copy0 = copy[0];
+    // console.log("This is the body copy", copy0);
+    return bodyCopy;
+  },
 
   // eslint-disable-next-line no-dupe-keys
-  // getBodyCopy1(categories) {
-  //   let bodyCopy = null;
-  //   const copy = [];
-  //   categories.forEach((category) => {
-  //     // for (let i = 0; i < 1; i += 1) {
-  //     // if (category.title === "Restaurants") {
-  //     //   bodyCopy =
-  //     //     "A cozy, stylish ambiance with warm lighting and elegant decor. The menu features a variety of expertly crafted dishes made from fresh, locally sourced ingredients. Friendly staff provide impeccable service, ensuring a memorable dining experience. It's the perfect spot for any occasion.";
-  //     //   copy.push(bodyCopy);
-  //     // } else
-  //     if (category.title === "Museums") {
-  //       bodyCopy =
-  //         "A captivating journey through history, art, and culture. Its thoughtfully curated exhibits showcase a diverse collection of artifacts, paintings, and sculptures, creating an immersive experience. With interactive displays and knowledgeable staff, it’s a place for discovery, learning, and inspiration.";
-  //       copy.push(bodyCopy);
-  //     } else if (category.title === "Beaches") {
-  //       bodyCopy =
-  //         "A serene escape, with soft golden sand stretching under the bright sun. Waves gently lap at the shore, creating a soothing rhythm. The air is filled with the salty scent of the sea, while the turquoise water sparkles under the sunlight, inviting relaxation and a peaceful retreat.";
-  //     } else if (category.title === "Parks") {
-  //       bodyCopy =
-  //         "A peaceful retreat, offering lush green lawns, towering trees, and winding pathways. Birds chirp in the trees, while visitors enjoy picnics or leisurely strolls. Playgrounds hum with children's laughter, and serene ponds reflect the sky, creating a perfect blend of nature and relaxation.";
-  //     }
-  //   });
-  //   // console.log("This is the body copy", bodyCopy);
-  //   const copy1 = copy[1];
-  //   console.log("This is the body copy", copy1);
-  //   return copy1;
-  // },
+  getBodyCopy1(categories) {
+    let bodyCopy = null;
+    const copy = [];
+    categories.forEach((category) => {
+      // for (let i = 0; i < 1; i += 1) {
+      // if (category.title === "Restaurants") {
+      //   bodyCopy =
+      //     "A cozy, stylish ambiance with warm lighting and elegant decor. The menu features a variety of expertly crafted dishes made from fresh, locally sourced ingredients. Friendly staff provide impeccable service, ensuring a memorable dining experience. It's the perfect spot for any occasion.";
+      //   copy.push(bodyCopy);
+      // } else
+      if (category.title === "Museums") {
+        bodyCopy =
+          "A captivating journey through history, art, and culture. Its thoughtfully curated exhibits showcase a diverse collection of artifacts, paintings, and sculptures, creating an immersive experience. With interactive displays and knowledgeable staff, it’s a place for discovery, learning, and inspiration.";
+        copy.push(bodyCopy);
+      } else if (category.title === "Beaches") {
+        bodyCopy =
+          "A serene escape, with soft golden sand stretching under the bright sun. Waves gently lap at the shore, creating a soothing rhythm. The air is filled with the salty scent of the sea, while the turquoise water sparkles under the sunlight, inviting relaxation and a peaceful retreat.";
+      } else if (category.title === "Parks") {
+        bodyCopy =
+          "A peaceful retreat, offering lush green lawns, towering trees, and winding pathways. Birds chirp in the trees, while visitors enjoy picnics or leisurely strolls. Playgrounds hum with children's laughter, and serene ponds reflect the sky, creating a perfect blend of nature and relaxation.";
+      }
+    });
+    // console.log("This is the body copy", bodyCopy);
+    const copy1 = copy[1];
+    console.log("This is the body copy", copy1);
+    return copy1;
+  },
 
   getAccountCategories0(categories) {
     // const data = categories;

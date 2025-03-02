@@ -1,6 +1,5 @@
 /* Model–view–controller (MVC) is a software design pattern commonly used for developing 
 user interfaces that divide the related program logic into three interconnected elements. */
-
 import { db } from "../models/db.js";
 import { CategorySpec } from "../models/joi-schemas.js";
 import { dashboardAnalytics } from "../utils/dashboard-analytics.js";
@@ -18,21 +17,13 @@ export const dashboardController = {
        * const loggedInUser = request.auth.credentials;
        * */
       const loggedInUser = request.auth.credentials;
-      // console.log(request.auth.credentials);
       const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
       // The 'sortedStations' object invokes a method contained in the 'weatherstationAnalytics' utility to sort the stations in alhabetical order
       const sortedCategories = somethingAnalytics.getSortedCategories(categories);
-
-      // const bodyCopy = somethingAnalytics.getBodyCopy(categories);
-      // const copy1 = somethingAnalytics.getBodyCopy1(categories);
-
       const viewData = {
         title: "Placemark Dashboard",
         user: loggedInUser,
         categories: sortedCategories,
-        // bodyCopy: bodyCopy,
-        // copy0: copy0,
-        // copy1: copy1,
       };
       return h.view("dashboard-view", viewData);
     },
@@ -46,15 +37,38 @@ export const dashboardController = {
         return h.view("dashboard-view", { title: "Category error", errors: error.details }).takeover().code(400);
       },
     },
+
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
+      const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
+      // eslint-disable-next-line prefer-destructuring
+      let title = request.payload.title;
+      const bodyCopy = somethingAnalytics.getBodyCopy(categories);
+      console.log("This is the bodyCopy", bodyCopy);
       const newCategory = {
         userid: loggedInUser._id,
-        title: request.payload.title,
-        userLat: request.payload.userLat,
-        userLong: request.payload.userLong,
+        title: title,
+        userLat: Number(request.payload.userLat),
+        userLong: Number(request.payload.userLong),
+        bodyCopy: bodyCopy,
         notes: request.payload.notes,
       };
+      let exTitle = "";
+      // eslint-disable-next-line prefer-const
+      let existingTitle = [];
+      categories.forEach((category) => {
+        exTitle = category.title;
+        console.log("Existing title", exTitle);
+        existingTitle.push(exTitle);
+      });
+      let existingTitleNow = "";
+      for (let i = 0; i < existingTitle.length; i += 1) {
+        existingTitleNow = existingTitle[i];
+        if (existingTitle[i] === title) {
+          title = null;
+          return h.redirect("/dashboard");
+        }
+      }
       await db.categoryStore.addCategory(newCategory);
       return h.redirect("/dashboard");
     },

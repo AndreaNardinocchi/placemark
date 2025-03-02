@@ -6,10 +6,10 @@
         <label class="label">Title</label><input class="input" type="text" placeholder="Enter Title" name="title"  />
       </div>
       <div class="field">
-        <label class="label">Latitude</label><input class="input" type="text" placeholder="Enter Latitude" name="lat"  />
+        <label class="label">Latitude</label><input class="input" type="number" step="any" placeholder="Enter Latitude" name="lat"  />
       </div>
       <div class="field">
-        <label class="label">Longitude</label><input class="input" type="text" placeholder="Enter Longitude" name="long" />
+        <label class="label">Longitude</label><input class="input" type="number" step="any" placeholder="Enter Longitude" name="long" />
       </div>
     </div>
   </div>
@@ -26,36 +26,24 @@
   <div class="field is-horizontal">
     <div class="field-body">
       <div class="field">
-        <label class="label">Phone Number</label><input class="input" type="text" placeholder="Enter phone number" name="phone" />
+        <label class="label">Phone Number</label><input class="input" type="number" placeholder="Enter phone number" name="phone" />
       </div>
       <div class="field">
         <label class="label">Website</label><input class="input" type="text" placeholder="Enter website URL" name="website" />
       </div>
       <div class="field">
-        {{! <label class="label">Visited?</label><input class="input" type="text" placeholder="Enter your answer" name="visited" /> }}
-
         <label class="label">Visited?</label>
-        
-        
         <select
-      class="p-2"
-      name="visited"
-      type="text"
-      placeholder="Select your Category"
-      style="font-size:100%; width: 100%; border-radius: 10px;   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.005), 0 6px 20px 0 rgba(0, 0, 0, 0.13); border-color: #d9d9d9 "
-    >
-    <option value="" disabled selected>Select your answer</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-      
-    </select>
-        
-        
-        {{!-- <input class="input" type="text" placeholder="Select your answer" name="visited" list="visited" />
-        <datalist id="visited">
+          class="p-2"
+          name="visited"
+          type="text"
+          placeholder="Select your Category"
+          style="font-size:100%; width: 100%; border-radius: 10px;   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.005), 0 6px 20px 0 rgba(0, 0, 0, 0.13); border-color: #d9d9d9 "
+          >
+          <option value="" disabled selected>Select your answer</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
-        </datalist> --}}
+        </select>
       </div>
     </div>
   </div>
@@ -70,18 +58,18 @@
   </div>
   <div class = "columns">
     <div class = "column is-3">
-  <button class="button is-info has-text-white">
-    Add your placemark
-  </button>
-  </div>
-  <div class = "column is-9">
-  <p class=" has-text-right">
-    *Find your exact placemarks coordinates on
-    <a href="https://www.gps-coordinates.net/" target="_blank" class="has-text-grey">https://www.gps-coordinates.net/ </a>
-    <span class="ml-1 icon is-small">
-      <i class="fas fa-solid fa-folder-open"></i>
-    </span>
-  </span>
-  </div>
+      <button class="button is-info has-text-white">
+      Add your placemark
+      </button>
+    </div>
+    <div class = "column is-9">
+      <p class=" has-text-right">
+        *Find your exact placemarks coordinates on
+        <a href="https://www.gps-coordinates.net/" target="_blank" class="has-text-grey">https://www.gps-coordinates.net/ </a>
+        <span class="ml-1 icon is-small">
+        <i class="fas fa-solid fa-folder-open"></i>
+        </span>
+        </span>
+    </div>
   </div>
 </form>

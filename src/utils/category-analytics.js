@@ -175,32 +175,32 @@ export const categoryAnalytics = {
     return ` ${yesNoIcon}`;
   },
 
-  // eslint-disable-next-line consistent-return
-  getTravelIcon(category) {
-    // const icon = [];
-    let destination = "";
-    let travelIcon = "";
-    if (category.placemarks) {
-      // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
-          // yesNoIcon = visit.concat("fas fa-solid fa-flag");
-          travelIcon = "fas fa-solid fa-car";
-          // icon.length = [];
-          // icon.push(yesNoIcon);
-        } else if (destination === "France") {
-          travelIcon = "fas fa-solid fa-plane";
-          // icon.length = [];
-          // icon.push(yesNoIcon);
-        } else {
-          travelIcon = null;
-        }
-      }
-    }
-    console.log(`This is ${travelIcon} on yesNoIcon `);
-    return travelIcon;
-  },
+  // // eslint-disable-next-line consistent-return
+  // getTravelIcon(category) {
+  //   // const icon = [];
+  //   let destination = "";
+  //   let travelIcon = "";
+  //   if (category.placemarks) {
+  //     // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
+  //     for (let i = 0; i < category.placemarks.length; i += 1) {
+  //       destination = category.placemarks[i].country;
+  //       if (destination === "Ireland") {
+  //         // yesNoIcon = visit.concat("fas fa-solid fa-flag");
+  //         travelIcon = "fas fa-solid fa-car";
+  //         // icon.length = [];
+  //         // icon.push(yesNoIcon);
+  //       } else if (destination === "France") {
+  //         travelIcon = "fas fa-solid fa-plane";
+  //         // icon.length = [];
+  //         // icon.push(yesNoIcon);
+  //       } else {
+  //         travelIcon = null;
+  //       }
+  //     }
+  //   }
+  //   console.log(`This is ${travelIcon} on yesNoIcon `);
+  //   return travelIcon;
+  // },
 
   // https://www.bing.com/search?q=calculate%20distance%20between%20geolocations%20node.js&qs=n&form=QBRE&sp=-1&lq=0&pq=calculate%20distance%20between%20geolocations%20node.js&sc=5-47&sk=&cvid=D62AA82E014D4729832525BD82DFBE20&ghsh=0&ghacc=0&ghpl=&ntref=1
 
@@ -326,10 +326,10 @@ export const categoryAnalytics = {
         gyn += 1;
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
-          localIcon = "https://i.ibb.co/ZpbKJrwP/ireland-mini.png";
+          localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
           local.push(localIcon);
         } else {
-          abroadIcon = "https://i.ibb.co/tygp5m2/international-mini.png";
+          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
           abroad.push(abroadIcon);
         }
       }
@@ -337,6 +337,24 @@ export const categoryAnalytics = {
       const abroadCounting = abroad.length;
       console.log(`This is local ${localCounting} and ${abroadCounting} `);
       return localCounting;
+    }
+  },
+
+  // eslint-disable-next-line consistent-return
+  getLocalTravelIcon(category) {
+    if (category.placemarks) {
+      let destination = "";
+      const localTravelIcons = [];
+      let localTravelIcon = "";
+      // Loop through all placemarks in the category
+      for (let i = 0; i < category.placemarks.length; i += 1) {
+        destination = category.placemarks[i].country;
+        if (destination === "Ireland") {
+          localTravelIcon = "fas fa-solid fa-car";
+          localTravelIcons.push(localTravelIcon);
+        }
+      }
+      return localTravelIcon;
     }
   },
 
@@ -356,11 +374,11 @@ export const categoryAnalytics = {
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
           // eslint-disable-next-line quotes
-          localIcon = "https://i.ibb.co/ZpbKJrwP/ireland-mini.png";
+          localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
 
           local.push(localIcon);
         } else {
-          abroadIcon = "https://i.ibb.co/tygp5m2/international-mini.png";
+          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
           abroad.push(abroadIcon);
         }
       }
@@ -386,10 +404,10 @@ export const categoryAnalytics = {
         gyn += 1;
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
-          localIcon = "https://i.ibb.co/ZpbKJrwP/ireland-mini.png";
+          localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
           local.push(localIcon);
         } else {
-          abroadIcon = "https://i.ibb.co/tygp5m2/international-mini.png";
+          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
           abroad.push(abroadIcon);
         }
       }
@@ -415,10 +433,10 @@ export const categoryAnalytics = {
         gyn += 1;
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
-          localIcon = "https://i.ibb.co/ZpbKJrwP/ireland-mini.png";
+          localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
           local.push(localIcon);
         } else if (destination !== "Ireland") {
-          abroadIcon = "https://i.ibb.co/tygp5m2/international-mini.png";
+          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
           abroad.push(abroadIcon);
         } else {
           abroadIcon = null;
@@ -431,20 +449,21 @@ export const categoryAnalytics = {
     }
   },
 
-  // // eslint-disable-next-line consistent-return
-  // placemarksOnAccount(category) {
-  //   let showPlacemark = "";
-  //   const showPlacemarks = [];
-  //   if (category.placemarks) {
-  //     // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
-
-  //     // Loop through all placemarks in the category
-  //     for (let i = 0; i < category.placemarks.length; i += 1) {
-  //       showPlacemark = category.placemarks[i].title;
-  //       showPlacemarks.push(showPlacemark);
-  //     }
-  //   }
-  //   console.log(`This is ${showPlacemarksyesCounting}`);
-  //   return showPlacemarks; // Visited: ${yesCounting} Not Visited: ${noCounting} `;
-  // },
+  // eslint-disable-next-line consistent-return
+  getAbroadTravelIcon(category) {
+    let destination = "";
+    if (category.placemarks) {
+      const abroadTravelIcons = [];
+      let abroadTravelIcon = "";
+      // Loop through all placemarks in the category
+      for (let i = 0; i < category.placemarks.length; i += 1) {
+        destination = category.placemarks[i].country;
+        if (destination !== "Ireland") {
+          abroadTravelIcon = "fas fa-solid fa-plane";
+          abroadTravelIcons.push(abroadTravelIcon);
+        }
+      }
+      return abroadTravelIcon;
+    }
+  },
 };

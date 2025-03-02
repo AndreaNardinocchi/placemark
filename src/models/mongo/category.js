@@ -4,8 +4,8 @@ const { Schema } = Mongoose;
 
 const categorySchema = new Schema({
   title: String,
-  userLat: String,
-  userLong: String,
+  userLat: Number,
+  userLong: Number,
   notes: String,
   userid: {
     type: Schema.Types.ObjectId,
@@ -18,8 +18,3 @@ const categorySchema = new Schema({
 });
 
 export const Category = Mongoose.model("Category", categorySchema);
-
-// placemark: {
-//   type: Schema.Types.Array,
-//   ref: "Placemark",
-// },

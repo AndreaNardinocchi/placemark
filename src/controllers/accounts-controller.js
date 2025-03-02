@@ -1,6 +1,8 @@
 // MVC Model View Controller: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 
 // eslint-disable-next-line import/no-cycle
+import dayjs from "dayjs";
+import Joi from "joi";
 import { db } from "../models/db.js";
 import { updatedUserSpec, UserCredentialsSpec, UserSpec } from "../models/joi-schemas.js";
 // import { accountAnalytics } from "../utils/account-analytics.js";
@@ -42,6 +44,12 @@ export const accountsController = {
     },
     handler: async function (request, h) {
       const user = request.payload;
+      // const currentHour = dayjs().format("YYYY-MM-DD HH:mm:ss");
+      // const newUser = {
+      //   user: user,
+      //   currentHour: currentHour,
+      // };
+      console.log("This is the currentHour: ", user);
       await db.userStore.addUser(user);
       return h.redirect("/");
     },
@@ -98,15 +106,16 @@ export const accountsController = {
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
       // const lat1 = accountAnalytics.getCoordinates(loggedInUser);
+      // const createdTimeStamp = Joi.
       const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
-      const accCat0 = somethingAnalytics.getAccountCategories0(categories);
-      const accCatId0 = somethingAnalytics.getAccountCategoriesId0(categories);
-      const accCat1 = somethingAnalytics.getAccountCategories1(categories);
-      const accCatId1 = somethingAnalytics.getAccountCategoriesId1(categories);
-      const accCat2 = somethingAnalytics.getAccountCategories2(categories);
-      const accCatId2 = somethingAnalytics.getAccountCategoriesId2(categories);
-      const accCat3 = somethingAnalytics.getAccountCategories3(categories);
-      const accCatId3 = somethingAnalytics.getAccountCategoriesId3(categories);
+      const accCat0 = await somethingAnalytics.getAccountCategories0(categories);
+      const accCatId0 = await somethingAnalytics.getAccountCategoriesId0(categories);
+      const accCat1 = await somethingAnalytics.getAccountCategories1(categories);
+      const accCatId1 = await somethingAnalytics.getAccountCategoriesId1(categories);
+      const accCat2 = await somethingAnalytics.getAccountCategories2(categories);
+      const accCatId2 = await somethingAnalytics.getAccountCategoriesId2(categories);
+      const accCat3 = await somethingAnalytics.getAccountCategories3(categories);
+      const accCatId3 = await somethingAnalytics.getAccountCategoriesId3(categories);
       const userDetails = await db.userStore.getUserById(loggedInUser._id);
       const viewData = {
         title: "Your Account details | App",
@@ -135,6 +144,7 @@ export const accountsController = {
         _id: userDetails._id,
         // categoryId: categoryId,
         // showPlacemarks: showPlacemarks,
+        createdTimeStamp: userDetails.createdTimeStamp,
       };
 
       console.log("Max POI Distance:", userDetails.userLat); // You can log the result for debugging
@@ -165,12 +175,12 @@ export const accountsController = {
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
       const user = await db.userStore.getUserById(loggedInUser._id);
-      const newUserLat = request.payload.userLat;
-      const newUserLong = request.payload.userLong;
+      const newUserLat = Number(request.payload.userLat);
+      const newUserLong = Number(request.payload.userLong);
       const newCountry = request.payload.country;
       const newStreet = request.payload.street;
       const newAddressCode = request.payload.addressCode;
-      const newPhoneNumber = request.payload.phoneNumber;
+      const newPhoneNumber = Number(request.payload.phoneNumber);
       const newEmail = request.payload.email;
       const newPassword = request.payload.password;
       const updatedUser = {

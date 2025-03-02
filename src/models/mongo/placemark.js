@@ -4,11 +4,11 @@ const { Schema } = Mongoose;
 
 const placemarkSchema = new Schema({
   title: String,
-  lat: String,
-  long: String,
+  lat: Number,
+  long: Number,
   country: String,
   address: String,
-  phone: String,
+  phone: Number,
   website: String,
   visited: String,
   description: String,

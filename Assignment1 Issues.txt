@@ -9,7 +9,7 @@ Add your coordinates, then add them to formula in somehow.
 ====== Category ==================
 
 Sort the image not showing on dashboard-view
-Show a message saying that only 4 categories are allowed.
+
 
 ====== Placemark =============
 
@@ -43,6 +43,7 @@ https://imgbb.com/
 shadow
 https://www.w3schools.com/csS/css3_shadows_box.asp
 https://emojicopy.com/#google_vignette
+https://pixabay.com/
 
 
 

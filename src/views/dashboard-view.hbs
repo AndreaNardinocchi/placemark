@@ -1,6 +1,21 @@
 {{> menu active="dashboard"}}
-
-<section class="section mt-6 pt-6">
+<div class="has-background-grey box mt-6  pt-6 ml-6 pl-5 mr-6 pr-5 mb-2">
+  <div class="card-image">
+    <figure class="image 264x264 m-auto">
+      <img src="https://i.ibb.co/7tNzywHW/side-view-hands-holding-map.jpg" alt="Side view hands holding map" style="border-radius: 15px;"  border="0">
+    </figure>
+    <div class="columns">
+      <div class="column">
+        <article class="card-content pt-4">
+          <p class="card-header title has-text-white"> PlaceMark<br>
+          <p class = "subtitle title has-text-white has-text-weight-bold">Place your mark on your new journey</p>
+          {{!-- {{#each category.placemarks}}{{placemarkSum}}{{/each}} - {{yesNoIcon}}  --}}
+        </article>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="section ">
   {{> list-categories}}
   {{> add-category}}
 </section>

@@ -9,35 +9,22 @@ export const categoryController = {
   index: {
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
-      // const user = await db.userStore.getUserById(loggedInUser._id);
       // We are retrieving/extracting the placemark
       const category = await db.categoryStore.getCategoryById(request.params.id);
       const placemark = await db.placemarkStore.getAllPlacemarks(category);
-      // const userDetails = await accountsController.showAccount.handler.viewData;
-      // const { userLat } = userDetails;
-      //  console.log("UserLat", userLat);
-
-      // await somethingAnalytics.getCategoryData(category);
-      // const placemarkId = await db.placemarkStore.getPlacemarkById(request.params.id);
-      // const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
-      // const yesNoIcon = categoryAnalytics.getYesNoIcon(category);
-      // console.log(`${yesNoIcon} + categoryControllers`);
-
       const imageCode = categoryAnalytics.getImageCode(category);
       const backgroundColor = categoryAnalytics.getBackgroundColor(category);
       const placemarkSum = categoryAnalytics.countPlacemarks(category);
       const yesCounting = categoryAnalytics.getYesCounting(category);
       const noCounting = categoryAnalytics.getNoCounting(category);
-      const travelIcon = categoryAnalytics.getTravelIcon(category);
+      const localTravelIcon = categoryAnalytics.getLocalTravelIcon(category);
+      const abroadTravelIcon = categoryAnalytics.getAbroadTravelIcon(category);
       const maxDistance = categoryAnalytics.getMaxPOIdistance(category);
       const minDistance = categoryAnalytics.getMinPOIdistance(category);
       const localCounting = categoryAnalytics.getLocal(category);
       const abroadCounting = categoryAnalytics.getAbroad(category);
       const localIcon = categoryAnalytics.getLocalIcon(category);
       const abroadIcon = categoryAnalytics.getAbroadIcon(category);
-
-      // const userLat = somethingAnalytics.getUserLatitudes(user);
-
       // We are showing/passing the category in the view
       const viewData = {
         title: `Placemark ${category.title}`, // ${category}
@@ -48,17 +35,15 @@ export const categoryController = {
         yesCounting: yesCounting,
         noCounting: noCounting,
         // yesNoIcon: yesNoIcon,
-        travelIcon: travelIcon,
+        localTravelIcon: localTravelIcon,
+        abroadTravelIcon: abroadTravelIcon,
         maxDistance: maxDistance,
         minDistance: minDistance,
         localCounting: localCounting,
         abroadCounting: abroadCounting,
         localIcon: localIcon,
         abroadIcon: abroadIcon,
-        // userLat: userLat,
       };
-
-      // console.log("UserLat", userLat);
       return h.view("category-view", viewData); // category-view.hbs is returned
     },
   },
@@ -77,13 +62,10 @@ export const categoryController = {
       const user = await db.userStore.getUserById(loggedInUser._id);
       const category = await db.categoryStore.getCategoryById(request.params.id);
       console.log(`This is category.title ${category.title}`);
-
       if (request.payload.title === category.title) {
         return h.redirect("/");
       }
       const placemark = await db.placemarkStore.getAllPlacemarks(category);
-      // const yesNoIcon = categoryAnalytics.getYesNoIcon(placemark);
-      // console.log(`${yesNoIcon} checking yesNoIcon`);
       const newPlacemark = {
         /** The inputted data from the form will get here (payload),
          * and we stick them to a placemark object (title, artist, duration), and
@@ -91,11 +73,11 @@ export const categoryController = {
          * with its specific 'id' */
         user: loggedInUser,
         title: request.payload.title,
-        lat: request.payload.lat,
-        long: request.payload.long,
+        lat: Number(request.payload.lat),
+        long: Number(request.payload.long),
         address: request.payload.address,
         country: request.payload.country,
-        phone: request.payload.phone,
+        phone: Number(request.payload.phone),
         website: request.payload.website,
         visited: request.payload.visited,
         description: request.payload.description,
@@ -122,14 +104,12 @@ export const categoryController = {
       const categoryId = request.params.categoryid; // await db.categoryStore.getCategoryById(request.params.id);
       const placemarkId = request.params.placemarkid;
       // console.log(`Editing Placemark ${placemarkId} from Category ${categoryId}`);
-
       // We are showing/passing the category in the view
       const viewData = {
         title: "Edit Placemark ", // ${category}
         category: await db.categoryStore.getCategoryById(categoryId),
         placemark: await db.placemarkStore.getPlacemarkById(placemarkId),
       };
-
       return h.view("placemark-view", viewData); // category-view.hbs is returned
     },
   },

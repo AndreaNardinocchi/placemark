@@ -7,6 +7,7 @@
 
 import Joi from "joi";
 import JoiDate from "@joi/date";
+import dayjs from "dayjs";
 
 const JoiExtended = Joi.extend(JoiDate);
 
@@ -19,23 +20,21 @@ export const UserCredentialsSpec = Joi.object()
   })
   .label("UserCredentials");
 
-// const minAge = 100;
-// const today = new Date();
-// const minDate = new Date(today.setFullYear(today.getFullYear()) - 15); // 18 years ago
-// console.log(`Min date: ${minDate}`);
-// const maxDate = new Date(today.setFullYear(today.getFullYear()) - 100);
-
 export const UserSpec = UserCredentialsSpec.keys({
   firstName: Joi.string().min(3).max(30).example("Homer").required(),
   lastName: Joi.string().min(3).max(30).example("Simpson").required(),
-  userLat: Joi.string().min(3).max(30).example("40.41541290283203"),
-  userLong: Joi.string().min(3).max(30).example("-3.684231996536255"),
+  userLat: Joi.number().max(100).example(40.41541290283203),
+  userLong: Joi.number().max(100).example(-3.684231996536255),
   // gender: Joi.string().min(3).max(10).example("Male").required(),
   country: Joi.string().min(3).max(30).example("Portugal").required(),
   street: Joi.string().min(3).max(50).example("Rua das Flores, 4").required(),
   addressCode: Joi.string().min(3).max(15).example("T12Y2NE").required(),
   DOB: JoiExtended.date().raw().format().required().messages({ "date.min": "You must be at least 14 years old.", "date.max": "Date of birth cannot be in the future." }), // to comment on the readme.md
-  phoneNumber: Joi.string().min(8).max(12).example("892356189").required(),
+  phoneNumber: Joi.number().example(892356189).required(),
+  createdTimeStamp: JoiExtended.date()
+    .raw()
+    .format()
+    .default(() => new Date()),
 }).label("UserDetails");
 
 export const UserSpecPlus = UserSpec.keys({
@@ -44,12 +43,12 @@ export const UserSpecPlus = UserSpec.keys({
 }).label("UserDetailsPlus");
 
 export const updatedUserSpec = {
-  userLat: Joi.string().min(3).max(30).example("40.41541290283203"),
-  userLong: Joi.string().min(3).max(30).example("-3.684231996536255"),
+  userLat: Joi.number().max(100).example(40.41541290283203),
+  userLong: Joi.number().max(100).example(-3.684231996536255),
   country: Joi.string().min(3).max(30).required(),
   street: Joi.string().min(3).max(50).required(),
   addressCode: Joi.string().min(3).max(15).required(),
-  phoneNumber: Joi.string().min(8).max(12).required(),
+  phoneNumber: Joi.number().example(892356189).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).max(12).required(),
 };
@@ -61,11 +60,11 @@ export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
 export const PlacemarkSpec = Joi.object()
   .keys({
     title: Joi.string().min(3).max(30).example("El Parque del Buen Retiro").required(),
-    lat: Joi.string().min(3).max(30).example("40.41541290283203").required(),
-    long: Joi.string().min(3).max(30).example("-3.684231996536255").required(),
+    lat: Joi.number().max(100).example(40.41541290283203).required(),
+    long: Joi.number().max(100).example(-3.684231996536255).required(),
     address: Joi.string().min(3).max(150).example("Plaza de la Independencia, 728001").required(),
     country: Joi.string().min(3).max(30).example("Spain").required(),
-    phone: Joi.string().min(8).max(20).example("89672435").required(),
+    phone: Joi.number().example(89672435).required(),
     website: Joi.string().example("https://bit.ly/3bGwJUlrequired").required(),
     visited: Joi.string().min(2).max(3).example("Yes").required(),
     description: Joi.string()
@@ -81,11 +80,11 @@ export const PlacemarkSpec = Joi.object()
 
 export const updatedPlacemarkSpec = {
   title: Joi.string().min(3).max(30).required(),
-  lat: Joi.string().min(3).max(30).required(),
-  long: Joi.string().min(3).max(30).required(),
+  lat: Joi.number().max(100).required(),
+  long: Joi.number().max(100).required(),
   address: Joi.string().min(3).max(150).required(),
   country: Joi.string().min(3).max(30).required(),
-  phone: Joi.string().min(8).max(20).required(),
+  phone: Joi.number().required(),
   website: Joi.string().required(),
   visited: Joi.string().min(2).max(3).required(),
   description: Joi.string().min(100).max(250),
@@ -101,8 +100,8 @@ export const PlacemarkArraySpec = Joi.array().items(PlacemarkSpecPlus).label("Pl
 export const CategorySpec = Joi.object()
   .keys({
     title: Joi.string().example("Museums").required(),
-    userLat: Joi.string().min(3).max(30).example("40.41541290283203").required(),
-    userLong: Joi.string().min(3).max(30).example("-3.684231996536255").required(),
+    userLat: Joi.number().max(100).example(40.41541290283203).required(),
+    userLong: Joi.number().max(100).example(3.927241764598).required(),
     userid: IdSpec,
     notes: Joi.string().min(20).max(1000).example("Here I will be adding all restaurants I would like to try out...").required(),
     placemarks: PlacemarkArraySpec,
