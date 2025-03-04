@@ -1,24 +1,5 @@
-/* eslint-disable import/no-cycle */
-import { db } from "../models/db.js";
-// import { accountsController } from "../controllers/accounts-controller.js";
-import { UserSpec } from "../models/joi-schemas.js";
-import { userMongoStore } from "../models/mongo/user-mongo-store.js";
-
 /* This util js file contains all methods used for the dashboard view */
 export const categoryAnalytics = {
-  //   // eslint-disable-next-line consistent-return
-  //   getUserLat(user) {
-  //     if (user) {
-  //       let lat1 = null;
-  //       for (let i = 0; i < 1; i += 1) {
-  //         if (user.userLat) {
-  //           lat1 = user[i].userLat;
-  //         }
-  //       }
-  //       return lat1;
-  //     }
-  //   },
-
   getImageCode(category) {
     if (category) {
       let imageCode = null;
@@ -61,45 +42,23 @@ export const categoryAnalytics = {
   // eslint-disable-next-line consistent-return
   countPlacemarks(category) {
     if (category.placemarks) {
-      // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
       let placemarkSum = 0;
-      let visit = "";
-      let yesNoIcon = "";
-      const yes = [];
-      const no = [];
-      // Loop through all placemarks in the category
       for (let i = 0; i < category.placemarks.length; i += 1) {
         placemarkSum += 1;
-        visit = category.placemarks[i].visited;
-        if (visit === "No") {
-          yesNoIcon = "fas fa-solid fa-flag";
-          no.push(yesNoIcon);
-        } else if (visit === "Yes") {
-          yesNoIcon = "fas fa-solid fa-check";
-          yes.push(yesNoIcon);
-        } else {
-          yesNoIcon = null;
-        }
       }
-      const yesCounting = yes.length;
-      const noCounting = no.length;
-      console.log(`This is ${yesCounting} and ${noCounting} and ${visit} and ${yesNoIcon} placemarkSum ${placemarkSum}`);
-      return `${placemarkSum} `; // Visited: ${yesCounting} Not Visited: ${noCounting} `;
+      return placemarkSum;
     }
   },
 
   // eslint-disable-next-line consistent-return
   getYesCounting(category) {
     if (category.placemarks) {
-      // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
-      let gyn = 0;
       const yes = [];
       const no = [];
       let visit = "";
       let yesNoIcon = "";
       // Loop through all placemarks in the category
       for (let i = 0; i < category.placemarks.length; i += 1) {
-        gyn += 1;
         visit = category.placemarks[i].visited;
         if (visit === "No") {
           yesNoIcon = "fas fa-solid fa-flag";
@@ -112,24 +71,19 @@ export const categoryAnalytics = {
         }
       }
       const yesCounting = yes.length;
-      const noCounting = no.length;
-      console.log(`This is ${gyn} placemarkSum `);
-      return `${yesCounting}`;
+      return yesCounting;
     }
   },
 
   // eslint-disable-next-line consistent-return
   getNoCounting(category) {
     if (category.placemarks) {
-      // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
-      let gyn = 0;
       const yes = [];
       const no = [];
       let visit = "";
       let yesNoIcon = "";
       // Loop through all placemarks in the category
       for (let i = 0; i < category.placemarks.length; i += 1) {
-        gyn += 1;
         visit = category.placemarks[i].visited;
         if (visit === "No") {
           yesNoIcon = "fas fa-solid fa-flag";
@@ -141,85 +95,17 @@ export const categoryAnalytics = {
           yesNoIcon = null;
         }
       }
-      const yesCounting = yes.length;
       const noCounting = no.length;
-      console.log(`This is ${gyn} placemarkSum `);
-      return `${noCounting}`;
+      return noCounting;
     }
   },
-
-  // eslint-disable-next-line consistent-return
-  getYesNoIcon(category) {
-    // const icon = [];
-    let visit = "";
-    let yesNoIcon = "";
-    if (category.placemarks) {
-      // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        visit = category.placemarks[i].visited;
-        if (visit === "Yes") {
-          // yesNoIcon = visit.concat("fas fa-solid fa-flag");
-          yesNoIcon = "fas fa-solid fa-check";
-          // icon.length = [];
-          // icon.push(yesNoIcon);
-        } else if (visit === "No") {
-          yesNoIcon = "fas fa-solid fa-flag";
-          // icon.length = [];
-          // icon.push(yesNoIcon);
-        } else {
-          yesNoIcon = null;
-        }
-      }
-    }
-    console.log(`This is ${yesNoIcon} on ${visit} yesNoIcon `);
-    return ` ${yesNoIcon}`;
-  },
-
-  // // eslint-disable-next-line consistent-return
-  // getTravelIcon(category) {
-  //   // const icon = [];
-  //   let destination = "";
-  //   let travelIcon = "";
-  //   if (category.placemarks) {
-  //     // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
-  //     for (let i = 0; i < category.placemarks.length; i += 1) {
-  //       destination = category.placemarks[i].country;
-  //       if (destination === "Ireland") {
-  //         // yesNoIcon = visit.concat("fas fa-solid fa-flag");
-  //         travelIcon = "fas fa-solid fa-car";
-  //         // icon.length = [];
-  //         // icon.push(yesNoIcon);
-  //       } else if (destination === "France") {
-  //         travelIcon = "fas fa-solid fa-plane";
-  //         // icon.length = [];
-  //         // icon.push(yesNoIcon);
-  //       } else {
-  //         travelIcon = null;
-  //       }
-  //     }
-  //   }
-  //   console.log(`This is ${travelIcon} on yesNoIcon `);
-  //   return travelIcon;
-  // },
-
-  // https://www.bing.com/search?q=calculate%20distance%20between%20geolocations%20node.js&qs=n&form=QBRE&sp=-1&lq=0&pq=calculate%20distance%20between%20geolocations%20node.js&sc=5-47&sk=&cvid=D62AA82E014D4729832525BD82DFBE20&ghsh=0&ghacc=0&ghpl=&ntref=1
 
   // https://www.bing.com/search?q=calculate%20distance%20between%20geolocations%20node.js&qs=n&form=QBRE&sp=-1&lq=0&pq=calculate%20distance%20between%20geolocations%20node.js&sc=5-47&sk=&cvid=D62AA82E014D4729832525BD82DFBE20&ghsh=0&ghacc=0&ghpl=&ntref=1
   getMaxPOIdistance(category) {
-    // const loggedInUser = request.auth.credentials;
     const lat1 = category.userLat;
     const long1 = category.userLong;
-    // console.log("This is the title", lat3);
     const toRadians = (degrees) => degrees * (Math.PI / 180);
     const R = 6371; // Radius of the Earth in
-    // Ensure coordinates are retrieved first
-    // this.getCoordinatesLat1();
-    // console.log(`This getCoord ${this.getCoordinatesLat1()}`);
-    // this.getUserLat();
-    // console.log(`This getCoord ${this.getUserLat()}`);
-
-    // const lat1 = 51.89;
-    // const long1 = -8.48;
     // eslint-disable-next-line prefer-const
     let long2 = 0;
     // eslint-disable-next-line prefer-const
@@ -230,7 +116,6 @@ export const categoryAnalytics = {
     let dLong = 0;
     let title = "";
     let country = "";
-    // let largest = "";
     // eslint-disable-next-line prefer-const, no-new-object
     let maxDistance = [];
     let distance = 0;
@@ -249,8 +134,7 @@ export const categoryAnalytics = {
         maxDistance.push(distance);
       }
     }
-    // https://www.w3schools.com/howto/howto_js_remove_decimals.asp
-
+    // https://www.w3schools.com/howto/howto_js_remove_decimals.as
     let resultMax = Math.trunc(Math.max(...maxDistance));
     if (resultMax === -Infinity) {
       resultMax = 0;
@@ -258,7 +142,7 @@ export const categoryAnalytics = {
       resultMax = `${resultMax} km away`;
     }
     console.log(resultMax);
-    return resultMax; // `${Math.trunc(Math.max(...maxDistance))} km away`; // km away, ${title}, ${country}`;
+    return resultMax;
   },
 
   // https://www.bing.com/search?q=calculate%20distance%20between%20geolocations%20node.js&qs=n&form=QBRE&sp=-1&lq=0&pq=calculate%20distance%20between%20geolocations%20node.js&sc=5-47&sk=&cvid=D62AA82E014D4729832525BD82DFBE20&ghsh=0&ghacc=0&ghpl=&ntref=1
@@ -297,9 +181,7 @@ export const categoryAnalytics = {
         minDistance.push(distance);
       }
     }
-
     // https://www.w3schools.com/howto/howto_js_remove_decimals.asp
-
     console.log(minDistance);
     let resultMin = Math.trunc(Math.min(...minDistance));
     if (resultMin === Infinity) {
@@ -307,35 +189,29 @@ export const categoryAnalytics = {
     } else {
       resultMin = `${resultMin} km away`;
     }
-    return resultMin; // `${Math.trunc(Math.min(...minDistance))} km away`;
-    //  return `${Math.trunc(distance)} km away, ${title}, ${country}`;
+    return resultMin;
   },
 
   // eslint-disable-next-line consistent-return
   getLocal(category) {
     if (category.placemarks) {
-      // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
-      let gyn = 0;
       const abroad = [];
       const local = [];
-      let localIcon = "";
-      let abroadIcon = "";
+      let localCounting = "";
+      let abroadCounting = "";
       let destination = "";
       // Loop through all placemarks in the category
       for (let i = 0; i < category.placemarks.length; i += 1) {
-        gyn += 1;
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
-          localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
-          local.push(localIcon);
+          localCounting = "Yes";
+          local.push(localCounting);
         } else {
-          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
-          abroad.push(abroadIcon);
+          abroadCounting = "Yes";
+          abroad.push(abroadCounting);
         }
       }
-      const localCounting = local.length;
-      const abroadCounting = abroad.length;
-      console.log(`This is local ${localCounting} and ${abroadCounting} `);
+      localCounting = local.length;
       return localCounting;
     }
   },
@@ -344,14 +220,13 @@ export const categoryAnalytics = {
   getLocalTravelIcon(category) {
     if (category.placemarks) {
       let destination = "";
-      const localTravelIcons = [];
+      // const localTravelIcons = [];
       let localTravelIcon = "";
       // Loop through all placemarks in the category
       for (let i = 0; i < category.placemarks.length; i += 1) {
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
           localTravelIcon = "fas fa-solid fa-car";
-          localTravelIcons.push(localTravelIcon);
         }
       }
       return localTravelIcon;
@@ -361,30 +236,19 @@ export const categoryAnalytics = {
   // eslint-disable-next-line consistent-return
   getLocalIcon(category) {
     if (category.placemarks) {
-      // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
-      let gyn = 0;
-      const abroad = [];
-      const local = [];
       let localIcon = "";
       let abroadIcon = "";
       let destination = "";
       // Loop through all placemarks in the category
       for (let i = 0; i < category.placemarks.length; i += 1) {
-        gyn += 1;
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
           // eslint-disable-next-line quotes
           localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
-
-          local.push(localIcon);
         } else {
           abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
-          abroad.push(abroadIcon);
         }
       }
-      const localCounting = local.length;
-      const abroadCounting = abroad.length;
-      console.log(`This is local ${localCounting} and ${abroadCounting} `);
       return localIcon;
     }
   },
@@ -392,28 +256,23 @@ export const categoryAnalytics = {
   // eslint-disable-next-line consistent-return
   getAbroad(category) {
     if (category.placemarks) {
-      // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
-      let gyn = 0;
       const abroad = [];
       const local = [];
-      let localIcon = "";
-      let abroadIcon = "";
+      let localCounting = "";
+      let abroadCounting = "";
       let destination = "";
       // Loop through all placemarks in the category
       for (let i = 0; i < category.placemarks.length; i += 1) {
-        gyn += 1;
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
-          localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
-          local.push(localIcon);
+          localCounting = "Yes";
+          local.push(localCounting);
         } else {
-          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
-          abroad.push(abroadIcon);
+          abroadCounting = "No";
+          abroad.push(abroadCounting);
         }
       }
-      const localCounting = local.length;
-      const abroadCounting = abroad.length;
-      console.log(`This is local ${localCounting} and ${abroadCounting} ${localIcon} `);
+      abroadCounting = abroad.length;
       return abroadCounting;
     }
   },
@@ -421,30 +280,20 @@ export const categoryAnalytics = {
   // eslint-disable-next-line consistent-return
   getAbroadIcon(category) {
     if (category.placemarks) {
-      // const placemarks = await db.placemarkStore.getAllPlacemarks(category);
-      let gyn = 0;
-      const abroad = [];
-      const local = [];
       let localIcon = "";
       let abroadIcon = "";
       let destination = "";
       // Loop through all placemarks in the category
       for (let i = 0; i < category.placemarks.length; i += 1) {
-        gyn += 1;
         destination = category.placemarks[i].country;
         if (destination === "Ireland") {
           localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
-          local.push(localIcon);
         } else if (destination !== "Ireland") {
           abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
-          abroad.push(abroadIcon);
         } else {
           abroadIcon = null;
         }
       }
-      const localCounting = local.length;
-      const abroadCounting = abroad.length;
-      console.log(`This is local ${localCounting} and ${abroadCounting} `);
       return abroadIcon;
     }
   },
@@ -453,14 +302,12 @@ export const categoryAnalytics = {
   getAbroadTravelIcon(category) {
     let destination = "";
     if (category.placemarks) {
-      const abroadTravelIcons = [];
       let abroadTravelIcon = "";
       // Loop through all placemarks in the category
       for (let i = 0; i < category.placemarks.length; i += 1) {
         destination = category.placemarks[i].country;
         if (destination !== "Ireland") {
           abroadTravelIcon = "fas fa-solid fa-plane";
-          abroadTravelIcons.push(abroadTravelIcon);
         }
       }
       return abroadTravelIcon;

@@ -2,7 +2,6 @@ import { assert } from "chai";
 import { assertSubset } from "../test-utils.js";
 import { placemarkService } from "./placemark-service.js";
 import { testPlacemarks, museums, testCategories, maggie, elPradoMuseum, maggieCredentials } from "../fixtures.js";
-import { db } from "../../src/models/db.js";
 
 suite("Placemark API tests API", () => {
   let user = null;
@@ -27,7 +26,6 @@ suite("Placemark API tests API", () => {
   test("create Placemark", async () => {
     const returnedCategory = await placemarkService.createPlacemark(louvre._id, elPradoMuseum);
     console.log(returnedCategory);
-    // assert.isNotNull(placemarkNew);
     assertSubset(elPradoMuseum, returnedCategory);
   });
 

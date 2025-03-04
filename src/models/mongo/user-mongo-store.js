@@ -1,7 +1,4 @@
 import { User } from "./user.js";
-// import { updatedUser } from "../controllers/about-controller.js";
-// eslint-disable-next-line import/order
-import dayjs from "dayjs";
 
 export const userMongoStore = {
   async getAllUsers() {
@@ -67,13 +64,13 @@ export const userMongoStore = {
     // }
   },
 
-  // Assuming you have a function to fetch a user by their ID
-  async getUserLat(user) {
-    // Fetch user from DB or mock data
-    const userDoc = await db.users.findOne({ _id: user._id });
-    userLat = userDoc.userLat;
-    console.log(`This is ${userLat}`);
-    return userLat;
-    // return user ? user.userLat : null;
-  },
+  // // Assuming you have a function to fetch a user by their ID
+  // async getUserLat(user) {
+  //   // Fetch user from DB or mock data
+  //   const userDoc = await db.users.findOne({ _id: user._id });
+  //   userLat = userDoc.userLat;
+  //   console.log(`This is ${userLat}`);
+  //   return userLat;
+  //   // return user ? user.userLat : null;
+  // },
 };

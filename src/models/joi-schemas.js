@@ -7,7 +7,6 @@
 
 import Joi from "joi";
 import JoiDate from "@joi/date";
-import dayjs from "dayjs";
 
 const JoiExtended = Joi.extend(JoiDate);
 
@@ -25,16 +24,12 @@ export const UserSpec = UserCredentialsSpec.keys({
   lastName: Joi.string().min(3).max(30).example("Simpson").required(),
   userLat: Joi.number().max(100).example(40.41541290283203),
   userLong: Joi.number().max(100).example(-3.684231996536255),
-  // gender: Joi.string().min(3).max(10).example("Male").required(),
   country: Joi.string().min(3).max(30).example("Portugal").required(),
   street: Joi.string().min(3).max(50).example("Rua das Flores, 4").required(),
   addressCode: Joi.string().min(3).max(15).example("T12Y2NE").required(),
   DOB: JoiExtended.date().raw().format().required().messages({ "date.min": "You must be at least 14 years old.", "date.max": "Date of birth cannot be in the future." }), // to comment on the readme.md
   phoneNumber: Joi.number().example(892356189).required(),
-  createdTimeStamp: JoiExtended.date()
-    .raw()
-    .format()
-    .default(() => new Date()),
+  createdTimeStamp: JoiExtended.date().default(() => new Date()),
 }).label("UserDetails");
 
 export const UserSpecPlus = UserSpec.keys({

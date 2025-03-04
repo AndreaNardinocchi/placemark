@@ -10,23 +10,21 @@
       <div class="column">
         <article class="card-content pt-2">
           <p class="card-header-title"> - {{category.title}} - </span></p>
-          {{!-- {{#each category.placemarks}}{{placemarkSum}}{{/each}} - {{yesNoIcon}}  --}}
           <p></p>
         </article>
       </div>
     </div>
-    {{!-- {{category.title}} --}}
-  </div>
-  <div class="box has-background-white">
-    <div class="columns">
-      <div class="column is-6">
+  </div> 
+    <div class="box has-background-white">
+    <div class="columns">  
+      <div class="column">
         <section class="">
           <header class="card-header ">
           </header>
           <div class="columns has-text-left">
-            <div class="column is-6">
-              <div class="card-image">
-                <figure class="image is-264x264 m-auto p-2">
+            <div class="column is-6 m-auto">
+              <div class="card-image ">
+                <figure class="image is-264x264  p-2">
                   <img src="https://i.ibb.co/G42MNvjz/placemark.jpg" alt="placemark" border="0">
                 </figure>
               </div>
@@ -51,25 +49,15 @@
             </div>
           </div>
         </section>
-      </div>
-      {{!-- 
-      <div class="column is-3">
-        <article class="card-content pt-2">
-          <p><span class=" has-text-weight-bold is-size-6">Placemarks:</span> {{placemarkSum}}</p>
-          {{!-- {{#each category.placemarks}}{{placemarkSum}}{{/each}} - {{yesNoIcon}}  --}}
-          {{!-- 
-          <p></p>
-        </article>
-      </div>
-      --}} 
-      <div class="column is-6">
+      </div> 
+      <div class="column ">
         <section class="">
           <header class="card-header ">
           </header>
           <div class="columns has-text-left">
-            <div class="column is-6">
+            <div class="column m-auto is-6">
               <div class="card-image">
-                <figure class="image is-264x264 m-auto pt-5">
+                <figure class="image is-264x264 pt-5">
                   <img src="https://i.ibb.co/s98MdtnM/travel.jpg" alt="travel"  border="0">
                 </figure>
               </div>
@@ -96,8 +84,9 @@
         </section>
       </div>
     </div>
-    {{!-- {{category.title}} --}}
   </div>
+  <img id="category-image" src="{{category.img }}" class="mb-5" style="border-radius: 10px; display: none;" />
   {{> list-placemarks}}
   {{> add-placemark}}
+  {{> category-image }}
 </section>

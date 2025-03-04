@@ -2,7 +2,6 @@ import { assert } from "chai";
 import { placemarkService } from "./placemark-service.js";
 import { assertSubset } from "../test-utils.js";
 import { maggie, testUsers, maggieCredentials } from "../fixtures.js";
-import { db } from "../../src/models/db.js";
 
 const users = new Array(testUsers.length);
 

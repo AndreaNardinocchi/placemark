@@ -2,33 +2,25 @@
 
 import { db } from "../models/db.js";
 import { PlacemarkSpec, updatedPlacemarkSpec } from "../models/joi-schemas.js";
-import { dashboardAnalytics } from "../utils/dashboard-analytics.js";
 import { categoryAnalytics } from "../utils/category-analytics.js";
-import { somethingAnalytics } from "../utils/something-analytics.js";
-import { categoryController } from "./category-controller.js";
+import { imageStore } from "../models/image-store.js";
 
 export const placemarkController = {
   index: {
     handler: async function (request, h) {
       // We are retrieving/extracting the placemark
-      const categoryId = request.params.categoryid; // await db.categoryStore.getCategoryById(request.params.id);
+      const categoryId = request.params.categoryid;
       const placemarkId = request.params.placemarkid;
-      // console.log(`Index Editing Placemark ${placemarkId} from Category ${categoryId}`);
       const category = await db.categoryStore.getCategoryById(categoryId);
       const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
-      const yesNoIcon = categoryAnalytics.getYesNoIcon(category);
-      // console.log(placemark.yesNoIcon);
-      console.log(`${yesNoIcon} + yesNoIcon placemarkControllers`);
-
       // We are showing/passing the category in the view
       const viewData = {
-        title: `Edit Placemark ${placemark.title}`, // ${yesNoIcon}, // ${category}
+        title: `Edit Placemark ${placemark.title}`,
         category: category,
         placemark: placemark,
-        yesNoIcon: yesNoIcon,
       };
-
-      return h.view("placemark-view", viewData); // category-view.hbs is returned
+      // category-view.hbs is returned
+      return h.view("placemark-view", viewData);
     },
   },
 
@@ -65,23 +57,7 @@ export const placemarkController = {
         visited: updatedVisited,
         description: updatedDescription,
       };
-
-      // request.cookieAuth.set(
-      //   "placemark",
-      //   // { id: user._id },
-      //   { title: updatedTitle },
-      //   { lat: updatedLat },
-      //   { long: updatedLong },
-      //   { address: updatedAddress },
-      //   { country: updatedCountry },
-      //   { address: updatedAddress },
-      //   { website: updatedWebsite },
-      //   { visited: updatedVisited },
-      //   { description: updatedDescription }
-      // );
-
       await db.placemarkStore.updatePlacemark(placemark, updatedPlacemark);
-
       request.cookieAuth.set({
         placemarkId: placemark._id,
         title: updatedTitle,
@@ -92,22 +68,54 @@ export const placemarkController = {
         website: updatedWebsite,
         visited: updatedVisited,
         description: updatedDescription,
-        ttl: 1000 * 60 * 60 * 24, // Cookie expires in 1 day
-        isHttpOnly: true, // Make cookie inaccessible to JavaScript
-        isSecure: true,
+        // ttl: 1000 * 60 * 60 * 24, // Cookie expires in 1 day
+        // isHttpOnly: true, // Make cookie inaccessible to JavaScript
+        // isSecure: true,
       });
 
-      request.cookieAuth.set({
-        ...updatedPlacemark,
-        ttl: 1000 * 60 * 60 * 24, // Cookie expires in 1 day
-        isHttpOnly: true, // Make cookie inaccessible to JavaScript
-        isSecure: true, // Use secure cookies
-      });
-
-      // console.log(`Editing Placemark ${placemarkId} from Category ${categoryId}`);
-      // console.log(`updating ${updatedVisited}`);
-      // console.log(`updating placemark.visited ${placemark.visited}`);
+      // request.cookieAuth.set({
+      //   ...updatedPlacemark,
+      //   ttl: 1000 * 60 * 60 * 24, // Cookie expires in 1 day
+      //   isHttpOnly: true, // Make cookie inaccessible to JavaScript
+      //   isSecure: true, // Use secure cookies
+      // });
       return h.redirect(`/category/${categoryId}`);
+    },
+  },
+
+  placemark: {
+    handler: async function (request, h) {
+      const viewData = {
+        title: "#instaPlaceMark!",
+      };
+      return h.view("placemark", viewData);
+    },
+  },
+
+  uploadImage: {
+    handler: async function (request, h) {
+      try {
+        const category = await db.categoryStore.getCategoryById(request.params.categoryid);
+        const placemark = await db.placemarkStore.getPlacemarkById(request.params.placemarkid);
+        console.log("Upload image", category);
+        console.log("Upload image", placemark);
+        const file = request.payload.imagefile;
+        if (Object.keys(file).length > 0) {
+          const url = await imageStore.uploadImage(request.payload.imagefile);
+          placemark.img = url;
+          await db.placemarkStore.updatePlacemark(placemark);
+        }
+        return h.redirect(`/category/${category._id}/placemark/${placemark._id}`);
+      } catch (err) {
+        console.log(err);
+        return h.redirect(`/category/${category._id}/placemark/${placemark._id}`);
+      }
+    },
+    payload: {
+      multipart: true,
+      output: "data",
+      maxBytes: 209715200,
+      parse: true,
     },
   },
 };

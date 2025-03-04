@@ -1,7 +1,6 @@
 // import { somethingAnalytics } from "../../utils/something-analytics.js";
 import { Category } from "./category.js";
 import { placemarkMongoStore } from "./placemark-mongo-store.js";
-import { User } from "./user.js";
 
 export const categoryMongoStore = {
   async getAllCategories() {
@@ -21,24 +20,9 @@ export const categoryMongoStore = {
   },
 
   async addCategory(category) {
-    // Check if the category already exists in the database
-    const existingCategory = await Category.findOne(category); // ({ title: category.title });
-
-    // if (existingCategory) {
-    //   // If a category already exists, return an error or a message
-    //   // throw new Error("Category already exists");
-    //   // eslint-disable-next-line no-alert
-
-    //   category = null;
-    //   return category;
-    // }
-
-    // If no duplicate, create a new category
     const newCategory = new Category(category);
-
     // Save the new category to the database
     const categoryObj = await newCategory.save();
-
     // Return the saved category
     return this.getCategoryById(categoryObj._id);
   },
@@ -60,8 +44,10 @@ export const categoryMongoStore = {
     await Category.deleteMany({});
   },
 
-  // async updateCategory(category, newCategory) {
-  //   await Category.findOne({ _id: category._id };
-  //   await Category.updateOne();
-  // },
+  async updateCategory(updatedCategory) {
+    const category = await Category.findOne({ _id: updatedCategory._id });
+    category.title = updatedCategory.title;
+    category.img = updatedCategory.img;
+    await category.save();
+  },
 };

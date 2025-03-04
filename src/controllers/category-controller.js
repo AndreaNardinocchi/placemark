@@ -1,17 +1,15 @@
 import { db } from "../models/db.js";
 import { PlacemarkSpec, updatedPlacemarkSpec } from "../models/joi-schemas.js";
-import { dashboardAnalytics } from "../utils/dashboard-analytics.js";
 import { categoryAnalytics } from "../utils/category-analytics.js";
-import { somethingAnalytics } from "../utils/something-analytics.js";
-import { accountsController } from "./accounts-controller.js";
+import { imageStore } from "../models/image-store.js";
 
 export const categoryController = {
   index: {
     handler: async function (request, h) {
-      const loggedInUser = request.auth.credentials;
+      // const loggedInUser = request.auth.credentials;
       // We are retrieving/extracting the placemark
       const category = await db.categoryStore.getCategoryById(request.params.id);
-      const placemark = await db.placemarkStore.getAllPlacemarks(category);
+      // const placemark = await db.placemarkStore.getAllPlacemarks(category);
       const imageCode = categoryAnalytics.getImageCode(category);
       const backgroundColor = categoryAnalytics.getBackgroundColor(category);
       const placemarkSum = categoryAnalytics.countPlacemarks(category);
@@ -34,7 +32,6 @@ export const categoryController = {
         placemarkSum: placemarkSum,
         yesCounting: yesCounting,
         noCounting: noCounting,
-        // yesNoIcon: yesNoIcon,
         localTravelIcon: localTravelIcon,
         abroadTravelIcon: abroadTravelIcon,
         maxDistance: maxDistance,
@@ -44,7 +41,8 @@ export const categoryController = {
         localIcon: localIcon,
         abroadIcon: abroadIcon,
       };
-      return h.view("category-view", viewData); // category-view.hbs is returned
+      // category-view.hbs is returned
+      return h.view("category-view", viewData);
     },
   },
 
@@ -81,7 +79,6 @@ export const categoryController = {
         website: request.payload.website,
         visited: request.payload.visited,
         description: request.payload.description,
-        // yesNoIcon: yesNoIcon,
       };
       await db.placemarkStore.addPlacemark(category._id, newPlacemark);
       return h.redirect(`/category/${category._id}`);
@@ -92,97 +89,49 @@ export const categoryController = {
     handler: async function (request, h) {
       // We are retrieving/extracting the category
       const category = await db.categoryStore.getCategoryById(request.params.id);
-      // await db.placemarkStore.getplacemarksByCategoryId(category, placemark._id);
       await db.placemarkStore.deletePlacemark(request.params.placemarkid);
       return h.redirect(`/category/${category._id}`);
     },
   },
 
-  placemarkView: {
+  uploadImage: {
     handler: async function (request, h) {
-      // We are retrieving/extracting the placemark
-      const categoryId = request.params.categoryid; // await db.categoryStore.getCategoryById(request.params.id);
-      const placemarkId = request.params.placemarkid;
-      // console.log(`Editing Placemark ${placemarkId} from Category ${categoryId}`);
-      // We are showing/passing the category in the view
-      const viewData = {
-        title: "Edit Placemark ", // ${category}
-        category: await db.categoryStore.getCategoryById(categoryId),
-        placemark: await db.placemarkStore.getPlacemarkById(placemarkId),
-      };
-      return h.view("placemark-view", viewData); // category-view.hbs is returned
+      try {
+        const category = await db.categoryStore.getCategoryById(request.params.id);
+        const file = request.payload.imagefile;
+        if (Object.keys(file).length > 0) {
+          const url = await imageStore.uploadImage(request.payload.imagefile);
+          category.img = url;
+          await db.categoryStore.updateCategory(category);
+        }
+        return h.redirect(`/category/${category._id}`);
+      } catch (err) {
+        console.log(err);
+        return h.redirect(`/category/${category._id}`);
+      }
+    },
+    payload: {
+      multipart: true,
+      output: "data",
+      maxBytes: 209715200,
+      parse: true,
     },
   },
 
-  // updatePlacemark: {
-  //   validate: {
-  //     payload: updatedPlacemarkSpec,
-  //     options: { abortEarly: false },
-  //     failAction: function (request, h, error) {
-  //       return h.view("report-view", { title: "Update placemark details error", errors: error.details }).takeover().code(400);
-  //     },
-  //   },
-  //   handler: async function (request, h) {
-  //     // const loggedInUser = request.auth.credentials;
-  //     // const user = await db.userStore.getUserById(loggedInUser._id);
-  //     // const categoryId = request.params.categoryid; // await db.categoryStore.getCategoryById(request.params.id);
-  //     const categoryId = await db.categoryStore.getCategoryById(request.params.id);
-  //     const placemarkId = await db.placemarkStore.getPlacemarkById(request.params.id);
-
-  //     // const placemarkId = request.params.placemarkid;
-  //     console.log(`Editing Placemark ${placemarkId} from Category ${categoryId}`);
-
-  //     // const placemark = await db.placemarkStore.getPlacemarkBy(request.params.id);
-  //     const updatedTitle = request.payload.title;
-  //     const updatedLong = request.payload.long;
-  //     const updatedLat = request.payload.Lat;
-  //     const updatedAddress = request.payload.address;
-  //     const updatedCountry = request.payload.country;
-  //     const updatedPhone = Number(request.payload.phone);
-  //     const updatedWebsite = request.payload.website;
-  //     const updatedVisited = request.payload.visited;
-  //     const updatedDescription = request.payload.description;
-  //     const updatedPlacemark = {
-  //       // user: loggedInUser,
-  //       title: updatedTitle,
-  //       long: updatedLong,
-  //       lat: updatedLat,
-  //       address: updatedAddress,
-  //       country: updatedCountry,
-  //       phone: updatedPhone,
-  //       website: updatedWebsite,
-  //       visited: updatedVisited,
-  //       description: updatedDescription,
-  //       //  _id: user._id,
-  //     };
-  //     // The below 'updateUser()' function from the 'user-store.js' file will update the user's data
-  //     // await db.placemarkStore.updatePlacemark(placemark, updatedPlacemark);
-  //     // The cookie 'user' will be created and will contain the user's email
-  //     // console.log(request.cookieAuth);
-
-  //     // h.cookieAuth.set("user", { id: user._id });
-  //     request.cookieAuth.set(
-  //       "placemark",
-  //       { id: user._id },
-  //       { title: updatedTitle },
-  //       { long: updatedLong },
-  //       { lat: updatedLat },
-  //       { address: updatedAddress },
-  //       { country: updatedCountry },
-  //       { address: updatedAddress },
-  //       { website: updatedWebsite },
-  //       { visited: updatedVisited },
-  //       { description: updatedDescription }
-  //     );
-
-  //     // request.cookieAuth.clear(user);
-
-  //     // request.cookieAuth.set("user", { id: user._id }, user.country, user.addressCode, user.street, user.phoneNumber, user.email, user.password);
-  //     // request.cookieAuth.clear();
-  //     const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
-  //     await db.placemarkStore.updatePlacemark(placemark, updatedPlacemark);
-  //     console.log(`updating ${visited}`);
-  //     return h.redirect(`/category/${categoryId}`);
-  //   },
-  // },
+  deleteImage: {
+    handler: async function (request, h) {
+      try {
+        const category = await db.categoryStore.getCategoryById(request.params.id);
+        if (category.img) {
+          await imageStore.deleteImage(category.img);
+          category.img = null;
+          await db.categoryStore.updateCategory(category);
+        }
+        return h.redirect(`/category/${category._id}`);
+      } catch (err) {
+        console.log("Error during image deletion:", err);
+        return h.redirect(`/category/${category._id}`); // Redirect even in case of error
+      }
+    },
+  },
 };

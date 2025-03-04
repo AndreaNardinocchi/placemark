@@ -8,14 +8,14 @@ Add your coordinates, then add them to formula in somehow.
 
 ====== Category ==================
 
-Sort the image not showing on dashboard-view
 
 
 ====== Placemark =============
 
 if in Ireland show a car icon, if abroad show an airplane icon.
 
-======= Account ===============
+
+
 
 
 

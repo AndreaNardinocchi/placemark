@@ -46,8 +46,6 @@ export const userMemStore = {
     user.phoneNumber = updatedUser.phoneNumber;
     user.email = updatedUser.email;
     user.password = updatedUser.password;
-    // users.pop(user);
-    // users.push(user);
     console.log(user);
     return user;
   },

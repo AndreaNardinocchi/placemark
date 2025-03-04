@@ -26,7 +26,8 @@ export const userJsonStore = {
     await db.read();
     let u = db.data.users.find((user) => user.email === email);
     if (u === undefined) u = null;
-    return u; // we detect undefined and return null in that instance
+    // we detect undefined and return null in that instance
+    return u;
   },
 
   async deleteUserById(id) {
@@ -45,7 +46,6 @@ export const userJsonStore = {
   // TOCHECK
   async updateUser(user, updatedUser) {
     console.log(updatedUser);
-    // await db.read();
     user._id = updatedUser._id;
     user.userLat = updatedUser.userLat;
     user.userLong = updatedUser.userLong;
@@ -55,8 +55,6 @@ export const userJsonStore = {
     user.phoneNumber = updatedUser.phoneNumber;
     user.email = updatedUser.email;
     user.password = updatedUser.password;
-    // db.data.users.pop(user);
-    // db.data.users.push(user);
     await db.write();
     console.log(user);
     return user;

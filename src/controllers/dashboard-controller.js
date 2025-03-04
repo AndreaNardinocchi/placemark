@@ -2,10 +2,7 @@
 user interfaces that divide the related program logic into three interconnected elements. */
 import { db } from "../models/db.js";
 import { CategorySpec } from "../models/joi-schemas.js";
-import { dashboardAnalytics } from "../utils/dashboard-analytics.js";
-import { categoryController } from "./category-controller.js";
 import { somethingAnalytics } from "../utils/something-analytics.js";
-import { categoryAnalytics } from "../utils/category-analytics.js";
 
 export const dashboardController = {
   index: {
@@ -43,16 +40,16 @@ export const dashboardController = {
       const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
       // eslint-disable-next-line prefer-destructuring
       let title = request.payload.title;
-      const bodyCopy = somethingAnalytics.getBodyCopy(categories);
-      console.log("This is the bodyCopy", bodyCopy);
       const newCategory = {
         userid: loggedInUser._id,
         title: title,
         userLat: Number(request.payload.userLat),
         userLong: Number(request.payload.userLong),
-        bodyCopy: bodyCopy,
         notes: request.payload.notes,
       };
+      /** Checking on whether the category title already exists. This app will only allow the user to add
+       * 4 categories in its 'basic' version.
+       */
       let exTitle = "";
       // eslint-disable-next-line prefer-const
       let existingTitle = [];

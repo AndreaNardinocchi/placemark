@@ -30,9 +30,17 @@ if (result.error) {
 
 const swaggerOptions = {
   info: {
-    title: "Playtime API",
+    title: "Placemark API",
     version: "0.1",
   },
+  securityDefinitions: {
+    jwt: {
+      type: "apiKey",
+      name: "Authorization",
+      in: "header",
+    },
+  },
+  security: [{ jwt: [] }],
 };
 
 async function init() {
@@ -44,8 +52,6 @@ async function init() {
   await server.register(Cookie); // registering the plugin
   server.validator(Joi); // We are setting the validator after we have registered the plugins.
   await server.register(jwt); // Import and register the plugin
-
-  // server.validator(JoiDate);
 
   await server.register([
     Inert,

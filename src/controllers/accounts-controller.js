@@ -1,12 +1,7 @@
 // MVC Model View Controller: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
-
 // eslint-disable-next-line import/no-cycle
-import dayjs from "dayjs";
-import Joi from "joi";
 import { db } from "../models/db.js";
 import { updatedUserSpec, UserCredentialsSpec, UserSpec } from "../models/joi-schemas.js";
-// import { accountAnalytics } from "../utils/account-analytics.js";
-import { categoryAnalytics } from "../utils/category-analytics.js";
 import { somethingAnalytics } from "../utils/something-analytics.js";
 
 export const accountsController = {
@@ -44,11 +39,6 @@ export const accountsController = {
     },
     handler: async function (request, h) {
       const user = request.payload;
-      // const currentHour = dayjs().format("YYYY-MM-DD HH:mm:ss");
-      // const newUser = {
-      //   user: user,
-      //   currentHour: currentHour,
-      // };
       console.log("This is the currentHour: ", user);
       await db.userStore.addUser(user);
       return h.redirect("/");
@@ -105,8 +95,6 @@ export const accountsController = {
   showAccount: {
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
-      // const lat1 = accountAnalytics.getCoordinates(loggedInUser);
-      // const createdTimeStamp = Joi.
       const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
       const accCat0 = await somethingAnalytics.getAccountCategories0(categories);
       const accCatId0 = await somethingAnalytics.getAccountCategoriesId0(categories);
@@ -120,7 +108,6 @@ export const accountsController = {
       const viewData = {
         title: "Your Account details | App",
         user: loggedInUser,
-        //  lat1: userDetails.lat1,
         firstName: userDetails.firstName,
         lastName: userDetails.lastName,
         userLat: userDetails.userLat,
@@ -140,15 +127,9 @@ export const accountsController = {
         accCatId2: accCatId2,
         accCat3: accCat3,
         accCatId3: accCatId3,
-        // yesCounting: yesCounting,
         _id: userDetails._id,
-        // categoryId: categoryId,
-        // showPlacemarks: showPlacemarks,
         createdTimeStamp: userDetails.createdTimeStamp,
       };
-
-      console.log("Max POI Distance:", userDetails.userLat); // You can log the result for debugging
-
       return h.view("account-view", viewData);
     },
   },
@@ -195,10 +176,6 @@ export const accountsController = {
         password: newPassword,
         _id: user._id,
       };
-      // The below 'updateUser()' function from the 'user-store.js' file will update the user's data
-      // The cookie 'user' will be created and will contain the user's email
-      // console.log(request.cookieAuth);
-      // h.cookieAuth.set("user", { id: user._id });
       request.cookieAuth.set(
         "user",
         { id: user._id },
@@ -211,9 +188,6 @@ export const accountsController = {
         { phoneNumber: newPhoneNumber },
         { password: newPassword }
       );
-      // request.cookieAuth.clear(user);
-      // request.cookieAuth.set("user", { id: user._id }, user.country, user.addressCode, user.street, user.phoneNumber, user.email, user.password);
-      // request.cookieAuth.clear();
       await db.userStore.updateUser(user, updatedUser);
       console.log(`updating ${user.email}`);
       return h.redirect("/");

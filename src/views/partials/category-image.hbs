@@ -1,0 +1,63 @@
+<div class="box p-4 pt-5 card-content">
+  <form action="/category/{{category._id}}/uploadimage" method="POST" enctype="multipart/form-data">
+    <div id="file-select" class="file has-name is-fullwidth">
+      <label class="file-label">
+      <input class="file-input" name="imagefile" type="file" name="resume" accept="image/png, image/jpeg" />
+      <span class="file-cta has-text-white has-background-grey-dark">
+      <span class="file-icon">
+      <i class="fas fa-upload"></i>
+      </span>
+      <span class="file-label">
+      Choose an image…
+      </span>
+      </span>
+      <span class="file-name"></span>
+      </label>
+      <button type="submit" class="button is-info ml-4 has-text-white">Upload image</button>
+      <a href="/category/{{category._id}}/deleteimage" class="button ml-2">
+      <span class="icon is-small">
+      <i class="fas fa-solid fa-trash"></i>
+      </span>
+      </a>
+    </div>
+  </form>
+</div>
+</div>
+<script>
+  /** If you want to prevent displaying the placeholder image when no image is uploaded, 
+  and ensure that it only shows once an image is selected or already uploaded, here’s a 
+  new approach: Steps to Implement
+  Hide the image element completely if no image exists.
+  Only show the image once it's uploaded or if it already exists.
+  We'll conditionally render the image using server-side logic (e.g., using a templating engine) 
+  and then hide it or show a preview based on whether a file is selected.*/
+  
+  /** Solution
+  We will start by hiding the image element by default and show it once there is an actual image 
+  to display. You can do this using JavaScript to dynamically check for an image and toggle 
+  its visibility. */
+  
+    const fileInput = document.querySelector(".file-input");
+    const categoryImage = document.getElementById("category-image");
+    const fileNameDisplay = document.querySelector(".file-name");
+  
+    // Display image if it already exists when page loads
+    if (categoryImage.src && categoryImage.src !== "") {
+      categoryImage.style.display = "block";  // Show the image if it has a valid src
+    }
+  
+    fileInput.onchange = () => {
+      if (fileInput.files.length > 0) {
+        const fileName = fileInput.files[0].name;
+        fileNameDisplay.textContent = fileName;
+  
+        // Show the image preview immediately after selection
+        const reader = new FileReader();
+        reader.onload = () => {
+          categoryImage.src = reader.result; // Set the image source to the file
+          categoryImage.style.display = 'block';  // Show the image
+        };
+        reader.readAsDataURL(fileInput.files[0]); // Read the selected file as a Data URL
+      }
+    };
+</script>

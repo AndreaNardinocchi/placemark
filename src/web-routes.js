@@ -34,6 +34,11 @@ export const webRoutes = [
   { method: "GET", path: "/category/{categoryid}/editplacemark/{placemarkid}", config: placemarkController.index },
   { method: "POST", path: "/category/{categoryid}/updateplacemark/{placemarkid}", config: placemarkController.updatePlacemark },
 
+  { method: "GET", path: "/category/{id}/placemark/{placemarkid}", config: placemarkController.placemark },
+  { method: "POST", path: "/category/{id}/uploadimage", config: categoryController.uploadImage },
+  { method: "POST", path: "/category/{id}/placemark/{placemarkid}/uploadimage", config: placemarkController.uploadImage },
+  { method: "GET", path: "/category/{id}/deleteimage", config: categoryController.deleteImage },
+
   { method: "GET", path: "/lifestyle", config: lifestyleController.index },
   { method: "GET", path: "/news", config: newsController.index },
 

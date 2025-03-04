@@ -56,6 +56,7 @@ export const placemarkMongoStore = {
       placemarkDoc.website = updatedPlacemark.website;
       placemarkDoc.visited = updatedPlacemark.visited;
       placemarkDoc.description = updatedPlacemark.description;
+      placemarkDoc.img = updatedPlacemark.img;
       await placemarkDoc.save();
       // Or throw an error depending on your needs
     } else {
@@ -64,14 +65,4 @@ export const placemarkMongoStore = {
     }
     return placemarkDoc;
   },
-
-  //   await Placemark.findOne(placemark);
-  //   try {
-  //     const updatePlacemark = await Placemark.updateOne(placemark, updatedPlacemark);
-  //     console.log(updatePlacemark);
-  //     console.log(`${updatePlacemark.matchedCount} document(s) matched the filter, updated ${updatePlacemark.modifiedCount} document(s)`);
-  //   } catch (error) {
-  //     console.error("Error updating record:", error);
-  //   }
-  // },
 };

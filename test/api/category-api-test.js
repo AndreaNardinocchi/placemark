@@ -17,7 +17,6 @@ suite("Category API tests", () => {
     await placemarkService.deleteAllUsers();
     user = await placemarkService.createUser(maggie);
     await placemarkService.authenticate(maggieCredentials);
-    // await placemarkService.authenticate(maggieCredentials);
     museums.userid = user._id;
   });
   teardown(async () => {});
@@ -27,7 +26,6 @@ suite("Category API tests", () => {
     const categoryNew = await placemarkService.createCategory(museums);
     assert.isNotNull(categoryNew);
     assertSubset(museums, categoryNew);
-    // assert.isDefined(categoryNew._id);
   });
 
   test("delete a category", async () => {
