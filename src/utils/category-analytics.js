@@ -313,4 +313,40 @@ export const categoryAnalytics = {
       return abroadTravelIcon;
     }
   },
+
+  // eslint-disable-next-line consistent-return
+  getTravelMeans(category) {
+    if (category.placemarks) {
+      let travelMeans = "";
+      let destination = "";
+      // Loop through all placemarks in the category
+      for (let i = 0; i < category.placemarks.length; i += 1) {
+        destination = category.placemarks[i].country;
+        if (destination === "Ireland") {
+          travelMeans = "car";
+        } else {
+          travelMeans = "plane";
+        }
+      }
+      return travelMeans;
+    }
+  },
+
+  // eslint-disable-next-line consistent-return
+  getYouShouldVisit(category) {
+    if (category.placemarks) {
+      let youShouldVisit = "";
+      let visit = "";
+      // Loop through all placemarks in the category
+      for (let i = 0; i < category.placemarks.length; i += 1) {
+        visit = category.placemarks[i].visited;
+        if (visit === "No") {
+          youShouldVisit = "What are you waiting for? Time to pay a visit to ";
+        } else {
+          youShouldVisit = "However, you have already been there, but it is never a bad idea to visit again ";
+        }
+      }
+      return youShouldVisit;
+    }
+  },
 };

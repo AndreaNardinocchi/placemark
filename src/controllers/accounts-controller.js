@@ -165,7 +165,7 @@ export const accountsController = {
       const newEmail = request.payload.email;
       const newPassword = request.payload.password;
       const updatedUser = {
-        user: loggedInUser,
+        // user: loggedInUser,
         userLat: newUserLat,
         userLong: newUserLong,
         country: newCountry,
@@ -176,21 +176,21 @@ export const accountsController = {
         password: newPassword,
         _id: user._id,
       };
-      request.cookieAuth.set(
-        "user",
-        { id: user._id },
-        { country: newCountry },
-        { userLat: newUserLat },
-        { userLong: newUserLong },
-        { addressCode: newAddressCode },
-        { street: newStreet },
-        { email: newEmail },
-        { phoneNumber: newPhoneNumber },
-        { password: newPassword }
-      );
+      // request.cookieAuth.set(
+      //   "user",
+      //   { id: user._id },
+      //   { country: newCountry },
+      //   { userLat: newUserLat },
+      //   { userLong: newUserLong },
+      //   { addressCode: newAddressCode },
+      //   { street: newStreet },
+      //   { email: newEmail },
+      //   { phoneNumber: newPhoneNumber },
+      //   { password: newPassword }
+      // );
       await db.userStore.updateUser(user, updatedUser);
-      console.log(`updating ${user.email}`);
-      return h.redirect("/");
+      // console.log(`updating ${user.email}`);
+      return h.redirect("/account");
     },
   },
 };

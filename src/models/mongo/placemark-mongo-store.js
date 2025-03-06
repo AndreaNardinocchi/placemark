@@ -56,7 +56,7 @@ export const placemarkMongoStore = {
       placemarkDoc.website = updatedPlacemark.website;
       placemarkDoc.visited = updatedPlacemark.visited;
       placemarkDoc.description = updatedPlacemark.description;
-      placemarkDoc.img = updatedPlacemark.img;
+      // placemarkDoc.img = updatedPlacemark.img;
       await placemarkDoc.save();
       // Or throw an error depending on your needs
     } else {
@@ -64,5 +64,20 @@ export const placemarkMongoStore = {
       console.log(`Updating placemark ${placemarkDoc}`);
     }
     return placemarkDoc;
+  },
+
+  async updatePlacemarkImage(updatedPlacemark) {
+    const placemark = await Placemark.findOne({ _id: updatedPlacemark._id });
+    console.log(placemark);
+    if (placemark) {
+      placemark.title = updatedPlacemark.title;
+      placemark.img = updatedPlacemark.img;
+      await placemark.save();
+      // Or throw an error depending on your needs
+    } else {
+      placemarkNotFound = "Placemark not found";
+      console.log(`Updating placemark ${placemark}`);
+    }
+    return placemark;
   },
 };

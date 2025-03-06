@@ -51,26 +51,6 @@ export const userMongoStore = {
     userDoc.phoneNumber = updatedUser.phoneNumber;
     userDoc.email = updatedUser.email;
     userDoc.password = updatedUser.password;
-
     await userDoc.save();
-
-    // await User.findOne(user);
-    // try {
-    //   const updateUser = await User.updateOne(user, updatedUser);
-    //   console.log(updateUser);
-    //   console.log(`${updateUser.matchedCount} document(s) matched the filter, updated ${updateUser.modifiedCount} document(s)`);
-    // } catch (error) {
-    //   console.error("Error updating record:", error);
-    // }
   },
-
-  // // Assuming you have a function to fetch a user by their ID
-  // async getUserLat(user) {
-  //   // Fetch user from DB or mock data
-  //   const userDoc = await db.users.findOne({ _id: user._id });
-  //   userLat = userDoc.userLat;
-  //   console.log(`This is ${userLat}`);
-  //   return userLat;
-  //   // return user ? user.userLat : null;
-  // },
 };

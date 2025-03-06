@@ -56,8 +56,8 @@ export const categoryController = {
     },
     handler: async function (request, h) {
       // We are retrieving/extracting the category
-      const loggedInUser = request.auth.credentials;
-      const user = await db.userStore.getUserById(loggedInUser._id);
+      //  const loggedInUser = request.auth.credentials;
+      //  const user = await db.userStore.getUserById(loggedInUser._id);
       const category = await db.categoryStore.getCategoryById(request.params.id);
       console.log(`This is category.title ${category.title}`);
       if (request.payload.title === category.title) {
@@ -69,7 +69,7 @@ export const categoryController = {
          * and we stick them to a placemark object (title, artist, duration), and
          * finally we add the placemark to the database (placemarkStore) via the category
          * with its specific 'id' */
-        user: loggedInUser,
+        //   user: loggedInUser,
         title: request.payload.title,
         lat: Number(request.payload.lat),
         long: Number(request.payload.long),
@@ -107,7 +107,7 @@ export const categoryController = {
         return h.redirect(`/category/${category._id}`);
       } catch (err) {
         console.log(err);
-        return h.redirect(`/category/${category._id}`);
+        return h.redirect("/");
       }
     },
     payload: {

@@ -1,109 +1,204 @@
 {{> menu }}
-
 <body>
-      <script>
-         // https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6
-         
-         const API_KEY = 'c3e26a0b5387b001f6f548f5710c0baf';
-         const BASE_URL = 'https://api.openweathermap.org/data/2.5/';
-         
-         
-         async function getWeather() {
-           const city = document.getElementById('cityInput').value;
-           if (!city) {
-             alert('Please enter a city name.');
-             return;
-           }
-           
-           try {
-             // Fetch current weather
-             const weatherResponse = await fetch(`${BASE_URL}weather?q=${city}&appid=${API_KEY}&units=metric&units`);
-             const weatherData = await weatherResponse.json();
-             displayCurrentWeather(weatherData);
-           } catch (error) {
-             console.error('Error fetching data:', error);
-             alert('Failed to fetch weather data.');
-           }
-         }
-           function displayCurrentWeather(data) {
-             const weatherBody = document.getElementById('weatherBody');
-             weatherBody.innerHTML = `
-             
-                <div class="column has-text-centered is-4">
-                  <p class="has-text-weight-bold"> City </p>
-                  <p>${data.name}</p>
-                </div>
-                <div class="column has-text-centered is-4">
-                  <p class="has-text-weight-bold"> Temperature </p>
-                  <p>${data.main.temp}°C</p>
-                </div>
-                <div class="column has-text-centered is-4">
-                  <p class="has-text-weight-bold"> Condition </p>
-                  <p>${data.weather[0].description}</p>
-                </div>
-             `;
-           }
-           
-           function displayForecast(data) {
-             const forecastBody = document.getElementById('forecastBody');
-             forecastBody.innerHTML = '';
-         
-             // Forecast data comes in 3-hour intervals, so we'll filter to get daily forecasts
-             const dailyForecasts = data.list.filter(item => item.dt_txt.includes('12:00:00'));
-             dailyForecasts.forEach(forecast => {
-               const date = new Date(forecast.dt_txt).toLocaleDateString();
-             });
-           }
-      </script>
-      <section class="has-background-white" id="weatherTable">
+  <script>
+    // https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6
+    
+    const API_KEY = 'c3e26a0b5387b001f6f548f5710c0baf';
+    const BASE_URL = 'https://api.openweathermap.org/data/2.5/';
+    
+    
+    async function getWeather() {
+      const city = document.getElementById('cityInput').value;
+      if (!city) {
+        alert('Please enter a city name.');
+        return;
+      }
+      
+      try {
+        // Fetch current weather
+        const weatherResponse = await fetch(`${BASE_URL}weather?q=${city}&appid=${API_KEY}&units=metric&units`);
+        const weatherData = await weatherResponse.json();
+        displayCurrentWeather(weatherData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        alert('Failed to fetch weather data.');
+      }
+    }
+      function displayCurrentWeather(data) {
+        const weatherBody = document.getElementById('weatherBody');
+        weatherBody.innerHTML = `
         
-         <!-- Weather Widget Section -->
-         <section class="box">
-            <section class="columns mt-6 pt-6 pb-4 px-6">
-               <div class="column is-4">
-                  <p class="title has-text-centered is-5 ">
-                     #instaWeather
-                  </p>
-               </div>
-               <div class="column is-8">
-                  <div class="columns">
-                     <div class="column is-9">
-                        <input class="input"  type="text" id="cityInput" placeholder="Enter city name" />
-                     </div>
-                     <div class="column is-3">
-                        <button class="button is-ghos " onclick="getWeather()">
-                        Get Weather
-                        </button>
-                     </div>
-                  </div>
-               </div>
-            </section>
-            <section class="columns has-background-white-bis" id="weatherBody" >
-            </section>
-         </section>
-         <article class="content">
-            <div class="container mt-6">
-               <div class="columns mx-6">
-                  <div class="column">
-                     <p class="title has-text-centered is-2 pt-4 pb-2">
-                        #instaPlaceMark!
-                     </p>
-                     <p class="subtitle has-text-centered mb-6">
-                        InstaMark your instaPlaces
-                     </p>
-                  </div>
-               </div>
-           
-               <div class="columns mx-6 mb-6 pb-6">
-                  <figure class="image is-128x128">
-      <img src={{img}} />
-    </figure>
-                  {{> category-image-copy }}
-                  
-               </div>
+           <div class="column has-text-centered is-4">
+             <p class="has-text-weight-bold"> City </p>
+             <p>${data.name}</p>
+           </div>
+           <div class="column has-text-centered is-4">
+             <p class="has-text-weight-bold"> Temperature </p>
+             <p>${data.main.temp}°C</p>
+           </div>
+           <div class="column has-text-centered is-4">
+             <p class="has-text-weight-bold"> Condition </p>
+             <p>${data.weather[0].description}</p>
+           </div>
+        `;
+      }
+      
+      function displayForecast(data) {
+        const forecastBody = document.getElementById('forecastBody');
+        forecastBody.innerHTML = '';
+    
+        // Forecast data comes in 3-hour intervals, so we'll filter to get daily forecasts
+        const dailyForecasts = data.list.filter(item => item.dt_txt.includes('12:00:00'));
+        dailyForecasts.forEach(forecast => {
+          const date = new Date(forecast.dt_txt).toLocaleDateString();
+        });
+      }
+  </script>
+  <section class="has-background-white" id="weatherTable">
+    <!-- Weather Widget Section -->
+    <section class="box">
+      <section class="columns mt-6 pt-6 pb-4 px-6">
+        <div class="column is-4">
+          <p class="title has-text-centered is-5 ">
+            #instaWeather
+          </p>
+        </div>
+        <div class="column is-8">
+          <div class="columns">
+            <div class="column is-9">
+              <input class="input"  type="text" id="cityInput" placeholder="Enter city name" />
             </div>
-         </article>
+            <div class="column is-3">
+              <button class="button is-ghos " onclick="getWeather()">
+              Get Weather
+              </button>
+            </div>
+          </div>
+        </div>
       </section>
-   </body>
-  
-
+      <section class="columns has-background-white-bis" id="weatherBody" >
+      </section>
+    </section>
+    <article class="content">
+      <div class="container mt-6">
+        <div class="columns mx-6">
+          <div class="column">
+            <p class="title has-text-centered is-2 pt-4 pb-2">
+              #instaPlaceMark {{titleShort}}!
+            </p>
+            <p class="subtitle has-text-centered mb-6">
+              InstaMark your instaPlaces
+            </p>
+          </div>
+        </div>
+      </div>
+      <main class="columns box">
+        <section class="column is-8 m-2">
+          <h4>{{titleShort}}, {{country}}</h4>
+          <p>
+            {{description}} Find out more on <a href="{{website}}" target="_blank" class="has-text-grey">{{website}}</a>.
+          </p>
+          <p>Hey! To get to {{titleShort}}, you need to travel by {{travelMeans}}.</p>
+          <p>{{youShouldVisit}}{{titleShort}}!</p>
+          <div class="buttons pt-3">
+            <a href="{{website}}" target="_blank" class="has-text-grey">
+            <button class="button is-info has-text-white">Find out more</button>
+            </a>
+          </div>
+        </section>
+        <section class="column is-4 ">
+          <figure class="image is-264x264 m-auto">
+            <img src="https://i.ibb.co/M66kktn/travel.jpg" alt="Travel signs" style="border-radius: 10px;" border="0">
+          </figure>
+        </section>
+      </main>
+      <section class="section">
+        <div class="container">
+          <h5 class="has-text-centered">@{{titleShort}}</h5>
+          <div class="columns is-multiline pt-3">
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+          </div>
+        </div>
+        <div class ="columns">
+          <div class ="column is-4 has-text-centered">
+          </div>
+          <div class ="column is-4  has-text-centered ">
+            <div class="buttons mt-6 ">
+              <a href="/category/{{categoryId}}" class="has-text-grey">
+             <h2>Back to category →</h2> 
+              </a>
+            </div>
+          </div>
+          <div class ="column is-4 has-text-centered">
+          </div>
+        </div>
+      </section>
+      {{!-- <div class="columns mt-6 mx-6 mb-6 pb-6">
+        <figure class="image is-128x128">
+          <img src="{{img}}" style="border-radius: 10px; " />
+        </figure>
+        {{> category-image-copy }}
+      </div>
+      </div>
+    </article> --}}
+  </section>
+</body>
