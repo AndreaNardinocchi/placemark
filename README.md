@@ -79,139 +79,118 @@ This is just a nice, easy on the eye grid to get the user familiarized with the 
 
 #### Source attribution
 
-https://bulma.io/documentation/columns/basics/
-https://bulma.io/documentation/components/card/#examples
-https://www.freepik.com/
-
-All icons/images have been taken from:
-https://openweathermap.org/weather-conditions
+- https://bulma.io/documentation/columns/basics/
+- https://bulma.io/documentation/components/card/#examples
+- https://www.freepik.com/
 
 ### Footer
 
 At the bottom of the page, there is a footer (**footer.hbs** partial), with a 2 column layout.
 While the first column shows an Irish address, the column on the right shows nav items/links.
-Additionally, there is an underfooter with the 'Weather Top App' clickable logo to boost brand awareness and a string with the developer Linkedin link.
+Additionally, there is an underfooter with the 'PlaceMark' clickable logo to boost brand awareness and a string with the developer Linkedin link.
 
 ![alt text](image-5.png)
 
 #### Source attribution
 
-https://bulma.io/documentation/layout/footer/
+- https://bulma.io/documentation/layout/footer/
 
 ## Lifestyle page
 
-#### (\*This page is part of the previous assignment web-dev 1)
+#### (\*This page is part of a previous assignment for web-dev 1)
 
-This page is basically a blog embedded into the website and users can supposedly use the search bar on the top to search for a tourist destination (I found it interesting to combine the 2 subjects).
+This page is basically a blog embedded into the website and users can supposedly use the search bar on the top to search for a tourist destination (I found it interesting to combine the placemark subject with the tourist one).
 It shows a variegated layout (**lifestyle-view.hbs**).
-
-### Search Bar
-
-![alt text](image-6.png)
-
-### Destinations Video
-
-This has been achieved by using a Bulma image component embedded into a 'box' class and a Youtube video is, in turn, embedded into it.
-
-![alt text](image-7.png)
-
-### Blog
-
-This is a 4 column layout section made of 4 Bulma cards with images.
-At the bottom of each card, there is a 'Read more' CTA, but it is 'performative' as the link gets the user back to the dashboard.
-
-![alt text](image-8.png)
-
-### Things to do
-
-Here, the only difference with the above section is the 3 column layout.
-
-![alt text](image-9.png)
 
 #### Source attribution
 
-https://bulma.io/documentation/elements/box/
-https://bulma.io/documentation/elements/image/#arbitrary-ratios-with-any-
+- https://bulma.io/documentation/elements/box/
+- https://bulma.io/documentation/elements/image/#arbitrary-ratios-with-any-
 
 All images have been taken from:
-https://pixabay.com/ and used availing of the URLs created in https://imgbb.com/ .
+https://pixabay.com/ and used availing of the IMGBB image hosting app in https://imgbb.com/ .
 
 ## News
 
-(\*This page is part of the previous assignment web-dev 1)
+(\*This page is part of a previous assignment web-dev 1)
 
-This page is supposed to be a 'news' page to get travelers up to speed with the latest about tourist destinations (**news-view.hbs**).
-
-![alt text](image-10.png)
+This page is supposed to be a 'news' page to get travelers up to speed with the latest news about tourist destinations (**news-view.hbs**).
 
 #### Source attribution
 
-https://bulma.io/documentation/elements/box/
+- https://bulma.io/documentation/elements/box/
 
 All images have been taken from:
-https://pixabay.com/ used availing of the URLs created in https://imgbb.com/ .
+https://pixabay.com/ and used availing of the IMGBB image hosting app in https://imgbb.com/ .
 
 ## About page
 
 This is just a simple and plain page with a centered copy (header and paraghraph, **about-view.hbs**) contained in a class 'box':
 
-![alt text](image-11.png)
-
 ## Log in
 
-The 'Log in' page is a 2 column layout with a Bulma form on the left column and a decorative image on the right one (**login-view**):
+The 'Log in' page is a 2 column layout with a Bulma form on the left column and the PlaceMark logo on the right (**login-view**):
 
-![alt text](image-13.png)
+![alt text](image-6.png)
 
-It is routed as per the below line of code in **routes.js**
-
-```
-router.get("/login", accountsController.login);
-```
-
-and its view is rendered by the **\*accounts-controller.js**
+It is routed as per the below line of code in **web-routes.js**
 
 ```
- /* The below 'login' action is invoked when "/login" route is triggered (user must be 'logged out').
- 'render' passes the object 'viewData' */
-  login(request, response) {
-    const viewData = {
-      title: "Login to the Service | Weather Top App",
-    };
-    response.render("login-view", viewData);
+ { method: "GET", path: "/login", config: accountsController.showLogin },
+```
+
+and its view is rendered by the **accounts-controller.js**
+
+```
+  showLogin: {
+    auth: false,
+    handler: function (request, h) {
+      return h.view("login-view", { title: "Login to Placemark" });
+    },
   },
-er.get("/login", accountsController.login);
+  login: {
+    auth: false,
+    validate: {
+      payload: UserCredentialsSpec,
+      options: { abortEarly: false },
+      failAction: function (request, h, error) {
+        return h.view("login-view", { title: "Login error", errors: error.details }).takeover().code(400);
+      },
+    },
+    handler: async function (request, h) {
+      const { email, password } = request.payload;
+      const user = await db.userStore.getUserByEmail(email);
+      if (!user || user.password !== password) {
+        return h.redirect("/");
+      }
+      // We set the cookie and istall the object 'user', passing the '._id' of the user
+      request.cookieAuth.set({ id: user._id });
+      return h.redirect("/dashboard");
+    },
 ```
 
-Once the user prompts the log in action, their data will be authenticated via the below action 'authenticate()':
+Once the user prompts the log in action, their data will be verified by the above 'handler' which will check email and password. The below function, instead, will validate whether the user exists by checking that the 'payload' of the variable 'UserCredentialsSpec' (Joi schema).
 
 ```
- /* The below 'authenticate' action is invoked when "/authenticate" route is triggered */
-  async authenticate(request, response) {
-    // Discovering which user is logged in by retrieving theor email.
-    const user = await userStore.getUserByEmail(request.body.email);
-    if (user) {
-      // The cookie 'station' will be created and will contain the user's email
-      response.cookie("station", user.email);
-      console.log(`logging in ${user.email}`);
-      response.redirect("/dashboard");
-    } else {
-      // If the email is not recognized, the user will be prompted to make another log in attempt
-      response.redirect("/login");
+ /**
+   * The function has access to a session object - which will have the users ID.
+   * We use this ID to locate the user object from the store and, if found,
+   * return this object: { isValid: true, credentials: user }; otherwise
+   * { valid: false };
+   */
+  async validate(request, session) {
+    const user = await db.userStore.getUserById(session.id);
+    if (!user) {
+      return { isValid: false };
     }
-  },
-
-  // Utility method to check wether the user exists and which user owns it
-  async getLoggedInUser(request) {
-    const userEmail = request.cookies.station;
-    return await userStore.getUserByEmail(userEmail);
+    return { isValid: true, credentials: user };
   },
 ```
 
 #### Source attribution
 
-Image taken from:
-https://pixabay.com
+Plane image taken from:
+https://fontawesome.com/v4/icons/
 
 ## Sign up
 
