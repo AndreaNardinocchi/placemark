@@ -45,22 +45,22 @@ Technical challenges at this stage of my study are not always easy to overcome. 
 
 ## Home page
 
-As a user opens up the **Weather Top App Homepage**, they will see a sticky nav bar on the top for an easy navigation through the website.
+As a user opens up the **PlaceMark** app, they will see a sticky nav bar on the top for an easy navigation throughout the website.
 
 ### Navigation bars
 
-The Navbars show all items that the user needs for a comfortable and friendly navigation.
-The **welcome-menu.hbs** partial is the one that the user will see in the 'log out' state (also contains the logo, which is clickable and links to the Homepage **index.hbs**.):,
+The Navbar shows all items that the user needs for a comfortable and friendly navigation.
+The **welcome-menu.hbs** partial is the one that the user will see in the 'log out' state (it also contains the PlaceMark logo, which is clickable and links to the Homepage **main.hbs**.):,
 
 ![alt text](image.png)
 
-whereas the **menu.hbs** one is what the user will see in their loggedin state, which contain less items (also contains the logo, which is clickable and links to the Dashboard view **dashboard.hbs**.):
+whereas the **menu.hbs** is what the user will see in their loggedin state, which contain more items (it also contains the logo, which is clickable and links to the Dashboard view **dashboard.hbs**.):
 
 ![alt text](image-1.png)
 
 Last, but not least, the navbar is responsive and mobile-friendly:
 
-![alt text](image-24.png)
+![alt text](image-3.png)
 
 #### Source attribution
 
@@ -69,20 +69,19 @@ https://bulma.io/documentation/components/navbar/
 
 I also studied some examples online such as https://www.geeksforgeeks.org/bulma-navbar/.
 
-### Weather Icon cards Grid
+### Card Image Grid on the main.hbs page
 
-As the user scrolls down, they will bump into a paragraph inviting the user to log in or sign up, right above a grid made up of Bulma cards with OpenWeather icons https://openweathermap.org/weather-conditions:
+As the user scrolls down, they will bump into a paragraph inviting the user to log in or sign up, right above a grid made of Bulma card images
 
-![alt text](image-2.png)
+![alt text](image-4.png)
 
-This is just a nice, easy on the eye grid to get the user familiarized with the weathre conditions icons.
-
-The layout has been achieved by using Bulma classes such as 'columns' to create a container for the columns embedded in it such as the 'column' class.
+This is just a nice, easy on the eye grid to get the user familiarized with the categories they might want to use.
 
 #### Source attribution
 
 https://bulma.io/documentation/columns/basics/
 https://bulma.io/documentation/components/card/#examples
+https://www.freepik.com/
 
 All icons/images have been taken from:
 https://openweathermap.org/weather-conditions
