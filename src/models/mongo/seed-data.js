@@ -14,7 +14,7 @@ export const seedData = {
       email: "homer@simpson.com",
       password: "Yoestoy",
     },
-    marge: {
+    margie: {
       firstName: "Margie",
       lastName: "Simpson",
       userLat: 36.7213028,
@@ -59,10 +59,10 @@ export const seedData = {
     },
     museum: {
       title: "Museums",
-      userLat: -3.712728164735647,
-      userLong: 14.00601527465352,
+      userLat: 36.7213028,
+      userLong: -4.4216366,
       notes: "This category is used to note down all museums I would like to visit",
-      userid: "->users.marge",
+      userid: "->users.margie",
     },
   },
   placemarks: {
@@ -81,7 +81,7 @@ export const seedData = {
       categoryid: "->categories.park",
     },
     placemark_2: {
-      title: "Santa Monica",
+      title: "Santa Monica beach",
       lat: 35.00535425523,
       long: -10.226577489,
       address: "Main Campus Marsille",
@@ -93,15 +93,16 @@ export const seedData = {
       categoryid: "->categories.beach",
     },
     placemark_3: {
-      title: "Trafalgar Square",
-      lat: 90.00535425523,
-      long: 20.226577489,
-      address: "Trafalgar, 23",
+      title: "National Gallery of London",
+      lat: 51.508881,
+      long: -0.1283826,
+      address: "Trafalgar Square, London, WC2N 5DN",
       country: "United Kingdom",
-      phone: 1256789569,
-      website: "https://www.loveholidays.ie/sem/santa-monica.html",
-      visited: "No",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      phone: 442077472885,
+      website: "https://www.nationalgallery.org.uk/",
+      visited: "Yes",
+      description:
+        "We are home to the national collection of paintings in the Western European tradition from the 13th to the 19th centuries. Our paintings are on show 361 days a year, free of charge.",
       categoryid: "->categories.museum",
     },
   },

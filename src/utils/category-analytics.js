@@ -343,7 +343,7 @@ export const categoryAnalytics = {
         if (visit === "No") {
           youShouldVisit = "What are you waiting for? Time to pay a visit to ";
         } else {
-          youShouldVisit = "However, you have already been there, but it is never a bad idea to visit again ";
+          youShouldVisit = "Although you have already been there, it is never a bad idea to visit again the ";
         }
       }
       return youShouldVisit;

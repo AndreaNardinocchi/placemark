@@ -3,8 +3,6 @@
 import { db } from "../models/db.js";
 import { PlacemarkSpec, updatedPlacemarkSpec } from "../models/joi-schemas.js";
 import { categoryAnalytics } from "../utils/category-analytics.js";
-import { imageStore } from "../models/image-store.js";
-import { categoryController } from "./category-controller.js";
 
 export const placemarkController = {
   index: {
@@ -20,7 +18,6 @@ export const placemarkController = {
         category: category,
         placemark: placemark,
       };
-      // category-view.hbs is returned
       return h.view("placemark-view", viewData);
     },
   },
@@ -59,17 +56,6 @@ export const placemarkController = {
         description: updatedDescription,
         _id: placemark._id,
       };
-      // request.cookieAuth.set({
-      //   placemarkId: placemark._id,
-      //   title: updatedTitle,
-      //   lat: updatedLat,
-      //   long: updatedLong,
-      //   address: updatedAddress,
-      //   country: updatedCountry,
-      //   website: updatedWebsite,
-      //   visited: updatedVisited,
-      //   description: updatedDescription,
-      // });
       await db.placemarkStore.updatePlacemark(placemark, updatedPlacemark);
       return h.redirect(`/category/${categoryId}`);
     },
@@ -81,15 +67,13 @@ export const placemarkController = {
       const placemarkId = request.params.placemarkid;
       const category = await db.categoryStore.getCategoryById(categoryId);
       const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
-      // const localTravelIcon = categoryAnalytics.getLocalTravelIcon(category);
-      // const abroadTravelIcon = categoryAnalytics.getAbroadTravelIcon(category);
       console.log("This is the category id", categoryId);
       console.log("This is the placemark id", placemarkId);
       const travelMeans = categoryAnalytics.getTravelMeans(category);
       const youShouldVisit = categoryAnalytics.getYouShouldVisit(category);
 
       const viewData = {
-        title: ` ${placemark.title}`, // #instaPlaceMark! |
+        title: ` ${placemark.title} | #instaPlaceMark!`,
         titleShort: placemark.title,
         lat: placemark.lat,
         long: placemark.long,
@@ -101,39 +85,8 @@ export const placemarkController = {
         placemarkId: placemarkId,
         travelMeans: travelMeans,
         youShouldVisit: youShouldVisit,
-        //  farOrClose: farOrClose,
-        // localTravelIcon: {{..localTravelIcon}},
-        // abroadTravelIcon: abroadTravelIcon,
       };
       return h.view("placemark", viewData);
     },
   },
-
-  // uploadImage: {
-  //   handler: async function (request, h) {
-  //     try {
-  //       const categoryId = request.params.id;
-  //       const placemarkId = request.params.placemarkid;
-  //       const category = await db.categoryStore.getCategoryById(categoryId);
-  //       const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
-  //       const file = request.payload.imagefile;
-  //       if (Object.keys(file).length > 0) {
-  //         const url = await imageStore.uploadImage(request.payload.imagefile);
-  //         placemark.img = url;
-  //         console.log("URL", url);
-  //         await db.placemarkStore.updatePlacemark(placemark);
-  //       }
-  //       return h.redirect(`/category/${categoryId}/placemark/${placemarkId}`);
-  //     } catch (err) {
-  //       console.log(err);
-  //       return h.redirect("/");
-  //     }
-  //   },
-  //   payload: {
-  //     multipart: true,
-  //     output: "data",
-  //     maxBytes: 209715200,
-  //     parse: true,
-  //   },
-  // },
 };

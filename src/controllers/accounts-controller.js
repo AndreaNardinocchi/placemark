@@ -137,7 +137,6 @@ export const accountsController = {
   deleteAccount: {
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
-      // console.log(loggedInUser);
       const user = await db.userStore.getUserById(loggedInUser._id);
       await db.userStore.deleteUserById(user._id);
       request.cookieAuth.clear();
@@ -165,7 +164,6 @@ export const accountsController = {
       const newEmail = request.payload.email;
       const newPassword = request.payload.password;
       const updatedUser = {
-        // user: loggedInUser,
         userLat: newUserLat,
         userLong: newUserLong,
         country: newCountry,
@@ -176,20 +174,7 @@ export const accountsController = {
         password: newPassword,
         _id: user._id,
       };
-      // request.cookieAuth.set(
-      //   "user",
-      //   { id: user._id },
-      //   { country: newCountry },
-      //   { userLat: newUserLat },
-      //   { userLong: newUserLong },
-      //   { addressCode: newAddressCode },
-      //   { street: newStreet },
-      //   { email: newEmail },
-      //   { phoneNumber: newPhoneNumber },
-      //   { password: newPassword }
-      // );
       await db.userStore.updateUser(user, updatedUser);
-      // console.log(`updating ${user.email}`);
       return h.redirect("/account");
     },
   },
