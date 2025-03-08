@@ -106,5 +106,18 @@ export const seedData = {
         "We are home to the national collection of paintings in the Western European tradition from the 13th to the 19th centuries. Our paintings are on show 361 days a year, free of charge.",
       categoryid: "->categories.museum",
     },
+    placemark_4: {
+      title: "Phoenix Park, Dublin",
+      lat: 53.3589378,
+      long: -6.3307105,
+      address: "Phoenix Park, Phoenix Park Ward 1986, Dublin",
+      country: "Ireland",
+      phone: 35318213021,
+      website: "https://www.phoenixpark.ie/",
+      visited: "Yes",
+      description:
+        "The Phoenix Park is one of the largest enclosed public parks in any capital city in Europe. It was originally formed as a royal hunting Park in the 1660s and opened to the public in 1747.",
+      categoryid: "->categories.park",
+    },
   },
 };

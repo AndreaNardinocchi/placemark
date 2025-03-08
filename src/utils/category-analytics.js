@@ -60,10 +60,10 @@ export const categoryAnalytics = {
       for (let i = 0; i < category.placemarks.length; i += 1) {
         visit = category.placemarks[i].visited;
         if (visit === "No") {
-          yesNoIcon = "fas fa-solid fa-flag";
+          yesNoIcon = "no";
           no.push(yesNoIcon);
         } else if (visit === "Yes") {
-          yesNoIcon = "fas fa-solid fa-check";
+          yesNoIcon = "yes";
           yes.push(yesNoIcon);
         } else {
           yesNoIcon = null;
@@ -85,10 +85,10 @@ export const categoryAnalytics = {
       for (let i = 0; i < category.placemarks.length; i += 1) {
         visit = category.placemarks[i].visited;
         if (visit === "No") {
-          yesNoIcon = "fas fa-solid fa-flag";
+          yesNoIcon = "no";
           no.push(yesNoIcon);
         } else if (visit === "Yes") {
-          yesNoIcon = "fas fa-solid fa-check";
+          yesNoIcon = "yes";
           yes.push(yesNoIcon);
         } else {
           yesNoIcon = null;
@@ -99,12 +99,12 @@ export const categoryAnalytics = {
     }
   },
 
-  // https://www.bing.com/search?q=calculate%20distance%20between%20geolocations%20node.js&qs=n&form=QBRE&sp=-1&lq=0&pq=calculate%20distance%20between%20geolocations%20node.js&sc=5-47&sk=&cvid=D62AA82E014D4729832525BD82DFBE20&ghsh=0&ghacc=0&ghpl=&ntref=1
+  // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
   getMaxPOIdistance(category) {
     const lat1 = category.userLat;
     const long1 = category.userLong;
     const toRadians = (degrees) => degrees * (Math.PI / 180);
-    const R = 6371; // Radius of the Earth in
+    const R = 6371; // Radius of the Earth in km
     // eslint-disable-next-line prefer-const
     let long2 = 0;
     // eslint-disable-next-line prefer-const
@@ -140,11 +140,10 @@ export const categoryAnalytics = {
     } else {
       resultMax = `${resultMax} km away`;
     }
-    console.log(resultMax);
     return resultMax;
   },
 
-  // https://www.bing.com/search?q=calculate%20distance%20between%20geolocations%20node.js&qs=n&form=QBRE&sp=-1&lq=0&pq=calculate%20distance%20between%20geolocations%20node.js&sc=5-47&sk=&cvid=D62AA82E014D4729832525BD82DFBE20&ghsh=0&ghacc=0&ghpl=&ntref=1
+  // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
   getMinPOIdistance(category) {
     const toRadians = (degrees) => degrees * (Math.PI / 180);
     const R = 6371; // Radius of the Earth in kilometers
@@ -160,7 +159,6 @@ export const categoryAnalytics = {
     let dLat = 0;
     let dLong = 0;
     let title = "";
-    // let smallest = "";
     let country = "";
     // eslint-disable-next-line prefer-const
     let minDistance = [];
@@ -219,7 +217,6 @@ export const categoryAnalytics = {
   getLocalTravelIcon(category) {
     if (category.placemarks) {
       let destination = "";
-      // const localTravelIcons = [];
       let localTravelIcon = "";
       // Loop through all placemarks in the category
       for (let i = 0; i < category.placemarks.length; i += 1) {
