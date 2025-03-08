@@ -38,7 +38,6 @@ export const categoryAnalytics = {
     return null;
   },
 
-  // THIS WORKS
   // eslint-disable-next-line consistent-return
   countPlacemarks(category) {
     if (category.placemarks) {

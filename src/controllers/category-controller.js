@@ -6,10 +6,7 @@ import { imageStore } from "../models/image-store.js";
 export const categoryController = {
   index: {
     handler: async function (request, h) {
-      // const loggedInUser = request.auth.credentials;
-      // We are retrieving/extracting the placemark
       const category = await db.categoryStore.getCategoryById(request.params.id);
-      // const placemark = await db.placemarkStore.getAllPlacemarks(category);
       const imageCode = categoryAnalytics.getImageCode(category);
       const backgroundColor = categoryAnalytics.getBackgroundColor(category);
       const placemarkSum = categoryAnalytics.countPlacemarks(category);
@@ -25,7 +22,7 @@ export const categoryController = {
       const abroadIcon = categoryAnalytics.getAbroadIcon(category);
       // We are showing/passing the category in the view
       const viewData = {
-        title: `Placemark ${category.title}`, // ${category}
+        title: `Placemark ${category.title}`,
         category: category,
         imageCode: imageCode,
         backgroundColor: backgroundColor,
@@ -56,20 +53,12 @@ export const categoryController = {
     },
     handler: async function (request, h) {
       // We are retrieving/extracting the category
-      //  const loggedInUser = request.auth.credentials;
-      //  const user = await db.userStore.getUserById(loggedInUser._id);
       const category = await db.categoryStore.getCategoryById(request.params.id);
-      console.log(`This is category.title ${category.title}`);
-      if (request.payload.title === category.title) {
-        return h.redirect("/");
-      }
-      const placemark = await db.placemarkStore.getAllPlacemarks(category);
       const newPlacemark = {
         /** The inputted data from the form will get here (payload),
          * and we stick them to a placemark object (title, artist, duration), and
          * finally we add the placemark to the database (placemarkStore) via the category
          * with its specific 'id' */
-        //   user: loggedInUser,
         title: request.payload.title,
         lat: Number(request.payload.lat),
         long: Number(request.payload.long),

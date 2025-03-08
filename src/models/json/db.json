@@ -1,143 +1,21 @@
 {
   "users": [
     {
-      "firstName": "Andrea",
-      "lastName": "Baley",
-      "userLat": 54.54663738,
-      "userLong": -8.735213442,
-      "country": "Spain",
-      "street": "1 Church Feeak",
-      "addressCode": "T11AB89",
-      "DOB": "1931-05-01",
-      "phoneNumber": 123456789,
-      "email": "andy.bailey11@gmail.com",
-      "password": "andybailey",
-      "createdTimeStamp": "2025-03-07T16:18:07.651Z",
-      "_id": "af72046b-2cfd-4e5c-84fc-564857423e07"
-    },
-    {
-      "firstName": "Andrea",
-      "lastName": "Nardinocchi",
-      "userLat": 11.24425,
-      "userLong": -87.7466535244233,
+      "firstName": "Maggie",
+      "lastName": "Simpson",
+      "userLat": 51.8985136,
+      "userLong": -8.4726423,
       "country": "Ireland",
-      "street": "2 Church Gate, Blackrock",
-      "addressCode": "T12Y2NE",
-      "DOB": "2011-11-29",
-      "phoneNumber": 894632389,
-      "email": "andrea.nardinocchi76@gmail.com",
+      "street": "Waterford",
+      "addressCode": "T12BNE",
+      "DOB": "1990-01-13",
+      "phoneNumber": 122224444,
+      "email": "maggie@simpson.com",
       "password": "Yoestoy",
-      "createdTimeStamp": "2025-03-07T17:55:23.034Z",
-      "_id": "af02e7d1-8e8c-40d5-a00d-681945811293"
-    },
-    {
-      "firstName": "Andrea",
-      "lastName": "Bin",
-      "userLat": 23.6789023,
-      "userLong": -87.7466535244233,
-      "country": "Italy",
-      "street": "2 Protestant Cathedral ",
-      "addressCode": "T241YLL",
-      "DOB": "1978-06-10",
-      "phoneNumber": 12345678,
-      "email": "andrea.bin@gmail.com",
-      "password": "Yoestoy",
-      "createdTimeStamp": "2025-03-07T20:47:43.047Z",
-      "_id": "343fd80b-a677-4301-b205-fbbaa782eeb7"
+      "createdTimeStamp": "2025-03-08T11:38:10.702Z",
+      "_id": "9f6b69cb-9b83-4fa9-b629-a07238307237"
     }
   ],
-  "categories": [
-    {
-      "userid": "af72046b-2cfd-4e5c-84fc-564857423e07",
-      "title": "Museums",
-      "userLat": 54.54663738,
-      "userLong": -8.735213442,
-      "notes": "This category is for me to add those art galleries and museums that I would like to visit sooner or later. I will update it routinely as I see it fit for my purposes.",
-      "_id": "efb04b41-b253-4281-a481-166b35c09563",
-      "img": "http://res.cloudinary.com/drfhgzmkc/image/upload/v1741369213/s6fybajexdkt2pztgyih.jpg"
-    },
-    {
-      "userid": "343fd80b-a677-4301-b205-fbbaa782eeb7",
-      "title": "Restaurants",
-      "userLat": 23.6789023,
-      "userLong": -87.7466535244233,
-      "notes": "Questa é una lista di ristoranti che voglio visitare.",
-      "_id": "8d8b7976-28f1-4ab0-bfc9-038cc10c0a10"
-    },
-    {
-      "userid": "343fd80b-a677-4301-b205-fbbaa782eeb7",
-      "title": "Beaches",
-      "userLat": 42.821048,
-      "userLong": 13.717891,
-      "notes": "This is the category in which I will be putting in a list of beaches I would like to visit.",
-      "_id": "53a81128-ec6c-4080-8310-83441ee31e0c"
-    }
-  ],
-  "placemarks": [
-    {
-      "title": "Contemporary Irish Art Gallery",
-      "lat": 53.34149932861328,
-      "long": -6.258684158325195,
-      "address": "Unit 8-9, Royal Hibernian Way, Dawson Street, Dublin 2, D02 HP82, Dublin",
-      "country": "Ireland",
-      "phone": 35316612558,
-      "website": "https://rhagallery.ie/",
-      "visited": "Yes",
-      "description": "The RHA is Ireland’s powerhouse of the Arts, steered by an artist-run academy of our time. Our mission is to support artists. We stage free public exhibitions and provide artist-led training in the visual arts.",
-      "_id": "64b0150c-c691-4f60-9148-dbeae58f2496",
-      "categoryid": "efb04b41-b253-4281-a481-166b35c09563"
-    },
-    {
-      "title": "Tortoreto Lido beach",
-      "lat": 42.8039627,
-      "long": 13.9432708,
-      "address": "64018 Tortoreto TE, Italy",
-      "country": "Italy",
-      "phone": 390861785317,
-      "website": "http://www.beach-on-map.com/tortoreto-lido.html",
-      "visited": "No",
-      "description": "Tortoreto Lido is a beach in the north of Adriatic coast, Abruzzo region, Italy. The key feature is an upscale palmed promenade.\r\n  ",
-      "_id": "84123b00-d554-4beb-870f-4b00ba1b3fdf",
-      "categoryid": "53a81128-ec6c-4080-8310-83441ee31e0c"
-    },
-    {
-      "title": "Inch Beach",
-      "lat": 52.1244776,
-      "long": -9.9683432,
-      "address": "Inch Beach, Ireland",
-      "country": "Ireland",
-      "phone": 12345678,
-      "website": "https://www.irelandbeforeyoudie.com/inch-beach/",
-      "visited": "Yes",
-      "description": "Situated along the beautiful Dingle Peninsula in County Kerry, Inch Beach is a real gem along the Wild Atlantic Way.",
-      "_id": "4b56c3e6-2290-4d25-b9c9-debf482a72f2",
-      "categoryid": "53a81128-ec6c-4080-8310-83441ee31e0c"
-    },
-    {
-      "title": "Museo Nacional del Prado",
-      "lat": 40.4137925,
-      "long": -3.6920407,
-      "address": "C. de Ruiz de Alarcón, 23, Retiro, 28014, Madrid",
-      "country": "Spain",
-      "phone": 34913302800,
-      "website": "https://www.museodelprado.es/",
-      "visited": "Yes",
-      "description": "The Museo Nacional del Prado is one of the most popular and renowned art venues in the world, with 3 million visitors annually and an online presence of over 10 million.",
-      "_id": "fa6ecfda-10a5-46a3-a010-16ceff0d3058",
-      "categoryid": "efb04b41-b253-4281-a481-166b35c09563"
-    },
-    {
-      "title": "Louvre Museum",
-      "lat": 48.8611473,
-      "long": 2.3380277,
-      "address": "Place du Carrousel, 75001 Paris, France",
-      "country": "France",
-      "phone": 330140205317,
-      "website": "https://www.louvre.fr/en",
-      "visited": "Yes",
-      "description": "The Louvre’s collections are an invitation to travel – a celebration of beauty in all its forms and guises, transcending classification. At the Louvre, a small, everyday Egyptian chair is just as much a masterpiece as...",
-      "_id": "ecf1e39f-5306-4845-964c-f5a4ff8bdf62",
-      "categoryid": "efb04b41-b253-4281-a481-166b35c09563"
-    }
-  ]
+  "categories": [],
+  "placemarks": []
 }

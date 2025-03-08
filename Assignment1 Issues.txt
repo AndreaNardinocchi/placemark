@@ -2,17 +2,18 @@ Assignment1 Issues:
 
 ====== Account ===================
 Email address should be unique
-Cookie issue/ Updates work once only
 How many times have they logged in?
 Add your coordinates, then add them to formula in somehow.
 
 ====== Category ==================
 
-
+Image uploading without
 
 ====== Placemark =============
 
 if in Ireland show a car icon, if abroad show an airplane icon.
+
+
 
 
 

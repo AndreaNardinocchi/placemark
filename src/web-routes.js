@@ -13,31 +13,30 @@ export const webRoutes = [
   { method: "GET", path: "/logout", config: accountsController.logout },
   { method: "POST", path: "/register", config: accountsController.signup },
   { method: "POST", path: "/authenticate", config: accountsController.login },
-
-  { method: "GET", path: "/about", config: aboutController.index },
-
-  { method: "GET", path: "/dashboard", config: dashboardController.index },
-  { method: "POST", path: "/dashboard/addcategory", config: dashboardController.addCategory },
-
-  { method: "GET", path: "/category/{id}", config: categoryController.index },
-  { method: "POST", path: "/category/{id}/addplacemark", config: categoryController.addPlacemark },
-  { method: "GET", path: "/dashboard/deletecategory/{id}", config: dashboardController.deleteCategory },
-
-  { method: "POST", path: "/category/{categoryid}/deleteplacemark/{id}", config: categoryController.deletePlacemark },
-  { method: "GET", path: "/category/{id}/deleteplacemark/{placemarkid}", config: categoryController.deletePlacemark },
-
   { method: "GET", path: "/account", config: accountsController.showAccount },
   { method: "GET", path: "/account/deleteuser/{id}", config: accountsController.deleteAccount },
   { method: "GET", path: "/account/edituser/", config: accountsController.showAccount },
   { method: "POST", path: "/account/updateuser/", config: accountsController.updateAccount },
 
+  { method: "GET", path: "/about", config: aboutController.index },
+
+  { method: "GET", path: "/dashboard", config: dashboardController.index },
+  { method: "POST", path: "/dashboard/addcategory", config: dashboardController.addCategory },
+  { method: "GET", path: "/dashboard/deletecategory/{id}", config: dashboardController.deleteCategory },
+
+  { method: "GET", path: "/category/{id}", config: categoryController.index },
+  { method: "POST", path: "/category/{id}/addplacemark", config: categoryController.addPlacemark },
+
+  { method: "POST", path: "/category/{categoryid}/deleteplacemark/{id}", config: categoryController.deletePlacemark },
+  { method: "GET", path: "/category/{id}/deleteplacemark/{placemarkid}", config: categoryController.deletePlacemark },
+
+  { method: "POST", path: "/category/{id}/uploadimage", config: categoryController.uploadImage },
+  { method: "GET", path: "/category/{id}/deleteimage", config: categoryController.deleteImage },
+
   { method: "GET", path: "/category/{categoryid}/editplacemark/{placemarkid}", config: placemarkController.index },
   { method: "POST", path: "/category/{categoryid}/updateplacemark/{placemarkid}", config: placemarkController.updatePlacemark },
 
   { method: "GET", path: "/category/{id}/placemark/{placemarkid}", config: placemarkController.placemark },
-  { method: "POST", path: "/category/{id}/uploadimage", config: categoryController.uploadImage },
-  // { method: "POST", path: "/category/{id}/placemark/{placemarkid}/uploadimage", config: placemarkController.uploadImage },
-  { method: "GET", path: "/category/{id}/deleteimage", config: categoryController.deleteImage },
 
   { method: "GET", path: "/lifestyle", config: lifestyleController.index },
   { method: "GET", path: "/news", config: newsController.index },

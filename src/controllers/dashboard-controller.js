@@ -15,7 +15,7 @@ export const dashboardController = {
        * */
       const loggedInUser = request.auth.credentials;
       const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
-      // The 'sortedStations' object invokes a method contained in the 'weatherstationAnalytics' utility to sort the stations in alhabetical order
+      // The 'sortedStations' object invokes a method contained in the 'somethingAnalytics' utility to sort the stations in alhabetical order
       const sortedCategories = somethingAnalytics.getSortedCategories(categories);
       const viewData = {
         title: "Placemark Dashboard",

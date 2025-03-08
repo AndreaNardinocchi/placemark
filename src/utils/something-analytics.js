@@ -1,7 +1,7 @@
 /* This util js file contains methods used for dashboard, category, account views */
 
 export const somethingAnalytics = {
-  // This method is used to sort stations in alphabetical order https://www.youtube.com/watch?v=CTHhlx25X-U
+  // This method is used to sort categories by alphabetical order https://www.youtube.com/watch?v=CTHhlx25X-U
   getSortedCategories(categories) {
     const sortedCategories = categories.sort((a, b) => a.title.localeCompare(b.title));
     return sortedCategories;

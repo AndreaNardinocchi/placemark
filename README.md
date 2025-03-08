@@ -545,192 +545,392 @@ and this is the list of the routes in **web-routse.js**:
 - https://endgrate.com/blog/using-the-mongodb-api-to-create-or-update-records-(with-javascript-examples)
 - https://www.geeksforgeeks.org/how-to-set-minimum-and-maximum-date-in-html-date-picker/
 
-## Bugs/Defects
+### Bugs/Defects
 
 - The purpose of having the user add their location geocoordinates was for them to be utilized for the calculation of the distance bewteen the user and the placemark locations. However, I was unable to find a way to inject the user geocoordinates into any util files to create an ad hoc function. Therefore, I am having the user add their location geocoordinates again whenever they add a new category in the dashboard.
 
 ## Dahboard
 
-data will be they will land to their dashboard (**dashboard-view.hbs**):
+As the user logs in, they will land to the dashboard view where they can select one of the 4 available categories (Restaurants, Museums, Parks, Beaches) from a dropdown menu in a form. They will also have the chance to add notes about the use of the category, and their location geeocordinates. The latter will be used in functions in the 'utils' files to calculate the distance between the user and the placemarks locations:
 
-![alt text](image-15.png)
+![alt text](image-13.png)
 
-As seen above, there is a Bulma form to add a station/city and its coordinates with a button.
-A short line with a link opening to a new tab on LatLong.net has been added to help the user find the coordinates of the city they wish to check the weather conditions of.
-The rationale behind that is that I wanted to let the user add manual reports in the Station View and be able to use accurate coordinates that match with those rendered by the integrated API https://api.openweathermap.org/data/2.5/weather call.
-
-After getting the form (**add-station.hbs** partial) filled out and submitted
+The first thing to notice is that the user won't be able to add the same category twice, which is a paramount feature because we don't want them to get unnecessary duplicates. To achieve that, a few lines of code have been injected into the 'addCategory' handler aiming at checking that category just added by the user is not already stored in the 'categoryStore' :
 
 ```
-<form class="box" action="/dashboard/addstation" method="POST">
-```
+addCategory: {
+    validate: {
+      payload: CategorySpec,
+      options: { abortEarly: false },
+      failAction: function (request, h, error) {
+        return h.view("dashboard-view", { title: "Category error", errors: error.details }).takeover().code(400);
+      },
+    },
 
-5 Bulma Cards are shown with icons and data to be fed into (**list-stations.hbs**)
+    handler: async function (request, h) {
+      const loggedInUser = request.auth.credentials;
+      const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
+      // eslint-disable-next-line prefer-destructuring
+      let title = request.payload.title;
+      const newCategory = {
+        userid: loggedInUser._id,
+        title: title,
+        userLat: Number(request.payload.userLat),
+        userLong: Number(request.payload.userLong),
+        notes: request.payload.notes,
+      };
 
-![alt text](image-17.png)
+     ================================= Checking that the added category does not exist in the categoryStore already =============================
 
-The Dahboard view is rendered in the **dashboard-controllers.js**
+      /** Checking on whether the category title already exists. This app will only allow the user to add
+       * 4 categories in its 'basic' version.
+       */
+      let exTitle = "";
+      // eslint-disable-next-line prefer-const
+      let existingTitle = [];
+      categories.forEach((category) => {
+        exTitle = category.title;
+        console.log("Existing title", exTitle);
+        existingTitle.push(exTitle);
+      });
+      let existingTitleNow = "";
+      for (let i = 0; i < existingTitle.length; i += 1) {
+        existingTitleNow = existingTitle[i];
+        if (existingTitle[i] === title) {
+          title = null;
+          return h.redirect("/dashboard");
+        }
+      }
 
-```
-  /* The below 'index' action is invoked when "/dashboard" route is triggered (user must be 'logged in').
- 'render' passes the object 'viewData' */
-  async index(request, response) {
-    // Discovering which user is logged in by retrieving data from the model 'user-store.js'.
-    const loggedInUser = await accountsController.getLoggedInUser(request);
-    // Discovering which stations are stored in the station-store.js and associated to that specific user.
-    const stations = await weatherStation.getStationsByUserId(loggedInUser._id);
-     // The 'sortedStations' object invokes a method contained in the 'weatherstationAnalytics' utility to sort the stations in alhabetical order
-    const sortedStations = weatherstationAnalytics.getSortedStations(stations);
-    const viewData = {
-      title: "Forecast Stations Dashboard | Weather Top App",
-      stations: sortedStations,
-    };
-    // If user known, it creates a cookie called 'weathertop' containing the loggedin user 'id'
-    console.log("dashboard rendering");
-    response.cookie("weathertop", loggedInUser._id);
-    response.render("dashboard-view", viewData);
-  },
-```
+    ================================================================================================================================================
 
-and it is routed via the below code line
-
-```
-router.get("/dashboard", dashboardController.index);
-```
-
-As the user clicks on the leftmost icon right below the cards, they will be redirected to the Station View page.
-
-The action to add or delete station can be observed in the above-mentioned controller:
-
-```
-/* The below 'addStation' action is invoked when "/dashboard/addstation" route is triggered (user must be 'logged in'). */
-  async addStation(request, response) {
-    // Discovering which user is logged in by retrieving the data from the model 'user-store.js'.
-    const loggedInUser = await accountsController.getLoggedInUser(request);
-    // Creating object 'newStation' to pass data inputted by the user
-    const newStation = {
-      title: request.body.title,
-      latitude: request.body.latitude,
-      longitude: request.body.longitude,
-      userid: loggedInUser._id,
-    };
-    console.log(`adding station ${newStation.title}`);
-    // The function 'addStation()' in station-store.js' will add the new station
-    await weatherStation.addStation(newStation);
-    response.redirect("/dashboard");
+      await db.categoryStore.addCategory(newCategory);
+      return h.redirect("/dashboard");
+    },
   },
 
-  /* The below 'deleteStation' action is invoked when "/dashboard/deletestation/:id" route is triggered (user must be 'logged in'). */
-  async deleteStation(request, response) {
-    // The object stationId will pass the station id to delete
-    const stationId = request.params.id;
-    console.log(`Deleting Station ${stationId}`);
-    // The function deleteStationById() is invoked from the model station-store.js file
-    await weatherStation.deleteStationById(stationId);
-    response.redirect("/dashboard");
+```
+
+In a nutshell, we first iterate through the categories to retrieve the category data ('title' in our case) and we push it to a list we named 'existingTitle'. We, then, iterate through this list to check whether we find the title just inputted by the user. If there is one already, the title gets assigned a 'null' value and it won't be added to the dashboard.
+
+Additionally, the list of categories will always be sorted by alphabetic order in the dashboard, as per the below function fom the **something-analytics.js** file:
+
+```
+// This method is used to sort categories by alphabetical order https://www.youtube.com/watch?v=CTHhlx25X-U
+  getSortedCategories(categories) {
+    const sortedCategories = categories.sort((a, b) => a.title.localeCompare(b.title));
+    return sortedCategories;
   },
-```
-
-and the model that stores station data is **station-store.js**, which, in turn, generates the **station.json** file.
-Whenever a new station is added, the user id is listed in the json file along with the station id just created:
 
 ```
-title": "Austin",
-      "latitude": "30.2711286",
-      "longitude": "-97.7436995",
-      "userid": "1ccd6a07-13bb-4d99-88de-80863a4346aa",
-      "_id": "c607cf56-eea5-48ec-bce3-0c7641bb72bf"
-```
 
-Noteworthy is the method used to get the stations sorted by alphabetical order once the user adds more than one station,
+The below lines show the CategorySpec const in the **joi-schemas.js** file
 
 ```
-const sortedStations = weatherstationAnalytics.getSortedStations(stations);
+export const CategorySpec = Joi.object()
+  .keys({
+    title: Joi.string().example("Museums").required(),
+    userLat: Joi.number().max(100).example(40.41541290283203).required(),
+    userLong: Joi.number().max(100).example(3.927241764598).required(),
+    userid: IdSpec,
+    notes: Joi.string().min(20).max(1000).example("Here I will be adding all restaurants I would like to try out...").required(),
+    placemarks: PlacemarkArraySpec,
+  })
+  .label("Category");
+
+export const CategorySpecPlus = CategorySpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("CategoryPlus");
+
+export const CategoryArraySpec = Joi.array().items(CategorySpecPlus).label("CategoryArray");
+
 ```
 
-which gets imported from the 'utils' file **weatherstations-analytics.js**
+A category can also be deleted if needed. Once the user is ready, they can click on the 'folder' icon and start addig placemarks.
+
+The dashboard view is routed va the below lines in **web-routes.js**:
 
 ```
-getSortedStations(stations) {
-    let sortedStations = stations.sort((a, b) => a.title.localeCompare(b.title));
-    console.log(stations);
-    return sortedStations;
- },
-```
+{ method: "GET", path: "/dashboard", config: dashboardController.index },
+{ method: "POST", path: "/dashboard/addcategory", config: dashboardController.addCategory },
+{ method: "GET", path: "/dashboard/deletecategory/{id}", config: dashboardController.deleteCategory },
 
-All methods to import data from the Station view to feed the dashboard 5 cards with the latest weather conditions of the added stations are in the **dashboard-analytics.js**. However, since these methods are importing data from the Station view and since the handlebars 'expressions' used in the **list-station.hbs** partial are iterated through an '{{#each stations}}' loop, a 'getStationData(station)' was created to retrieve the 'properties' of the 'stations' array as seen in https://stackoverflow.com/questions/6439915/how-to-set-a-javascript-object-values-dynamically/6439954#6439954 .
-
-```
-  /* The method getStationData(station); is basically the same method as the reportStore.updateReport() one and
-  will make the latest station details show on the dashboard view (passing them through to the latter).
-  https://stackoverflow.com/questions/6439915/how-to-set-a-javascript-object-values-dynamically/6439954#6439954 */
-  async getStationData(station) {
-    // Retrieving the below object values/data from report-store.js
-    const reports = await reportStore.getReportsByStationId(station._id);
-    if (reports.length > 0) {
-      const temperature = dashboardAnalytics.getTemperature(station);
-      const feelsLike = dashboardAnalytics.getFeelsLike(station);
-      const humidity = dashboardAnalytics.getHumidity(station);
-      const tempFar = dashboardAnalytics.getTempFar(station);
-      const maxTemp = dashboardAnalytics.getMaxTemp(station);
-      const minTemp = dashboardAnalytics.getMinTemp(station);
-      const wind = dashboardAnalytics.getWind(station);
-      const windDirect = dashboardAnalytics.getWindDirect(station);
-      const windDir = dashboardAnalytics.getWindDir(station);
-      const maxWindSpeed = dashboardAnalytics.getMaxWindSpeed(station);
-      const minWindSpeed = dashboardAnalytics.getMinWindSpeed(station);
-      const pressure = dashboardAnalytics.getPressure(station);
-      const maxPressure = dashboardAnalytics.getMaxPressure(station);
-      const minPressure = dashboardAnalytics.getMinPressure(station);
-      const iconCode = dashboardAnalytics.getIconCode(station);
-      const weatherType = dashboardAnalytics.getWeatherType(station);
-      // Creating a new object 'newStation' and retrieving values
-      const newStation = {};
-      newStation['temperature'] = temperature;
-      newStation['feelsLike'] = feelsLike;
-      newStation['humidity'] = humidity;
-      newStation['tempFar'] = tempFar;
-      newStation['maxTemp'] = maxTemp;
-      newStation['minTemp'] = minTemp;
-      newStation['wind'] = wind;
-      newStation['windDirect'] = windDirect;
-      newStation['windDir'] = windDir;
-      newStation['maxWindSpeed'] = maxWindSpeed;
-      newStation['minWindSpeed'] = minWindSpeed;
-      newStation['pressure'] = pressure;
-      newStation['maxPressure'] = maxPressure;
-      newStation['minPressure'] = minPressure;
-      newStation['iconCode'] = iconCode;
-      newStation['weatherType'] = weatherType;
-      console.log(newStation + iconCode);
-      console.log("Updating station data for " + station.title);
-      /* The below action calls a new method 'weatherStation.updateStationDetails' and passes
-      both the original stations and the updated ones into the station-store.js model, which then
-      will enable the dashboard-view to render them */
-      weatherStation.updateStationDetails(station, newStation);
-   }
-  }
 ```
 
 #### Source attribution
 
-https://bulma.io/documentation/components/card/
+- https://bulma.io/documentation/form/
 
-https://www.flaticon.com/
+## Category page
 
-Sorted stations method https://www.youtube.com/watch?v=CTHhlx25X-U
+The Category view is the page where the user lands on when clicking on the 'folder' icon at the botttom of a category in the dahboard:
 
-Broken icon styling method in https://dev.to/stephenafamo/the-best-way-to-style-broken-images-29k on **list-station.hbs**
+On top of the page, the user will see a banner whose background color and image are customized according to the type of category. Ex.:
 
-https://stackoverflow.com/questions/6439915/how-to-set-a-javascript-object-values-dynamically/6439954#6439954
+![alt text](image-14.png)
 
-## Station
-
-The Station view is the page where the user lands on when clicking on the leftmost CTA, right below the 5 cards in the Dashboard view.
-
-![alt text](image-18.png)
+This particular feature has been achieved via 2 functions set up in the **category-analytics.js** file:
 
 ```
+ getImageCode(category) {
+    if (category) {
+      let imageCode = null;
+      for (let i = 0; i < 1; i += 1) {
+        if (category.title === "Restaurants") {
+          imageCode = "https://i.ibb.co/qL14ZG2g/mossel-dish-7724006-1280.jpg";
+        } else if (category.title === "Museums") {
+          imageCode = "https://i.ibb.co/C5hpYTW3/man-2590655-1280.jpg";
+        } else if (category.title === "Beaches") {
+          imageCode = "https://i.ibb.co/1YHM8FHt/coast-7366616-1280.jpg";
+        } else if (category.title === "Parks") {
+          imageCode = "https://i.ibb.co/jPnk3WxG/autumn-3731094-1280.jpg";
+        }
+      }
+      return imageCode;
+    }
+    return null;
+  },
+
+  getBackgroundColor(category) {
+    if (category) {
+      let backgroundColor = "";
+      for (let i = 0; i < 1; i += 1) {
+        if (category.title === "Restaurants") {
+          backgroundColor = "title box has-text-centered has-background-grey-dark has-text-white";
+        } else if (category.title === "Museums") {
+          backgroundColor = "title box has-text-centered has-background-black-bis has-text-white";
+        } else if (category.title === "Beaches") {
+          backgroundColor = "title box has-text-centered has-background-grey-light has-text-white";
+        } else if (category.title === "Parks") {
+          backgroundColor = "title box has-text-centered has-background-grey-darker has-text-white";
+        }
+      }
+      return backgroundColor;
+    }
+    return null;
+  },
+
+```
+
+The **getImageCode(category)** function will set the image into the banner based upon the category title inputted by the user. The images are all stored in the ImgBB free image hosting site [https://imgbb.com/](https://imgbb.com/).
+
+The background color of the banner is set by the **getBackgroundColor(category)**.
+
+The 'index' handler in the **category-controller.js** will handle the view of the category page, and it is in there that the 'imageCode', and 'backgroundColor' are retrieved from the **category-analytics.js** to be shown on the page:
+
+```
+index: {
+    handler: async function (request, h) {
+      const category = await db.categoryStore.getCategoryById(request.params.id);
+      const imageCode = categoryAnalytics.getImageCode(category);
+      const backgroundColor = categoryAnalytics.getBackgroundColor(category);
+      ...
+
+```
+
+Moving down to the bottom of the page, above the footer, the user will be presented with a form to fill out in order to start adding up their placemarks. As soon as the user submit the placemark details, the action tag in thr form element will 'post' them:
+
+```
+<form class="box" action="/category/{{category._id}}/addplacemark" method="POST">
+
+```
+
+The addPlacemark handler in the **category-controller.js** will handle the placemark creation and addition. The payload will be made of the PlacemarkSpec data retrieved from the **joi-schema.js** file:
+
+```
+export const PlacemarkSpec = Joi.object()
+  .keys({
+    title: Joi.string().min(3).max(30).example("El Parque del Buen Retiro").required(),
+    lat: Joi.number().max(100).example(40.41541290283203).required(),
+    long: Joi.number().max(100).example(-3.684231996536255).required(),
+    address: Joi.string().min(3).max(150).example("Plaza de la Independencia, 728001").required(),
+    country: Joi.string().min(3).max(30).example("Spain").required(),
+    phone: Joi.number().example(89672435).required(),
+    website: Joi.string().example("https://bit.ly/3bGwJUlrequired").required(),
+    visited: Joi.string().min(2).max(3).example("Yes").required(),
+    description: Joi.string()
+      .min(100)
+      .max(250)
+      .example(
+        "Covering over 125 hectares and comprising more than 15,000 trees, El Retiro Park–recently named a UNESCO World Heritage Site–is a green oasis in the heart of the city. And more!!!"
+      )
+      .required(),
+    categoryid: IdSpec,
+  })
+  .label("Placemark");
+
+export const updatedPlacemarkSpec = {
+  title: Joi.string().min(3).max(30).required(),
+  lat: Joi.number().max(100).required(),
+  long: Joi.number().max(100).required(),
+  address: Joi.string().min(3).max(150).required(),
+  country: Joi.string().min(3).max(30).required(),
+  phone: Joi.number().required(),
+  website: Joi.string().required(),
+  visited: Joi.string().min(2).max(3).required(),
+  description: Joi.string().min(100).max(250),
+};
+
+export const PlacemarkSpecPlus = PlacemarkSpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("PlacemarkPlus");
+
+export const PlacemarkArraySpec = Joi.array().items(PlacemarkSpecPlus).label("PlacemarkArray");
+
+```
+
+We, then, retrieve the 'id' of the category where the placemark is being added, and request the payload of each placemark field the user added via the form:
+
+```
+ addPlacemark: {
+    validate: {
+      payload: PlacemarkSpec,
+      options: { abortEarly: false },
+      failAction: function (request, h, error) {
+        return h.view("category-view", { title: "Add placemark error", errors: error.details }).takeover().code(400);
+      },
+    },
+    handler: async function (request, h) {
+      // We are retrieving/extracting the category
+      const category = await db.categoryStore.getCategoryById(request.params.id);
+      const newPlacemark = {
+        /** The inputted data from the form will get here (payload),
+         * and we stick them to a placemark object (title, artist, duration), and
+         * finally we add the placemark to the database (placemarkStore) via the category
+         * with its specific 'id' */
+        title: request.payload.title,
+        lat: Number(request.payload.lat),
+        long: Number(request.payload.long),
+        address: request.payload.address,
+        country: request.payload.country,
+        phone: Number(request.payload.phone),
+        website: request.payload.website,
+        visited: request.payload.visited,
+        description: request.payload.description,
+      };
+      await db.placemarkStore.addPlacemark(category._id, newPlacemark);
+      return h.redirect(`/category/${category._id}`);
+    },
+  },
+
+```
+
+The 'addPlacemark' function in the placemarkStore file will, at this point, take up the task of adding the newly created placemark to the store. Ex. **placemark-mongo-store.js** below:
+
+```
+async addPlacemark(categoryId, placemark) {
+    try {
+      placemark.categoryid = categoryId;
+      const newplacemark = new Placemark(placemark);
+      const placemarkObj = await newplacemark.save();
+      return this.getPlacemarkById(placemarkObj._id);
+    } catch (error) {
+      console.error("Error adding placemark:", error);
+      throw error;
+    }
+  },
+
+```
+
+As the categoryId, and placemark are passed along as parameters, a new object nePlacemark is created, and save din the MongoDB store, and it will return a new placemark 'id'. The same type of logic will apply to the other placemarks stote (json and mem).
+
+The **list-placemarks.hbs** is the the file that determines the layout of the placemarks, and it is made of a Bulma card. It also iterates the placemarks array via the '#each' helper in order to show all placemarks on the category page.
+
+These are the routes of the
+
+Right into the footer of the placemark card, two icons will enable the user to update or delete the placemark:
+
+![alt text](image-15.png)
+
+```
+<footer class="card-footer">
+    <a href="/category/{{../category._id}}/editplacemark/{{_id}}" class="button card-footer-item">
+    <span class="icon is-small">
+    <i class="fas fa-solid fa-edit"></i>
+    </span>
+    </a>
+    <a href="/category/{{../category._id}}/deleteplacemark/{{_id}}" class="button card-footer-item">
+    <span class="icon is-small">
+    <i class="fas fa-solid fa-trash"></i>
+    </span>
+    </a>
+  </footer>
+
+```
+
+The updatePlacemark handler is in the **placemark-controller.js** file, and gets evoked by the form action in **edit-placemark.hbs** :
+
+```
+<form class="box" action="/category/{{category._id}}/updateplacemark/{{placemark._id}}" method="POST">
+
+```
+
+Therefore, upon clicking on the placemark update icon, the user lands on anew route/page inside the placemark itself:
+
+```
+  { method: "GET", path: "/category/{categoryid}/editplacemark/{placemarkid}", config: placemarkController.index },
+  { method: "POST", path: "/category/{categoryid}/updateplacemark/{placemarkid}", config: placemarkController.updatePlacemark },
+```
+
+It will, then, be redirected back to the category page once the updates are submitted:
+
+```
+from the placemark-controller.jd file
+....
+
+updatePlacemark: {
+    validate: {
+      payload: updatedPlacemarkSpec,
+      options: { abortEarly: false },
+      failAction: function (request, h, error) {
+        return h.view("placemark-view", { title: "Update placemark details error", errors: error.details }).takeover().code(400);
+      },
+    },
+    handler: async function (request, h) {
+      const categoryId = request.params.categoryid;
+      const category = await db.categoryStore.getCategoryById(categoryId);
+      const placemarkId = request.params.placemarkid;
+      const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
+      const updatedTitle = request.payload.title;
+      const updatedLat = request.payload.lat;
+      const updatedLong = request.payload.long;
+      const updatedAddress = request.payload.address;
+      const updatedCountry = request.payload.country;
+      const updatedPhone = request.payload.phone;
+      const updatedWebsite = request.payload.website;
+      const updatedVisited = request.payload.visited;
+      const updatedDescription = request.payload.description;
+      const updatedPlacemark = {
+        title: updatedTitle,
+        lat: updatedLat,
+        long: updatedLong,
+        address: updatedAddress,
+        country: updatedCountry,
+        phone: updatedPhone,
+        website: updatedWebsite,
+        visited: updatedVisited,
+        description: updatedDescription,
+        _id: placemark._id,
+      };
+      await db.placemarkStore.updatePlacemark(placemark, updatedPlacemark);
+      return h.redirect(`/category/${categoryId}`);
+    },
+  },
+
+```
+
+Another feature added to the category page is the one that lets the user add an image to the category page. Its widget, generated byt the partial **category-image.hbs** is positioned right below the form used to add placemarks:
+
+![alt text](image-16.png)
+
+```
+
+However, the Bulma upload file component in [https://bulma.io/documentation/form/file/](https://bulma.io/documentation/form/file/) provides a script which shows an empty image before a user upload thier own image. I found it as not a great user experience, and consulted ChatGPT [https://chatgpt.com/](https://chatgpt.com/) to enhance the script to the extent that now the image card no longer shows the empty image icon when no image is uploaded.
+
+
+
   <a href="/station/{{_id}}" class="button">
   {{>icons/open}}
 ```
@@ -1233,3 +1433,7 @@ Special thanks to John Rellis again!
 I also would like to thank and acknowledge Giovanni's, Noemi Lovei's, David O'Connor's help, but, most of all, a special thanks to Wolfgang Helnwein who patiently helped me out and came to my rescue when I was only seeing doom and gloom and could not get the Dashboard view to display weather conditions data for each station added by the user. Without his invaluable help, I would have likely dropped out of the course altogether.
 
 Thank you all again!!!
+
+```
+
+```
