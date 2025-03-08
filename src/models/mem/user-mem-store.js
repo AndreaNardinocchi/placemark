@@ -34,7 +34,6 @@ export const userMemStore = {
     users = [];
   },
 
-  // TOCHECK
   async updateUser(user, updatedUser) {
     console.log(updatedUser);
     user._id = updatedUser._id;

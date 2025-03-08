@@ -44,4 +44,37 @@ export const categoryJsonStore = {
     db.data.categories = [];
     await db.write();
   },
+
+  // // eslint-disable-next-line consistent-return
+  // async updateCategory(updatedCategory) {
+  //   await db.read();
+  //   // Finding the category index, which is the same as the update one
+  //   const i = db.data.categories.findIndex((category) => category._id === updatedCategory._id);
+  //   // If it does exist then find the category and update
+  //   if (i) {
+  //     // Update the fields that were passed in the updatedCategory
+  //     const category = db.data.categories[i];
+  //     category.title = updatedCategory.title;
+  //     category.img = updatedCategory.img;
+  //     await db.write();
+  //     return category;
+  //   }
+  // },
+
+  // New method to update a category
+  // eslint-disable-next-line consistent-return
+  async updateCategory(updatedCategory) {
+    await db.read();
+    // Finding the category index, which is the same as the update one
+    const i = db.data.categories.findIndex((category) => category._id === updatedCategory._id);
+    // If it does exist then find the category and update
+    if (i !== -1) {
+      // Update the fields that were passed in the updatedCategory
+      const category = db.data.categories[i];
+      category.title = updatedCategory.title;
+      category.img = updatedCategory.img;
+      await db.write();
+      return category;
+    }
+  },
 };

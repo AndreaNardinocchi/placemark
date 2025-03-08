@@ -43,7 +43,6 @@ export const userJsonStore = {
     await db.write();
   },
 
-  // TOCHECK
   async updateUser(user, updatedUser) {
     console.log(updatedUser);
     user._id = updatedUser._id;

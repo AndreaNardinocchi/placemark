@@ -12,7 +12,7 @@ export const accountsController = {
      */
     auth: false,
     handler: function (request, h) {
-      return h.view("main", { title: "Welcome to Placemark" });
+      return h.view("main", { title: "Welcome to PlaceMark" });
     },
   },
   showSignup: {
@@ -65,7 +65,7 @@ export const accountsController = {
       if (!user || user.password !== password) {
         return h.redirect("/");
       }
-      // We set the cookie and istall the object 'user', passing the '._id' of te user
+      // We set the cookie and istall the object 'user', passing the '._id' of the user
       request.cookieAuth.set({ id: user._id });
       return h.redirect("/dashboard");
     },
@@ -106,7 +106,7 @@ export const accountsController = {
       const accCatId3 = await somethingAnalytics.getAccountCategoriesId3(categories);
       const userDetails = await db.userStore.getUserById(loggedInUser._id);
       const viewData = {
-        title: "Your Account details | App",
+        title: "Your Account details | PlaceMark",
         user: loggedInUser,
         firstName: userDetails.firstName,
         lastName: userDetails.lastName,

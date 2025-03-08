@@ -194,66 +194,364 @@ https://fontawesome.com/v4/icons/
 
 ## Sign up
 
-![alt text](image-14.png)
+![alt text](image-7.png)
 
-It is routed as per the below line of code in **routes.js**
-
-```
-router.get("/signup", accountsController.signup);
-```
-
-and its view is rendered by the **\*accounts-controller.js**
+It is routed as per the below line of code in **web-routes.js**
 
 ```
- /* The below 'signup' action is invoked when "/signup" route is triggered to create a new account
- 'render' passes the object 'viewData' */
-  signup(request, response) {
-    const viewData = {
-      title: "Sign up to the Service | Weather Top App",
-    };
-    response.render("signup-view", viewData);
+ { method: "GET", path: "/signup", config: accountsController.showSignup },
+```
+
+and its view is rendered by the **accounts-controller.js**
+
+```
+  signup: {
+    auth: false,
+    /**
+     * validate object specifying our validation schema
+     * (UserSpec) + failAction method,
+     * to be called if the validation fails.
+     * 'errors: error.details' will enable the signup page to show the errors
+     * .takeover() will avoid the redirection to accountController, as Joi will manage the error
+     */
+    validate: {
+      payload: UserSpec,
+      options: { abortEarly: false },
+      failAction: function (request, h, error) {
+        return h.view("signup-view", { title: "Sign up error", errors: error.details }).takeover().code(400);
+      },
+    },
+    handler: async function (request, h) {
+      const user = request.payload;
+      console.log("This is the currentHour: ", user);
+      await db.userStore.addUser(user);
+      return h.redirect("/");
+    },
   },
 ```
 
-Once the user prompts the sign up action, their data will be registered via the below action 'register()' to create a new user:
+Once a new user object is created, the validation() function will check the Joi scema UserSpec data, and if it comes across any issues, the failAction method will be called in and redirects the page to the how the errors.
 
-```
-  /* The below 'register' action is invoked when "/register" route is triggered */
-  async register(request, response) {
-    // The 'user' object is passed through to the function addUser() from the user-store.js and a new user is added
-    const user = request.body;
-    await userStore.addUser(user);
-    console.log(`registering ${user.email}`);
-    response.redirect("/");
-  },
-```
+The user data will, then, be stored into one of the stores being used by the app administrator:
 
-The user data will, then, be stored into **user-store.js** model and viewable in the generated **user.json** file, and a unique 'id' is created with them:
+- user-mongo-store.js
+- user-json-store.js
+- user-mem-store.js
 
-```
-"firstName": "test",
-      "lastName": "test",
-      "email": "test",
-      "password": "test",
-      "_id": "98bc7ad5-a964-4ff8-a102-cded2aebc0ee"
-```
+**Mongoose T3**
 
-As seen above, once the user signs up, they will be redirected to the homepage:
+![alt text](image-8.png)
 
-```
-response.redirect("/");
-```
+**json**
 
-and will have to click on 'Log In' on the menu if they would like to get access to the logged in views.
+![alt text](image-9.png)
+
+The way that we tie these database logics is via the **db.js**, which is basically a facade from which we can choose the database we want the app to use.
 
 #### Source attribution
 
-Image taken from:
-https://pixabay.com
+- https://www.mongodb.org
+- https://robomongo.org
 
-## Dashboard
+## Joi Schema
 
-Once the user logs in, they will land to their dashboard (**dashboard-view.hbs**):
+The information the user will be inputting is defined in the Joi Schema file **joi-schema.js** which indicates 'string', 'number', 'date' fields with certain value ranges which might or might not be indicated as well as whether they are required or not. Ex.:
+
+```
+export const UserSpec = UserCredentialsSpec.keys({
+  firstName: Joi.string().min(3).max(30).example("Homer").required(),
+  lastName: Joi.string().min(3).max(30).example("Simpson").required(),
+  userLat: Joi.number().max(100).example(40.41541290283203),
+  userLong: Joi.number().max(100).example(-3.684231996536255),
+  country: Joi.string().min(3).max(30).example("Portugal").required(),
+  street: Joi.string().min(3).max(50).example("Rua das Flores, 4").required(),
+  addressCode: Joi.string().min(3).max(15).example("T12Y2NE").required(),
+  DOB: JoiExtended.date().raw().format().required(),
+  phoneNumber: Joi.number().example(892356189).required(),
+  createdTimeStamp: JoiExtended.date().default(() => new Date()),
+}).label("UserDetails");
+```
+
+The same logic applies to the 'categories' and 'placemarks' data.
+
+## Account page
+
+This page is where the user can check their personal details, and, also, update them via a Bulma form, which will show in aa pop-up:
+
+![alt text](image-10.png)
+
+![alt text](image-11.png)
+
+The **accounts-controller.js** renders the page through the below 'showAccount' handler
+
+```
+ showAccount: {
+    handler: async function (request, h) {
+      const loggedInUser = request.auth.credentials;
+      const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
+      const accCat0 = await somethingAnalytics.getAccountCategories0(categories);
+      const accCatId0 = await somethingAnalytics.getAccountCategoriesId0(categories);
+      const accCat1 = await somethingAnalytics.getAccountCategories1(categories);
+      const accCatId1 = await somethingAnalytics.getAccountCategoriesId1(categories);
+      const accCat2 = await somethingAnalytics.getAccountCategories2(categories);
+      const accCatId2 = await somethingAnalytics.getAccountCategoriesId2(categories);
+      const accCat3 = await somethingAnalytics.getAccountCategories3(categories);
+      const accCatId3 = await somethingAnalytics.getAccountCategoriesId3(categories);
+      const userDetails = await db.userStore.getUserById(loggedInUser._id);
+      const viewData = {
+        title: "Your Account details | PlaceMark",
+        user: loggedInUser,
+        firstName: userDetails.firstName,
+        lastName: userDetails.lastName,
+        userLat: userDetails.userLat,
+        userLong: userDetails.userLong,
+        country: userDetails.country,
+        street: userDetails.street,
+        addressCode: userDetails.addressCode,
+        DOB: userDetails.DOB,
+        phoneNumber: userDetails.phoneNumber,
+        email: userDetails.email,
+        password: userDetails.password,
+        accCat0: accCat0,
+        accCatId0: accCatId0,
+        accCat1: accCat1,
+        accCatId1: accCatId1,
+        accCat2: accCat2,
+        accCatId2: accCatId2,
+        accCat3: accCat3,
+        accCatId3: accCatId3,
+        _id: userDetails._id,
+        createdTimeStamp: userDetails.createdTimeStamp,
+      };
+      return h.view("account-view", viewData);
+    },
+  },
+```
+
+After requesting the autorized credentials, I retrieve the 'categories' of the loggedInUser as well as their 'userDetails'. The userDetails const retrieves all information from the userStore, and, then, the const 'viewData' will itemize it to get rendered on the account-view.
+
+If the user wished to update their details, or even delet the account altogether, the below handlers will make the above-mentioned actions possible:
+
+```
+deleteAccount: {
+    handler: async function (request, h) {
+      const loggedInUser = request.auth.credentials;
+      const user = await db.userStore.getUserById(loggedInUser._id);
+      await db.userStore.deleteUserById(user._id);
+      request.cookieAuth.clear();
+      return h.redirect("/");
+    },
+  },
+
+  updateAccount: {
+    validate: {
+      payload: updatedUserSpec,
+      options: { abortEarly: false },
+      failAction: function (request, h, error) {
+        return h.view("account-view", { title: "Update user details error", errors: error.details }).takeover().code(400);
+      },
+    },
+    handler: async function (request, h) {
+      const loggedInUser = request.auth.credentials;
+      const user = await db.userStore.getUserById(loggedInUser._id);
+      const newUserLat = Number(request.payload.userLat);
+      const newUserLong = Number(request.payload.userLong);
+      const newCountry = request.payload.country;
+      const newStreet = request.payload.street;
+      const newAddressCode = request.payload.addressCode;
+      const newPhoneNumber = Number(request.payload.phoneNumber);
+      const newEmail = request.payload.email;
+      const newPassword = request.payload.password;
+      const updatedUser = {
+        userLat: newUserLat,
+        userLong: newUserLong,
+        country: newCountry,
+        street: newStreet,
+        addressCode: newAddressCode,
+        phoneNumber: newPhoneNumber,
+        email: newEmail,
+        password: newPassword,
+        _id: user._id,
+      };
+      await db.userStore.updateUser(user, updatedUser);
+      return h.redirect("/account");
+    },
+  },
+```
+
+The updateUser() function from the userStore will enable the user details updates:
+
+**user-mongo-store.js**
+
+```
+ async updateUser(user, updatedUser) {
+    const userDoc = await User.findOne({ _id: user._id });
+    console.log(userDoc);
+    user._id = updatedUser._id;
+    userDoc.userLat = updatedUser.userLat;
+    userDoc.userLong = updatedUser.userLong;
+    userDoc.country = updatedUser.country;
+    userDoc.street = updatedUser.street;
+    userDoc.addressCode = updatedUser.addressCode;
+    userDoc.phoneNumber = updatedUser.phoneNumber;
+    userDoc.email = updatedUser.email;
+    userDoc.password = updatedUser.password;
+    await userDoc.save();
+  },
+```
+
+**user-json-store.js**
+
+```
+async updateUser(user, updatedUser) {
+    console.log(updatedUser);
+    user._id = updatedUser._id;
+    user.userLat = updatedUser.userLat;
+    user.userLong = updatedUser.userLong;
+    user.country = updatedUser.country;
+    user.street = updatedUser.street;
+    user.addressCode = updatedUser.addressCode;
+    user.phoneNumber = updatedUser.phoneNumber;
+    user.email = updatedUser.email;
+    user.password = updatedUser.password;
+    await db.write();
+    console.log(user);
+    return user;
+  },
+```
+
+**user-mem-store.js**
+
+```
+  async updateUser(user, updatedUser) {
+    console.log(updatedUser);
+    user._id = updatedUser._id;
+    user.userLat = updatedUser.userLat;
+    user.userLong = updatedUser.userLong;
+    user.country = updatedUser.country;
+    user.street = updatedUser.street;
+    user.addressCode = updatedUser.addressCode;
+    user.phoneNumber = updatedUser.phoneNumber;
+    user.email = updatedUser.email;
+    user.password = updatedUser.password;
+    console.log(user);
+    return user;
+  },
+```
+
+It is worth spending a few lines on a few variables created an itemized in the 'viewData' variable:
+
+```
+const accCat0 = await somethingAnalytics.getAccountCategories0(categories);
+const accCatId0 = await somethingAnalytics.getAccountCategoriesId0(categories);
+const accCat1 = await somethingAnalytics.getAccountCategories1(categories);
+const accCatId1 = await somethingAnalytics.getAccountCategoriesId1(categories);
+const accCat2 = await somethingAnalytics.getAccountCategories2(categories);
+const accCatId2 = await somethingAnalytics.getAccountCategoriesId2(categories);
+const accCat3 = await somethingAnalytics.getAccountCategories3(categories);
+const accCatId3 = await somethingAnalytics.getAccountCategoriesId3(categories);
+```
+
+Here, the objective is to retrieve the titles of the categories as well as their ids since the partial **stats-account.hbs** embedded in the **account-view.hbs** will show the categories that the user added. In the example below there is an extract of the functions created in the **something-analytics.js** util file to achieve just that:
+
+```
+ getAccountCategories0(categories) {
+    let accCat = "";
+    // eslint-disable-next-line prefer-const
+    let accCats = [];
+    // eslint-disable-next-line prefer-const
+    let accCatsId = [];
+    let accCatId = "";
+    categories.forEach((category) => {
+      accCat = category.title;
+      accCatId = category._id;
+      accCats.push(accCat);
+      accCatsId.push(accCatId);
+    });
+    // eslint-disable-next-line prefer-const
+    let accCat0 = accCats[0];
+    return accCat0;
+  },
+
+  getAccountCategoriesId0(categories) {
+    let accCat = "";
+    // eslint-disable-next-line prefer-const
+    let accCats = [];
+    // eslint-disable-next-line prefer-const
+    let accCatsId = [];
+    let accCatId = "";
+    categories.forEach((category) => {
+      accCat = category.title;
+      accCatId = category._id;
+      accCats.push(accCat);
+      accCatsId.push(accCatId);
+    });
+    // eslint-disable-next-line prefer-const
+    let accCatId0 = accCatsId[0];
+    return accCatId0;
+  },
+```
+
+The 'categories' value is passed along the parameter 'categories' in the above function, and then through iteration we fetch the category values we need to show in the account page, namely the 'title' of the category as well as its id which is needed to create a URL to make the title clickable (see the **stats-account.hbs**):
+
+```
+ <section class = "content pl-4">
+    <div class="columns">
+      <div class="column">
+        <p class="is-size-4 mb-2 "><a href="/category/{{accCatId0}}" class="has-text-grey-light">{{accCat0}}</a> </p>
+        <p class="is-size-4 mb-2"><a href="/category/{{accCatId1}}" class="has-text-grey-light">{{accCat1}}</a> </p>
+        <p class="is-size-4 mb-2 "><a href="/category/{{accCatId2}}" class="has-text-grey-light">{{accCat2}}</a> </p>
+        <p class="is-size-4 mb-6"><a href="/category/{{accCatId3}}" class="has-text-grey-light">{{accCat3}}</a> </p>
+        <p class="is-size-7">* If you have added any categories, they will get displayed in this box. </p>
+      </div>
+    </div>
+  </section>
+```
+
+![alt text](image-12.png)
+
+The **joi-schemas.js** also contains the below line which produces a 'time stamp' of when the account was created:
+
+```
+createdTimeStamp: JoiExtended.date().default(() => new Date()),
+
+```
+
+This is the list of the HTML files created for the account page:
+
+- account-view.hbs
+- user-deatils.hbs
+- stats-account.hbs
+
+and this is the list of the routes in **web-routse.js**:
+
+```
+ { method: "GET", path: "/", config: accountsController.index },
+  { method: "GET", path: "/signup", config: accountsController.showSignup },
+  { method: "GET", path: "/login", config: accountsController.showLogin },
+  { method: "GET", path: "/logout", config: accountsController.logout },
+  { method: "POST", path: "/register", config: accountsController.signup },
+  { method: "POST", path: "/authenticate", config: accountsController.login },
+  { method: "GET", path: "/account", config: accountsController.showAccount },
+  { method: "GET", path: "/account/deleteuser/{id}", config: accountsController.deleteAccount },
+  { method: "GET", path: "/account/edituser/", config: accountsController.showAccount },
+  { method: "POST", path: "/account/updateuser/", config: accountsController.updateAccount },
+```
+
+#### Source attribution
+
+- https://bulma.io/documentation/form/
+- https://bulma.io/documentation/components/modal/
+- https://endgrate.com/blog/using-the-mongodb-api-to-create-or-update-records-(with-javascript-examples)
+- https://www.geeksforgeeks.org/how-to-set-minimum-and-maximum-date-in-html-date-picker/
+
+## Bugs/Defects
+
+- The purpose of having the user add their location geocoordinates was for them to be utilized for the calculation of the distance bewteen the user and the placemark locations. However, I was unable to find a way to inject the user geocoordinates into any util files to create an ad hoc function. Therefore, I am having the user add their location geocoordinates again whenever they add a new category in the dashboard.
+
+## Dahboard
+
+data will be they will land to their dashboard (**dashboard-view.hbs**):
 
 ![alt text](image-15.png)
 

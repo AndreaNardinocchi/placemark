@@ -2,7 +2,11 @@
  * This defines a schema we will use for the signup form, indicating that all
  * fields are strings, required + the email should be a validly formatted email.
  *
- * Sources: // https://www.npmjs.com/package/@joi/date and https://github.com/hapijs/joi-date/issues/39
+ * Sources:
+ * https://www.npmjs.com/package/@joi/date
+ * https://github.com/hapijs/joi-date/issues/39
+ * https://joi.dev/module/joi-date/api/?v=2.1.1
+ * https://www.w3schools.com/js/js_dates.asp
  */
 
 import Joi from "joi";
@@ -27,7 +31,7 @@ export const UserSpec = UserCredentialsSpec.keys({
   country: Joi.string().min(3).max(30).example("Portugal").required(),
   street: Joi.string().min(3).max(50).example("Rua das Flores, 4").required(),
   addressCode: Joi.string().min(3).max(15).example("T12Y2NE").required(),
-  DOB: JoiExtended.date().raw().format().required().messages({ "date.min": "You must be at least 14 years old.", "date.max": "Date of birth cannot be in the future." }), // to comment on the readme.md
+  DOB: JoiExtended.date().raw().format().required(),
   phoneNumber: Joi.number().example(892356189).required(),
   createdTimeStamp: JoiExtended.date().default(() => new Date()),
 }).label("UserDetails");

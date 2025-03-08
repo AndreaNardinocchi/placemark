@@ -315,38 +315,33 @@ export const categoryAnalytics = {
   },
 
   // eslint-disable-next-line consistent-return
-  getTravelMeans(category) {
-    if (category.placemarks) {
-      let travelMeans = "";
-      let destination = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
-          travelMeans = "car";
-        } else {
-          travelMeans = "plane";
-        }
+  getTravelMeans(placemark) {
+    let travelMeans = "";
+    let destination = "";
+    if (placemark) {
+      destination = placemark.country;
+      console.log("This is the destination: ", destination);
+      if (destination === "Ireland") {
+        travelMeans = "car, bus, or train";
+      } else {
+        travelMeans = "plane";
       }
-      return travelMeans;
     }
+    return travelMeans;
   },
 
   // eslint-disable-next-line consistent-return
-  getYouShouldVisit(category) {
-    if (category.placemarks) {
-      let youShouldVisit = "";
-      let visit = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        visit = category.placemarks[i].visited;
-        if (visit === "No") {
-          youShouldVisit = "What are you waiting for? Time to pay a visit to ";
-        } else {
-          youShouldVisit = "Although you have already been there, it is never a bad idea to visit again the ";
-        }
+  getYouShouldVisit(placemark) {
+    let youShouldVisit = "";
+    let visit = "";
+    if (placemark) {
+      visit = placemark.visited;
+      if (visit === "No") {
+        youShouldVisit = "What are you waiting for? Time to pay a visit to ";
+      } else {
+        youShouldVisit = "Although you have already been there, it is never a bad idea to visit again the ";
       }
-      return youShouldVisit;
     }
+    return youShouldVisit;
   },
 };

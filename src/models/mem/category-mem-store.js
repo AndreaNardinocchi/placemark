@@ -40,4 +40,17 @@ export const categoryMemStore = {
   async deleteAllCategories() {
     categories = [];
   },
+
+  // eslint-disable-next-line consistent-return
+  async updateCategory(updatedCategory) {
+    // Finding the category index, which is the same as the update one
+    const i = categories.findIndex((category) => category._id === updatedCategory._id);
+    // If it does exist then find the category and update
+    if (i !== -1) {
+      // Update the fields that were passed in the updatedCategory
+      const category = categories[i];
+      category.title = updatedCategory.title;
+      category.img = updatedCategory.img;
+    }
+  },
 };
