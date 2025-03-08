@@ -838,7 +838,13 @@ As the categoryId, and placemark are passed along as parameters, a new object ne
 
 The **list-placemarks.hbs** is the the file that determines the layout of the placemarks, and it is made of a Bulma card. It also iterates the placemarks array via the '#each' helper in order to show all placemarks on the category page.
 
-These are the routes of the
+These are the routes to delete a placemark:
+
+```
+{ method: "POST", path: "/category/{categoryid}/deleteplacemark/{id}", config: categoryController.deletePlacemark },
+  { method: "GET", path: "/category/{id}/deleteplacemark/{placemarkid}", config: categoryController.deletePlacemark },
+
+```
 
 Right into the footer of the placemark card, two icons will enable the user to update or delete the placemark:
 
@@ -925,14 +931,135 @@ Another feature added to the category page is the one that lets the user add an 
 
 ![alt text](image-16.png)
 
-```
-
 However, the Bulma upload file component in [https://bulma.io/documentation/form/file/](https://bulma.io/documentation/form/file/) provides a script which shows an empty image before a user upload thier own image. I found it as not a great user experience, and consulted ChatGPT [https://chatgpt.com/](https://chatgpt.com/) to enhance the script to the extent that now the image card no longer shows the empty image icon when no image is uploaded.
 
+```
+<script>
+  /** If you want to prevent displaying the placeholder image when no image is uploaded,
+  and ensure that it only shows once an image is selected or already uploaded, here’s a
+  new approach: Steps to Implement
+  Hide the image element completely if no image exists.
+  Only show the image once it's uploaded or if it already exists.
+  We'll conditionally render the image using server-side logic (e.g., using a templating engine)
+  and then hide it or show a preview based on whether a file is selected.*/
 
+  /** Solution
+  We will start by hiding the image element by default and show it once there is an actual image
+  to display. You can do this using JavaScript to dynamically check for an image and toggle
+  its visibility. */
 
-  <a href="/station/{{_id}}" class="button">
-  {{>icons/open}}
+    const fileInput = document.querySelector(".file-input");
+    const categoryImage = document.getElementById("category-image");
+    const fileNameDisplay = document.querySelector(".file-name");
+
+    // Display image if it already exists when page loads
+    if (categoryImage.src && categoryImage.src !== "") {
+      categoryImage.style.display = "block";  // Show the image if it has a valid src
+    }
+
+    fileInput.onchange = () => {
+      if (fileInput.files.length > 0) {
+        const fileName = fileInput.files[0].name;
+        fileNameDisplay.textContent = fileName;
+
+        // Show the image preview immediately after selection
+        const reader = new FileReader();
+        reader.onload = () => {
+          categoryImage.src = reader.result; // Set the image source to the file
+          categoryImage.style.display = 'block';  // Show the image
+        };
+        reader.readAsDataURL(fileInput.files[0]); // Read the selected file as a Data URL
+      }
+    };
+</script>
+
+```
+
+![alt text](image-17.png)
+
+![alt text](image-18.png)
+
+The upladImage and deleteImage handlers are in the **category-controller.js** file:
+
+```
+uploadImage: {
+    handler: async function (request, h) {
+      try {
+        const category = await db.categoryStore.getCategoryById(request.params.id);
+        const file = request.payload.imagefile;
+        if (Object.keys(file).length > 0) {
+          const url = await imageStore.uploadImage(request.payload.imagefile);
+          category.img = url;
+          await db.categoryStore.updateCategory(category);
+        }
+        return h.redirect(`/category/${category._id}`);
+      } catch (err) {
+        console.log(err);
+        return h.redirect("/");
+      }
+    },
+    payload: {
+      multipart: true,
+      output: "data",
+      maxBytes: 209715200,
+      parse: true,
+    },
+  },
+
+  deleteImage: {
+    handler: async function (request, h) {
+      try {
+        const category = await db.categoryStore.getCategoryById(request.params.id);
+        if (category.img) {
+          await imageStore.deleteImage(category.img);
+          category.img = null;
+          await db.categoryStore.updateCategory(category);
+        }
+        return h.redirect(`/category/${category._id}`);
+      } catch (err) {
+        console.log("Error during image deletion:", err);
+        return h.redirect(`/category/${category._id}`); // Redirect even in case of error
+      }
+    },
+  },
+```
+
+The functions updateImage() and deleteImage() are called in from the **image-store.js** file from which the images will be uploaded or delete into the [Cloudinary](https://console.cloudinary.com/) account of the app administrator.
+
+As **category.js** file also shows a field for the image:
+
+```
+const categorySchema = new Schema({
+  title: String,
+  userLat: Number,
+  userLong: Number,
+  notes: String,
+  img: String,
+  userid: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+});
+
+```
+
+These are the routes used to upload or delete an image in the category page:
+
+```
+  { method: "POST", path: "/category/{id}/uploadimage", config: categoryController.uploadImage },
+  { method: "GET", path: "/category/{id}/deleteimage", config: categoryController.deleteImage },
+
+```
+
+once an image has been added, the updateCategory function in **category-mongo-store.js** will ensure that the img field will pop up in the categoryStore:
+
+```
+async updateCategory(updatedCategory) {
+    const category = await Category.findOne({ _id: updatedCategory._id });
+    category.title = updatedCategory.title;
+    category.img = updatedCategory.img;
+    await category.save();
+  },
 ```
 
 ![alt text](image-19.png)
