@@ -3,7 +3,7 @@ import { db } from "../../src/models/db.js";
 import { maggie, testUsers } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 
-suite("User API tests", () => {
+suite("User API model tests", () => {
   setup(async () => {
     db.init("mongo");
     await db.userStore.deleteAll(); // ESach test should generally start from an empty data store

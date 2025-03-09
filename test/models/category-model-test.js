@@ -7,7 +7,7 @@ import { assertSubset } from "../test-utils.js";
 // This should generate a cleaner report
 EventEmitter.setMaxListeners(25);
 
-suite("Category API tests", () => {
+suite("Category API model tests", () => {
   setup(async () => {
     db.init("mongo");
     await db.categoryStore.deleteAllCategories(); // Each test should generally start from an empty data store

@@ -15,8 +15,3 @@ const categorySchema = new Schema({
 });
 
 export const Category = Mongoose.model("Category", categorySchema);
-
-// placemarks: {
-//   type: Schema.Types.Array,
-//   ref: "Placemark",
-// },

@@ -70,7 +70,7 @@ export const placemarkController = {
       const travelMeans = categoryAnalytics.getTravelMeans(placemark);
       const youShouldVisit = categoryAnalytics.getYouShouldVisit(placemark);
 
-      /* --------- The below section calculates the distance between the user and the placemark location ----- */
+      /* --------- The below section calculates the distance between the user's and the placemark location ----- */
       const lat1 = category.userLat;
       const long1 = category.userLong;
       const toRadians = (degrees) => degrees * (Math.PI / 180);

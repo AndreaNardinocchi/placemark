@@ -3,7 +3,7 @@ import { db } from "../../src/models/db.js";
 import { maggie, testCategories, testUsers, museums, elPradoMuseum, testPlacemarks, parks } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 
-suite("placemark API tests", () => {
+suite("placemark API model tests", () => {
   let parksList = null;
 
   setup(async () => {

@@ -253,9 +253,9 @@ The way that we tie these database logics is via the **db.js**, which is basical
 - https://www.mongodb.org
 - https://robomongo.org
 
-## Joi Schema
+## Joi Schemas
 
-The information the user will be inputting is defined in the Joi Schema file **joi-schema.js** which indicates 'string', 'number', 'date' fields with certain value ranges which might or might not be indicated as well as whether they are required or not. Ex.:
+The information the user will be inputting is defined in the Joi Schemas file **joi-schema.js** which indicates 'string', 'number', 'date' fields with certain value ranges which might or might not be indicated as well as whether they are required or not. Ex.:
 
 ```
 export const UserSpec = UserCredentialsSpec.keys({
@@ -273,6 +273,40 @@ export const UserSpec = UserCredentialsSpec.keys({
 ```
 
 The same logic applies to the 'categories' and 'placemarks' data.
+
+## Joi Error Reporting
+
+Furthermore, we have introduced the 'Joi Error Reporting' as Joi can generate human readable errors. Therefore, **error.hbs** partial was created in which errors are looped through and a handlebar will enable to show errors on the UX:
+
+```
+{{#if errors}}
+  <div class="box content">
+    <p> There was a problem... </p>
+    <ul>
+      {{#each errors}}
+        <li>{{message}}</li>
+      {{/each}}
+    </ul>
+  </div>
+{{/if}}
+
+```
+
+Additionally, the errors are passed from Joi to the view on any 'controller' actions where it is relevant:
+
+```
+validate: {
+      payload: UserSpec,
+      failAction: function (request, h, error) {
+        return h.view("signup-view", { title: "Sign up error", errors: error.details }).takeover().code(400);
+      },
+    },
+
+```
+
+'errors: error.details' will enable the signup page to show the errors, whereas .takeover() will avoid the redirection to accountController, as Joi will manage the error:
+
+![alt text](image-27.png)
 
 ## Account page
 
@@ -1436,479 +1470,303 @@ index: {
 - https://bulma.io/documentation/form/file/
 - https://chatgpt.com/
 
-The Station view in **station-view.hbs** is rendered by the 'index' action in the **station-controller.js** file:
+## Placemark page
 
-```
-async index(request, response) {
-    // Discovering the station by its id by retrieving data from the model 'station-store.js'.
-    const station = await weatherStation.getStationById(request.params.id);
-    // The below action will call out the method getStationData(station); from the 'weatherStation' utility.
-    await weatherstationAnalytics.getStationData(station);
-    /* Creating new object by calling out methods from 'station-analytics.js' utility.
-    All of them will be called in in the 'handlebars' via 'expressions' ({{}}) */
-    const temperatureReport = stationAnalytics.getTemperatureReport(station);
-    const tempFarReport = stationAnalytics.getTempFarReport(station);
-    const maxTempReport = stationAnalytics.getMaxTempReport(station);
-    const minTempReport = stationAnalytics.getMinTempReport(station);
-    const maxWindSpeedReport = stationAnalytics.getMaxWindSpeedReport(station);
-    const minWindSpeedReport= stationAnalytics.getMinWindSpeedReport(station);
-    const windDirection = stationAnalytics.getWindDirectionReport(station);
-    const windDir = stationAnalytics.getWindDir(station);
-    const windReport = stationAnalytics.getWindReport(station);
-    const pressureReport = stationAnalytics.getPressureReport(station);
-    const maxPressureReport = stationAnalytics.getMaxPressureReport(station);
-    const minPressureReport = stationAnalytics.getMinPressureReport(station);
-    const iconCodeReport = stationAnalytics.getIconCodeReport(station);
-    const weatherTypeReport = stationAnalytics.getWeatherTypeReport(station);
-    const feelsLikeReport = stationAnalytics.getFeelsLikeReport(station);
-    const humidityReport = stationAnalytics.getHumidityReport(station);
-    const viewData = {
-      title: "Station View | Weather Top App",
-      station: station,
-      temperatureReport: temperatureReport,
-      tempFarReport: tempFarReport,
-      maxTempReport: maxTempReport,
-      minTempReport: minTempReport,
-      windReport: windReport,
-      maxWindSpeedReport: maxWindSpeedReport,
-      minWindSpeedReport: minWindSpeedReport,
-      windDirection: windDirection,
-      windDir: windDir,
-      pressureReport: pressureReport,
-      maxPressureReport: maxPressureReport,
-      minPressureReport: minPressureReport,
-      iconCodeReport: iconCodeReport,
-      weatherTypeReport: weatherTypeReport,
-      feelsLikeReport: feelsLikeReport,
-      humidityReport: humidityReport,
-    };
-    response.render("station-view", viewData);
-  },
-
-```
-
-As seen in the above code, const variables are created and import data from the functions, in turn, created in the **station-analytics.js** file in the 'utils' folder. The variables and the values (weather conditions data) of their methods populate the 5 cards of the station/city.
-
-The weather conditions data are added through three different actions called in the **station-controller.js**:
-
-- addManualReport()
-- addAutoReport()
-- addChartReport()
-
-All of the actions above-listed call out their respective methods in the **report-store.js** in which the reports are stored and a reports.json is generated to list them all.
-
-#### addManualReport()
-
-```
-  /* The below 'addManualReport' action is invoked when "/station/:id/addmanualreport" route is triggered (user must be 'logged in'). */
-async addManualReport(request, response) {
-  // Discovering which station is stored in the station-store.js and associated to that specific user.
-  const station = await weatherStation.getStationById(request.params.id);
-  // Passing data through to add a new report
-  const newReport = {
-    code: Number(request.body.code),
-    temperature: Number(request.body.temperature),
-    windSpeed: Number(request.body.windSpeed),
-    windDirection: request.body.windDirection,
-    windSpeed: Number(request.body.windSpeed),
-    pressure: Number(request.body.pressure),
-    currentHour: dayjs().format("YYYY-MM-DD HH:mm:ss") // Adding current time
-  };
-  console.log(`adding report ${newReport.code}`);
-  // The below function addManualReport() is retrieved from the model report-store.js
-  await reportStore.addManualReport(station._id, newReport);
-  response.redirect("/station/" + station._id);
-},
-```
-
-This action enables the user to manually add station reports via the Bulma form and the **add-report.hbs** partial.
-
-The manual and auto report can also be updated, via the Bulma form in the **edit-user.hbs** partial, triggered when clicking the 'edit icon':
-
-![alt text](image-26.png)
-
-The below edit page is rendered by the **report-controller.js**
-
-```
-/* The below 'index' action is invoked when "/station/:id" route is triggered (user must be 'logged in'). */
-  async index(request, response) {
-    // Passing 'station' and 'report' data through.
-    const stationId = request.params.stationid;
-    const reportId = request.params.reportid;
-    console.log(`Editing Report ${reportId} from Station ${stationId}`);
-    const viewData = {
-      title: "Edit Station",
-      // Stations and reports are rendered as retrieved from the model 'user-store.js' and 'report-store.js'.
-      station: await weatherStation.getStationById(stationId),
-      report: await reportStore.getReportById(reportId),
-    };
-    response.render("report-view", viewData);
-  },
-```
-
-![alt text](image-28.png)
-and routed by
-
-```
-router.post("/station/:stationid/updatereport/:reportid", reportController.update);
-```
-
-The action to get the report updated lives in the **report-controller.js** too
-
-```
-/* The below 'index' action is invoked when "/station/:stationid/editreport/:reportid" route is triggered (user must be 'logged in'). */
-  async update(request, response) {
-    // Passing 'station' and 'report' data through.
-    const stationId = request.params.stationid;
-    const reportId = request.params.reportid;
-    // Creating object updatedReport to update report
-    const updatedReport = {
-      code: Number(request.body.code),
-      temperature: Number(request.body.temperature),
-      windSpeed: Number(request.body.windSpeed),
-      windDirection: request.body.windDirection,
-      windDir: request.body.windDir,
-      windSpeed: Number(request.body.windSpeed),
-      pressure: Number(request.body.pressure),
-    };
-    console.log(`Updating Report ${reportId} from Station ${stationId}`);
-    // Retrieving the report to update from 'report-store,js'
-    const report = await reportStore.getReportById(reportId);
-    // The updateReport() function from 'report-store,js' will update the report
-    await reportStore.updateReport(report, updatedReport);
-    response.redirect("/station/" + stationId);
-  },
-```
-
-Once the user edits the form field values and clicks on the CTA 'Update report', the action tag in the form in **edit-user.hbs**
-
-```
-<form class="box" action="/station/{{station._id}}/updatereport/{{report._id}}" method="POST">
-```
-
-will trigger the response on the action updateReport() in **report-controller.js**, as shown above. At that point, the **report-store.js** will update the report data and show them on the **report.json** file
-
-```
-{
-      "code": 200,
-      "temperature": 34,
-      "windSpeed": 78,
-      "windDirection": "West-northwest (WNW)",
-      "windDir": "20",
-      "pressure": 45,
-      "currentHour": "2024-07-22 18:07:28",
-      "_id": "bd4639dd-024c-4aa3-8e4c-addbdac21e74",
-      "stationid": "91bcb86d-9c07-4ac7-95cb-54c1915f8fdb"
-    },
-```
-
-### addAutoReport()
-
-```
-/* The below 'addAutoReport' action is invoked when "/station/:id/addautoreport" route is triggered (user must be 'logged in').
-  It would be basically the same action as the 'addChartReport', but for the chart the the TempTrend and TempLabels objects, which have not been included in here */
-  async addAutoReport(request, response) {
-    const station = await weatherStation.getStationById(request.params.id);
-    console.log("rendering new report");
-    const title = station.title;
-    let report = {};
-    const cityRequestUrl  = `https://api.openweathermap.org/data/2.5/weather?q=${title}&units=metric&appid=c3e26a0b5387b001f6f548f5710c0baf`;
-    const cityResult = await axios.get(cityRequestUrl);
-    if (cityResult.status == 200) {
-      const currentWeather = cityResult.data;
-      report.currentHour = dayjs().format("YYYY-MM-DD HH:mm:ss");
-      report.title = currentWeather.name;
-      report.longitude = currentWeather.coord.lon;
-      report.latitude = currentWeather.coord.lat;
-      report.code = currentWeather.weather[0].id;
-      report.iconCodeReport = currentWeather.weather[0].icon;
-      report.weatherTypeReport = currentWeather.weather[0].main;
-      report.temperature = currentWeather.main.temp;
-      report.tempFar = (currentWeather.main.temp* 1.8) + 32;
-      report.maxTempReport = currentWeather.main.temp_max;
-      report.minTempReport = currentWeather.main.temp_min;
-      report.feelsLikeReport = currentWeather.main.feels_like;
-      report.humidityReport = currentWeather.main.humidity;
-      report.windSpeed = currentWeather.wind.speed;
-      report.pressure = currentWeather.main.pressure;
-      report.windDir = currentWeather.wind.deg;
-   }
-    console.log(report);
-    const viewData = {
-      title: "Weather Autogenerated Report | Weather Top App",
-      station: report,
-      currentHour: dayjs().format("YYYY-MM-DD HH:mm:ss") // Adding current time
-    };
-    // The function 'addAutoReport()' is retrieved from the model report-store.js
-    await reportStore.addAutoReport(station._id, report);
-    response.redirect("/station/" + station._id);
-  },
-```
-
-This action enables the user to get an automated station report based upon an API call that returns weather stations conditions according to the added city name via the Bulma form and the **add-report.hbs** partial :
+The purpose of this landing page is just to provide some more info about the placemark selected. A user will land to this one after clicking on a placemark title on the category-view page.
 
 ![alt text](image-21.png)
 
-The **report.json** offers a clear picture of the weather conditions data retrieved.
+Handlebars in the **placemark.hbs** file will help us convey some of the information already shown on the category placemark card:
 
 ```
- {
-      "currentHour": "2024-07-22 18:05:30",
-      "title": "Phoenix",
-      "longitude": -112.074,
-      "latitude": 33.4484,
-      "code": 801,
-      "iconCodeReport": "02d",
-      "weatherTypeReport": "Clouds",
-      "temperature": 37.62,
-      "tempFar": 99.716,
-      "maxTempReport": 38.98,
-      "minTempReport": 36.07,
-      "feelsLikeReport": 39.12,
-      "humidityReport": 31,
-      "windSpeed": 3.58,
-      "pressure": 1009,
-      "windDir": 101,
-      "_id": "fd8f31cd-1020-4689-8687-cadd97278979",
-      "stationid": "5a04c321-cb35-4c4c-918f-6bc180e09cbc"
-    },
+ <p class="title has-text-centered is-2 pt-4 pb-2">
+              #instaPlaceMark {{titleShort}}!
+            </p>
+            <p class="subtitle has-text-centered mb-6">
+              InstaMark your instaPlaces
+            </p>
+          </div>
+        </div>
+      </div>
+      <main class="columns box">
+        <section class="column is-8 m-2">
+          <h4>{{titleShort}}, {{country}}</h4>
+          <p>
+            {{description}} Find out more on <a href="{{website}}" target="_blank" class="has-text-grey">{{website}}</a>.
+          </p>
+          <p>Hey! To get to {{titleShort}}, you need to travel by {{travelMeans}}, and it is {{distance}}.</p>
+          <p>{{youShouldVisit}}{{titleShort}}!</p>
+          <div class="buttons pt-3">
+            <a href="{{website}}" target="_blank" class="has-text-grey">
+            <button class="button is-info has-text-white">Find out more</button>
+            </a>
+          </div>
+        </section>
+        <section class="column is-4 ">
+          <figure class="image is-264x264 m-auto">
+            <img src="https://i.ibb.co/M66kktn/travel.jpg" alt="Travel signs" style="border-radius: 10px;" border="0">
+          </figure>
+        </section>
+      </main>
+      <section class="section">
+        <div class="container">
+          <h5 class="has-text-centered">@{{titleShort}}</h5>
+
+
 ```
 
-### addChartReport()
+However,there is also an attempt to enrich the user experienceby providing some additional information via a couple of functions pulled from the **category-analytics.js** file:
 
 ```
-/* The below 'addChartReport' action is invoked when "/station/:id/addchartreport" route is triggered (user must be 'logged in'). */
-  async addChartReport(request, response) {
-    // Discovering which station is stored in the station-store.js and associated to that specific user.
-    const station = await weatherStation.getStationById(request.params.id);
-    console.log("rendering new report");
-    // Retrieving the object 'title' value from the getStationData(station) action in weatherstation-analytics.js
-    const title = station.title;
-    let report = {};
-    // Creating a cityRequestUrl object to retrieve weather data straight from the API call based upon the city name (title) inputted by the user
-    const cityRequestUrl  = `https://api.openweathermap.org/data/2.5/weather?q=${title}&units=metric&appid=c3e26a0b5387b001f6f548f5710c0baf`;
-    const cityResult = await axios.get(cityRequestUrl);
-    if (cityResult.status == 200) {
-      const currentWeather = cityResult.data;
-      report.currentHour = dayjs().format("YYYY-MM-DD HH:mm:ss");
-      report.title = currentWeather.name;
-      report.longitude = currentWeather.coord.lon;
-      report.latitude = currentWeather.coord.lat;
-      report.code = currentWeather.weather[0].id;
-      report.iconCodeReport = currentWeather.weather[0].icon;
-      report.weatherTypeReport = currentWeather.weather[0].main;
-      report.temperature = currentWeather.main.temp;
-      report.tempFar = ((currentWeather.main.temp* 1.8) + 32).toFixed(2); //https://www.w3schools.com/howto/howto_js_format_number_dec.asp
-      report.maxTempReport = currentWeather.main.temp_max;
-      report.minTempReport = currentWeather.main.temp_min;
-      report.feelsLikeReport = currentWeather.main.feels_like;
-      report.humidityReport = currentWeather.main.humidity;
-      report.windSpeed = currentWeather.wind.speed;
-      report.pressure = currentWeather.main.pressure;
-      report.windDir = currentWeather.wind.deg;
-   }
-    // Retrieving the object 'latitude' and 'longitude' values from the getStationData(station) method in weatherstation-analytics.js
-    const lng = station.longitude;
-    const lat = station.latitude;
-    /* Creating a cityRequestUrl object to retrieve weather data straight from
-    the API call based upon the 'latitude' and 'longitude' inputted by the user */
-    const latLongRequestUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&units=metric&appid=c3e26a0b5387b001f6f548f5710c0baf`;
-    const latLongResult = await axios.get(latLongRequestUrl);
-    if (latLongResult.status == 200) {
-      report.tempTrend = [];
-      report.trendLabels = [];
-      const trends = latLongResult.data.list;
-      for (let i=0; i<10; i++) {
-        report.tempTrend.push(trends[i].main.temp);
-        report.trendLabels.push(trends[i].dt_txt);
+/ eslint-disable-next-line consistent-return
+  getTravelMeans(placemark) {
+    let travelMeans = "";
+    let destination = "";
+    if (placemark) {
+      destination = placemark.country;
+      console.log("This is the destination: ", destination);
+      if (destination === "Ireland") {
+        travelMeans = "car, bus, or train";
+      } else {
+        travelMeans = "plane";
       }
-   }
-   console.log(report);
-    const viewData = {
-      title: "Weather Chart Report | Weather Top App",
-      station: report,
-      currentHour: dayjs().format("YYYY-MM-DD HH:mm:ss") // Adding current time
-    };
-    /* A new 'stationreading' is created since I created 3 different (addManualReport, addAutoReport and addChartReport) methods in the 'report-store.js' model,
-    and this one would not render in the station view for some reason */
-    response.render("stationreading-view" , viewData);
+    }
+    return travelMeans;
+  },
+
+  // eslint-disable-next-line consistent-return
+  getYouShouldVisit(placemark) {
+    let youShouldVisit = "";
+    let visit = "";
+    if (placemark) {
+      visit = placemark.visited;
+      if (visit === "No") {
+        youShouldVisit = "What are you waiting for? Time to pay a visit to ";
+      } else {
+        youShouldVisit = "Although you have already been there, it is never a bad idea to visit again the ";
+      }
+    }
+    return youShouldVisit;
   },
 ```
 
-This action enables the user to get an automated station report with a temperature trend chart powered by Frappe based upon an API call that returns weather stations conditions according to the latitude and longitude added by the user via the Bulma form and the **add-report.hbs** partial :
-
 ![alt text](image-22.png)
+![alt text](image-23.png)
 
-Having said that, my original aim was to add a Temperature Trend chart to the same Station view routed in.
+As one can see above, this banner content will suggest the user the travel means they need to travel to the destination based upon whether they are located in Ireland or abroad (Ireland, of course, is an island so one needs to jump on a plane to travel abroad, such as to Spain to visit the 'El Parque del Buen Retiro' in Madrid). Whereas traveling to Ireland can be done by bus, car or train, and if the destination has not been visited yet, a senetnce at the bottom will encourage the visit to go.
 
-```
-router.get("/station/:id", stationController.index);
-```
-
-However, I could not get the chart to render on the above-mentioned view for some reason that I evidently failed to understand.
-
-The **report.json** offers a clear picture of the weather conditions data retrieved.
+Particularly interesting is the feature that enables us to have the distance between the user's and the location distance whose code is embedded in the 'placemark' handler into the **placemark-controller.js** file:
 
 ```
- "currentHour": "2024-07-21 09:35:28",
-      "title": "Milan",
-      "longitude": 9.1895,
-      "latitude": 45.4643,
-      "code": 800,
-      "iconCodeReport": "01d",
-      "weatherTypeReport": "Clear",
-      "temperature": 28.65,
-      "tempFar": 83.57,
-      "maxTempReport": 29.65,
-      "minTempReport": 27.66,
-      "feelsLikeReport": 30.74,
-      "humidityReport": 62,
-      "windSpeed": 2.57,
-      "pressure": 1010,
-      "windDir": 160,
-      "tempTrend": [
-        33.63,
-        36.33,
-        36.08,
-        33.63,
-        33.21,
-        30.79,
-        29.55,
-        33.94,
-        37.74,
-        38.05
-      ],
-      "trendLabels": [
-        "2024-07-21 12:00:00",
-        "2024-07-21 15:00:00",
-        "2024-07-21 18:00:00",
-        "2024-07-21 21:00:00",
-        "2024-07-22 00:00:00",
-        "2024-07-22 03:00:00",
-        "2024-07-22 06:00:00",
-        "2024-07-22 09:00:00",
-        "2024-07-22 12:00:00",
-        "2024-07-22 15:00:00"
-      ],
-      "_id": "708c99f2-4480-4ea5-8f73-a97fc13d83f8",
-      "stationid": "649823c0-5cc8-4fa5-9271-39365fcd3c6e"
+ placemark: {
+    handler: async function (request, h) {
+      const categoryId = request.params.id;
+      const placemarkId = request.params.placemarkid;
+      const category = await db.categoryStore.getCategoryById(categoryId);
+      const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
+      const travelMeans = categoryAnalytics.getTravelMeans(placemark);
+      const youShouldVisit = categoryAnalytics.getYouShouldVisit(placemark);
+
+      /* --------- The below section calculates the distance between the user's and the placemark location ----- */
+      const lat1 = category.userLat;
+      const long1 = category.userLong;
+      const toRadians = (degrees) => degrees * (Math.PI / 180);
+      const R = 6371; // Radius of the Earth in
+      // eslint-disable-next-line prefer-const
+      let long2 = 0;
+      // eslint-disable-next-line prefer-const
+      let lat2 = 0;
+      let a = 0;
+      let c = 0;
+      let dLat = 0;
+      let dLong = 0;
+      let title = "";
+      let country = "";
+      // eslint-disable-next-line prefer-const, no-new-object
+      let distance = 0;
+      if (category.placemarks) {
+        for (let i = 0; i < category.placemarks.length; i += 1) {
+          long2 = placemark.long;
+          lat2 = placemark.lat;
+          title = placemark.title;
+          country = placemark.country;
+          dLat = toRadians(lat2 - lat1);
+          dLong = toRadians(long2 - long1);
+          // eslint-disable-next-line no-const-assign
+          a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+          c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          distance = R * c;
+        }
+      }
+      // https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places
+      distance = Number(distance).toFixed(2);
+      if (distance === -Infinity) {
+        distance = 0;
+      } else {
+        distance = `${distance} km away`;
+      }
+      /* ----------------------------------------------------  */
+
+      const viewData = {
+        title: ` ${placemark.title} | #instaPlaceMark!`,
+        titleShort: placemark.title,
+        lat: placemark.lat,
+        long: placemark.long,
+        address: placemark.address,
+        country: placemark.country,
+        website: placemark.website,
+        description: placemark.description,
+        categoryId: categoryId,
+        placemarkId: placemarkId,
+        travelMeans: travelMeans,
+        youShouldVisit: youShouldVisit,
+        distance: distance,
+      };
+      return h.view("placemark", viewData);
     },
+  },
+
 ```
 
-#### Source attribution
+It is very much alike the function getMaxPOIdistance(), although we are not closing it with a Math.max() function this time.
 
-https://frappe.io/charts
+As far as the images shown in the banner and grid, they are just placeholders since the intention here is to further develop this section for the next assignment, and, maybe, have images dynamically showing up for each placemark.
 
-https://bulma.io/documentation/components/card/
+The weather widget on top of the page is noteworthy too. The idea would be that the user might want to take a quick pick of the current weather conditions in the destination they aim to visit:
 
-https://www.flaticon.com/
+![alt text](image-24.png)
 
-https://stackoverflow.com/questions/15992085/html-select-drop-down-with-an-input-field
+This is a widget I am bringing in from the SETU Computer Systems and Network module final assignment in https://instapi.glitch.me/ and it is based on JavaScript Fetch API. To make the weather widget get up and running, I educated myself through this guide https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6 and adjusted the code to serve the purposes of the PlaceMark app:
 
-### Account
+```
+ <script>
+    // https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6
 
-This page is where the user can check their personal details and update them via a Bulma form:
+    const API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+    const BASE_URL = 'https://api.openweathermap.org/data/2.5/';
+
+
+    async function getWeather() {
+      const city = document.getElementById('cityInput').value;
+      if (!city) {
+        alert('Please enter a city name.');
+        return;
+      }
+
+      try {
+        // Fetch current weather
+        const weatherResponse = await fetch(`${BASE_URL}weather?q=${city}&appid=${API_KEY}&units=metric&units`);
+        const weatherData = await weatherResponse.json();
+        displayCurrentWeather(weatherData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        alert('Failed to fetch weather data.');
+      }
+    }
+      function displayCurrentWeather(data) {
+        const weatherBody = document.getElementById('weatherBody');
+        weatherBody.innerHTML = `
+
+           <div class="column has-text-centered is-4">
+             <p class="has-text-weight-bold"> City </p>
+             <p>${data.name}</p>
+           </div>
+           <div class="column has-text-centered is-4">
+             <p class="has-text-weight-bold"> Temperature </p>
+             <p>${data.main.temp}°C</p>
+           </div>
+           <div class="column has-text-centered is-4">
+             <p class="has-text-weight-bold"> Condition </p>
+             <p>${data.weather[0].description}</p>
+           </div>
+        `;
+      }
+
+      function displayForecast(data) {
+        const forecastBody = document.getElementById('forecastBody');
+        forecastBody.innerHTML = '';
+
+        // Forecast data comes in 3-hour intervals, so we'll filter to get daily forecasts
+        const dailyForecasts = data.list.filter(item => item.dt_txt.includes('12:00:00'));
+        dailyForecasts.forEach(forecast => {
+          const date = new Date(forecast.dt_txt).toLocaleDateString();
+        });
+      }
+  </script>
+
+```
+
+The widget may be further developed for the next assignment.
+
+Finally, this is the route that enables the placemark page to show:
+
+```
+ { method: "GET", path: "/category/{id}/placemark/{placemarkid}", config: placemarkController.placemark },
+```
+
+### Source attribution
+
+- https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6
+
+## TDD (Test-driven development)
+
+This app development has been guided by the TDD principles, hence, any feature development has been tested, and, where needed, the code has been refactored.
+
+The strategy used was that of, first of all, using two supporting components to allow us to run unit tests:
+
+- https://mochajs.org/
+- https://www.chaijs.com/
+
+We created a 'test/model' folder hierarchy in which we have added the below testing files:
+
+- **category-model-test.js**
+- **placemark-model-test.js**
+- **user-model-test.js**
+
+To feed the app with testing data, the **fixture.js** file was created with dummy content for users, categories, and placemarks.
+
+At this point, whenever the command `npm run test` is run on the terminal to test via 'Chai', a report of the tests will be delivered:
 
 ![alt text](image-25.png)
 
-The **account-controller.hbs** renders the page through the below action
+4 tests are failing because of the fact that the app is not running at the moment.
+
+If the Mocha Test Explorer plugin is installed, and the tests are run via the lab icon on VsCode, then all tests should pass (I am using the 'Mongo DB' database):
+
+![alt text](image-26.png)
+
+### MongoDB, Robo 3T, Mongoose
+
+To connect MongoDb (https://www.mongodb.org) database service to the PlaceMark app, we are using the Robo 3T app https://robomongo.org. At that point the Mongoose library has been installed ``npm install mongoose``` and imported into mongo models files :
+
+- user.js
+- user-mongo-store.js
+- category.js
+- category-mongo-store.js
+- placemark.js
+- placemark-mongo-store.js
+
+The Mongo conncetion has then been defined in the .env file using the below strings (the first one, which is commented out, is craeted for the MongoDB connection, whereas the second connects Atlas (https://cloud.mongodb.com/)):
 
 ```
-/* The below 'account' action is invoked when "/account" route is triggered and renders the user's data */
-  async account(request, response) {
-    const user = await accountsController.getLoggedInUser(request);
-    const firstName = user.firstName;
-    const lastName = user.lastName;
-    const email = user.email;
-    const password = user.password;
-    const _id = user._id;
-      const viewData = {
-        title: "Account",
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        _id: _id,
-      };
-      response.render("account-view", viewData);
-    },
-```
+# db=mongodb://127.0.0.1:27017/placemark?directConnection=true
 
-and routed in
+db=mongodb+srv://latinxxxxxxx:xxxxxxxxxx@cluster0.u8y0d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
 ```
-router.get("/account/", accountsController.account);
-```
 
-Once the user changes the form field values and clicks on the CTA 'Update User', the action into the form tag in **edit-user.hbs** response
+Finally, the **connect.js** file was created establish a connection to the database and logging errors to the console.
+The **db.js** is also updated to introduce an option to connect to mongo if selected.
 
-```
-<form class="box" action="/account/updateuser/" method="POST">
-```
+### Source attribution
 
-routed by
+- https://robomongo.org
+- http://mongoosejs.com/
+- https://cloud.mongodb.com/
+- https://mochajs.org/
+- https://www.chaijs.com/
 
-```
-router.post("/account/updateuser/", accountsController.update);
-```
-
-will trigger a response put into action by the **accounts-controller.hbs** action below
-
-```
- /* The below 'account' action is invoked when "/account/edituser/" route is triggered and updates the user's data */
-  async update(request, response) {
-    console.log(request.body);
-    // Discovering which user is logged in by retrieving the data from them model 'user-store.js'.
-    const user = await accountsController.getLoggedInUser(request);
-    // Passing user data throught to the 'updateUser' object
-    const firstName = request.body.firstName;
-    const lastName = request.body.lastName;
-    const email = request.body.email;
-    const password = request.body.password;
-    const _id = request.body._id;
-    const updatedUser = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      _id: user._id,
-     };
-    // The below 'updateUser()' function from the 'user-store.js' file will update the user's data
-    await userStore.updateUser(user, updatedUser);
-    // The cookie 'station' will be created and will contain the user's email
-    response.cookie("station", user.email, user.password);
-    console.log(`updating ${user.email}`);
-    response.redirect("/login/");
-  },
-```
-
-The function updateUser() in **user-store.hbs** will then help store the update user data
-
-```
-  async updateUser(user, updatedUser) {
-    user._id = updatedUser._id;
-    user.firstName = updatedUser.firstName;
-    user.lastName = updatedUser.lastName;
-    user.email = updatedUser.email;
-    user.password = updatedUser.password;
-    await db.write();
-  },
-```
-
-and will show them in the **user.json**
-
-```
-"firstName": "weather",
-     "lastName": "top",
-     "email": "weathertopapp@gmail.com",
-     "password": "weathertopapp76",
-     "_id": "cb48cff2-6d0a-40d5-b277-93ce618475d5"
-   },
-```
-
-#### Source attribution
-
-https://bulma.io/documentation/form/
+TO BE CONTINUED
 
 ## Bugs/Defects
 
