@@ -1766,9 +1766,74 @@ The **db.js** is also updated to introduce an option to connect to mongo if sele
 - https://mochajs.org/
 - https://www.chaijs.com/
 
+## REST API
+
+As we wanted to expose our app to APIs, we first installed the boom module `npm install @hapi/boom` to make it retiring HTTP code more convenient
+(https://hapi.dev/module/boom), and, then, to create the API for the PlaceMark app, the below modules were created:
+
+- api-routes.js: a set of routes to service the api
+- users-api.js: implementation of the User API
+- category-api.js: implementation of the Category API
+- placemark-api.js: implementation of the Placemark API
+
+Next step was to create a set of API file tests was in the 'model' folder:
+
+- category-api-test.js
+- placemark-api-test.js
+- user-api-test.js
+- placemark-servive.js
+
+Additionally, as we needed a HTTP Client Library, 'axios' was installed (https://axios-http.com/docs/intro) and imported into the **placemark-servive.js** file, which is the encapsulation to access the api:
+
+```
+import axios from "axios";
+
+import { serviceUrl } from "../fixtures.js";
+
+export const placemarkService = {
+  placemarkUrl: serviceUrl,
+
+  async createUser(user) {
+    const res = await axios.post(`${this.placemarkUrl}/api/users`, user);
+    return res.data;
+  },
+...
+
+```
+
+As we are processing these API tests over HTTP, they require that the application be running (`npm run start`).
+
+However, to make the development experience a little more convenient, 'Nodemon' (https://github.com/remy/nodemon) was used to avoid having to restart the server every time a change made to its implementation.
+
+### Source attribution
+
+- https://hapi.dev/module/boom
+- https://axios-http.com/docs/intro
+- https://github.com/remy/nodemon
+
+## OpenAPI
+
+To document the API, the route chosen was that of following a widely accepted stabdard:
+
+- https://www.openapis.org/
+
+However, the tool used is Swagger (https://swagger.io/), which is an OpenAPI specification.
+
+To then create the metadata to document our API to support Swagger/OpenAPI standards, we used the hapi-swagger plugin https://github.com/glennjones/hapi-swagger.
+
 TO BE CONTINUED
 
-## Bugs/Defects
+This will enable us to annotate our HAPI endpoints with additional information, and the plugin will generate the appropriate metadata conformant with Swagger/OpenAPI. It all works with Vision + Inert, which we already have installed.
+
+To get this to work, you will need to sign up on the OpenWeatherMap site for an API Key. Then press Authorize button and paste in your key:
+
+Try the GET endpoint:
+
+Enter your City name
+
+… and then press Execute:
+
+If your API key is valid, then the Response Body should be the current weather as requested.
 
 - Whenever I delete all reports in the Station view, its station still shows the last report weather conditions data (deleted) in the Dashboard view.
 
