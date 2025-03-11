@@ -1819,29 +1819,179 @@ To document the API, the route chosen was that of following a widely accepted st
 
 However, the tool used is Swagger (https://swagger.io/), which is an OpenAPI specification.
 
-To then create the metadata to document our API to support Swagger/OpenAPI standards, we used the hapi-swagger plugin https://github.com/glennjones/hapi-swagger.
+To, then, create the metadata to document our API to support Swagger/OpenAPI standards, the hapi-swagger plugin https://github.com/glennjones/hapi-swagger was used.
 
-TO BE CONTINUED
+At that point, the HAPI endpoints were annotated with all information needed, and, appropriate metadata conformant with Swagger/OpenAPI got generated.
 
-This will enable us to annotate our HAPI endpoints with additional information, and the plugin will generate the appropriate metadata conformant with Swagger/OpenAPI. It all works with Vision + Inert, which we already have installed.
+To ensure this all works, the Vision and Inert plugins were installed :
 
-To get this to work, you will need to sign up on the OpenWeatherMap site for an API Key. Then press Authorize button and paste in your key:
+- https://hapi.dev/module/inert
+- https://www.npmjs.com/package/@hapi/vision
 
-Try the GET endpoint:
+Whituot going into further details, once the annotations were added to the **user-api.js**, **category-api.js**, and **placemrk-api.js** files (user-api.js example below of the 'create' action):
 
-Enter your City name
+```
+  create: {
+    auth: false,
+    handler: async function(request, h) {
+      try {
+        const user = await db.userStore.addUser(request.payload);
+        if (user) {
+          return h.response(user).code(201);
+        }
+        return Boom.badImplementation("error creating user");
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Create a User",
+    notes: "Returns the newly created user",
+    validate: { payload: UserSpec, failAction: validationError },
+    response: { schema: UserSpec, failAction: validationError },
+  },
+```
 
-… and then press Execute:
+the Swagger documentation would finally show for the user, category, and placemark endpoints, and would be available for testing:
 
-If your API key is valid, then the Response Body should be the current weather as requested.
+![alt text](image-28.png)
 
-- Whenever I delete all reports in the Station view, its station still shows the last report weather conditions data (deleted) in the Dashboard view.
+### Source attribution
 
-- I have not been able to set markers on the map to point each station geolocation on the Dashboard view map.
+- https://www.openapis.org/
+- https://spec.openapis.org/oas/latest.html
+- https://swagger.io/
+- https://swagger.io/tools/swagger-codegen/
+- https://swagger.io/tools/swaggerhub/
+- https://support.smartbear.com/swaggerhub/docs/about.html
+- https://app.swaggerhub.com/search
+- https://openweathermap.org/
+- https://openweathermap.org/current
+- https://app.swaggerhub.com/search?query=openweathermap&sort=BEST_MATCH&order=DESC
+- https://app.swaggerhub.com/apis/IdRatherBeWriting/open-weather_map_api/2.5.1#/
+- https://hapi.dev/module/inert
+- https://www.npmjs.com/package/@hapi/vision
+- https://github.com/glennjones/hapi-swagger
 
-# Contact info
+## JSON Web Token (JWT)
 
-Users can contact me at andrea.nardinocchi76@gmail.com or by clicking on the website underfoot where they can find my name linking to my Linkedin profile.
+The PlaceMark app also features a JSON Web Tokens (JWT), which provides a mechanism to authenticate users, validate identities, and secure a safe communication between clients and servers, staving off any unathorized access.
+
+To that end, the **jwt-utils.js** was created into the 'api'folder to make a set of utilities available for encoding, decoding and validating tokens, while the JWT system was initialized by importing and registering into the **server.js**.
+
+Additionally, the **api-routers.js** file had to be enriched wu=ith the following route:
+
+```
+  { method: "POST", path: "/api/users/authenticate", config: userApi.authenticate },
+```
+
+A new action was, then, created into the **user-api.js** file:
+
+```
+import { createToken } from "./jwt-utils.js";
+...
+
+  authenticate: {
+    auth: false,
+    handler: async function (request, h) {
+      try {
+        const user = await db.userStore.getUserByEmail(request.payload.email);
+        if (!user) {
+          return Boom.unauthorized("User not found");
+        }
+        if (user.password !== request.payload.password) {
+          return Boom.unauthorized("Invalid password");
+        }
+        const token = createToken(user);
+        return h.response({ success: true, token: token }).code(201);
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+  },
+
+```
+
+Hence, if there is a matching user, a token gets created and returned.
+
+The **placemark-service.js** was also extended to include the new methods to authenticate a user:
+
+```
+  async authenticate(user) {
+    const response = await axios.post(`${this.playtimeUrl}/api/users/authenticate`, user);
+    axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+    return response.data;
+  },
+
+  async clearAuth() {
+    axios.defaults.headers.common["Authorization"] = "";
+  }
+```
+
+These methods set the appropriate HTTP parameters to include accessing the endpoint with a valid user and then the token header for all axios requests, until clearAuth is called.
+
+The **auth-api-test.js** was, then, created for the user testing.
+
+Finally, the authorization strategy was changed in all **xxx-api.js** files for all routes, expect for 'create', and 'authenticate' in the **user-api.js** file, otherwise there would be no endpoints for registration and authentiation (Ex. 'find' action below):
+
+```
+ find: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request, h) {
+      try {
+        const users = await db.userStore.getAllUsers();
+    ....
+```
+
+At this point, because almost all routes are secured due to the above autorization strategy, a change was needed into the **server.js** **swaggerOptions** const to add some additional parameters:
+
+```
+...
+const swaggerOptions = {
+  info: {
+    title: "Placemark API",
+    version: "0.1",
+  },
+  securityDefinitions: {
+    jwt: {
+      type: "apiKey",
+      name: "Authorization",
+      in: "header",
+    },
+  },
+  security: [{ jwt: [] }],
+};
+...
+```
+
+which, ultimately, led up to an 'Authorize' button to appear on the Swagger Placemark documentation:
+
+![alt text](image-29.png)
+
+Hence, once we create a new user in our local environment documentation http://localhost:3000/documentation#/api/postApiUsers :
+
+![alt text](image-30.png)
+
+We could then use the created token to authorize the rest of the Swagger tests:
+
+![alt text](image-31.png)
+
+The tests were, then, successful (Ex. below):
+
+![alt text](image-33.png)
+
+#### Bug, defects
+
+Unfortunately, the create category does hsow a 503 error, which I was unable to resolve:
+
+![alt text](image-32.png)
+
+### Source attribution
+
+- https://github.com/dwyl/hapi-auth-jwt2
+- https://github.com/auth0/node-jsonwebtoken
 
 # Who maintains and contributes to the project
 
@@ -1849,13 +1999,10 @@ This project will be maintained by myself only.
 
 # Acknowledgements
 
-My lecture John Rellis provided all info I needed to build and set up the pages by transferring knowledge of programming/web-development 2 languages and tools such as HTML, Bulma CSS framework, Javascript, node.js, Express/Handlebars, Glitch, + lowdb database.
+My lecture Eamonn de Leastar provided all knowledge I needed to build and set up the app through the Full Stack WebDevelopment 1 module and tools such as HTML, Bulma CSS framework, Javascript, node.js, Hapi, Express/Handlebars, lowdb database, and sso on.
 
-Special thanks to John Rellis again!
-I also would like to thank and acknowledge Giovanni's, Noemi Lovei's, David O'Connor's help, but, most of all, a special thanks to Wolfgang Helnwein who patiently helped me out and came to my rescue when I was only seeing doom and gloom and could not get the Dashboard view to display weather conditions data for each station added by the user. Without his invaluable help, I would have likely dropped out of the course altogether.
+Special thanks to John Rellis too as he transferred plenty of the knowledge in the web development 2 needed for this project when working on the following assignment https://evanescent-mercury-naranja.glitch.me/ during summer 2024.
+
+And a big thank you to my fellow students for asking questions on our Slack channel from which I was able to capture useful bits for the project.
 
 Thank you all again!!!
-
-```
-
-```
