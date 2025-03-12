@@ -6,7 +6,7 @@ This is a node.js, hapi.js, and TDD (Test Driven Development) based project, des
 
 # PlaceMark App
 
-This website is about implementing a Point of Interest app using:
+This website is about implementing a Points of Interest app using:
 
 - node.js
 - hapi,js
@@ -20,41 +20,41 @@ This website is about implementing a Point of Interest app using:
 - [Cloudinary](https://cloudinary.com/)
 - [Render](https://render.com/)
 
-whose data can be manually submitted by the user, and fed into the app, and sored into a Mongo database .
+whose data can be manually submitted by the user, and fed into the app, and stored into a Mongo database .
 
 # What this project does
 
-Its purpose is simply to create and show placemarks or [points of interest](https://en.wikipedia.org/wiki/Point_of_interest) to the user, which, as mentioned earlier, are fed into the app by the user itself. In a nutshell, the user creates their own points of interest via a [Bulma form](https://bulma.io/documentation/form/). However, these placemarks will be 'categorized', namely they are created on the hill of a category, which precedes them in the app hierarchy (user -> categories -> placemarks).
+Its purpose is simply to create and show placemarks or [points of interest](https://en.wikipedia.org/wiki/Point_of_interest) or destinations to the user, which, as mentioned earlier, are fed into the app by the user itself. In a nutshell, the user creates their own points of interest via a [Bulma form](https://bulma.io/documentation/form/). However, these placemarks will be 'categorized', namely they are created on the hill of categories selected by the user, which precedes them in the app hierarchy (user -> categories -> placemarks).
 Therefore, the user will first sign-up or log-in, then, they will create a category (only 4 categories are allowed per user), and, once the category is created, relevant placemarks will be added for each category (Ex. category 'Restaurants' -> placemark 'A Casa do Porco, São Paulo').
 
 In a nutshell, the user will have a dashboard with a list of categories they have added, and each of them will link out to a list of their placemarks. Additionaly, each placemark will link out to a simple dedicated and individual placemark landing page.
 
 # Why the project is useful
 
-The project is useful for those users that would like to note down those destinations or, better said, those points of interest/placemarks/locations, and so on and so forth, that they would like to visit. Nevertheless, the user will also be able to mark down whether a placemark has finally been visited. As I will explained further down this document, selcting whether a placemark has been visited or not is actually a mandatory field in the placemark form and its info is relevants for 'statistical purposes'.
+The project is useful for those users that would like to note down those destinations or, better said, those points of interest/placemarks/locations, and so on and so forth, that they would like to visit. Nevertheless, the user will also be able to mark down whether a placemark has eventually been visited (like adding a check to a dashboard line). As I will explain further down this document, 'selecting' whether a placemark has been visited or not is actually a mandatory field in a placemark form, and its info is relevants for 'analytical purposes'.
 
-Apart from all of the above, the very main purpose of the project was for the writer to be exposed to the use of Bulma components, Javascript, node.js, hapi.js, handlebars, and all of the frameworks, modules, platforms above mentioned, when developing a MVC [Model View Controller](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller).
+Apart from all of the above, the very main purpose of the project was for the writer to be exposed to the use of Bulma components, Javascript, node.js, hapi.js, handlebars, and all of the frameworks, modules, platforms above mentioned, when developing a MVC [Model View Controller](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) app.
 
-The ultimate idea here would have also been to expand the website insofar that it would have included a Google map indicated the geolocation of each placemark right inside each placemark card (the one currently in it is just a placeholder).
+The ultimate idea here would have also been to expand the website insofar that it would have included a Google map indicating the geolocation of each placemark right inside each placemark card (the map currently in the placemark card is just a placeholder).
 
-In addition to that, I wanted to ensure that the user geocoordinates, added when signing up, would be values retrieved from a function that calculates the distance from the user location to the placemark locatio. Alás, I did not get that far, hence, the user will have to also add their coordinates to the category they create to ensure that they will at least have a calculation of the furthest and nearest placemark in their list.
+In addition to that, the objective I had was for the user geocoordinates values, added when signing up, to be used in a function that calculates the distance from the user's to the placemark location. Alás, I did not get that far, hence, the user will have to add their location geocoordinates to the category they add as well to ensure that they will at least get a calculation of the furthest and nearest placemark in their list in the analytics banner in the category page.
 
 Technical challenges at this stage of my study are not always easy to overcome. Nevertheless, I count on the lectures to come to be able to fill my knowledge gaps, and being able to ultimately revisit and enhance the app soon.
 
 # How users can get started with the project
 
-# Home page
+## Home page
 
 As a user opens up the **PlaceMark** app, they will see a sticky nav bar on the top for an easy navigation throughout the website.
 
-## Navigation bars
+### Navigation bars
 
 The Navbar shows all items that the user needs for a comfortable and friendly navigation.
-The **welcome-menu.hbs** partial is the one that the user will see in the 'log out' state (it also contains the PlaceMark logo, which is clickable and links to the Homepage **main.hbs**.):,
+The **welcome-menu.hbs** partial is the one that the user will see in the 'log out' state (it also features the PlaceMark logo, which is clickable, and links to the Homepage **main.hbs**.):
 
 ![alt text](image.png)
 
-whereas the **menu.hbs** is what the user will see in their loggedin state, which contain more items (it also contains the logo, which is clickable and links to the Dashboard view **dashboard.hbs**.):
+The **menu.hbs**, instead, is what the user will see in their loggedin state, which contains more items (it also features the logo, which is clickable, and links to the Dashboard view **dashboard.hbs**.):
 
 ![alt text](image-1.png)
 
@@ -75,7 +75,7 @@ As the user scrolls down, they will bump into a paragraph inviting the user to l
 
 ![alt text](image-4.png)
 
-This is just a nice, easy on the eye grid to get the user familiarized with the categories they might want to use.
+This is just a nice, easy on the eye grid to get the user familiarized with the categories they will use.
 
 ### Source attribution
 
@@ -83,11 +83,11 @@ This is just a nice, easy on the eye grid to get the user familiarized with the 
 - https://bulma.io/documentation/components/card/#examples
 - https://www.freepik.com/
 
-## Footer
+### Footer
 
 At the bottom of the page, there is a footer (**footer.hbs** partial), with a 2 column layout.
 While the first column shows an Irish address, the column on the right shows nav items/links.
-Additionally, there is an underfooter with the 'PlaceMark' clickable logo to boost brand awareness and a string with the developer Linkedin link.
+Additionally, there is an underfooter with the 'PlaceMark' clickable logo to boost brand awareness, and a string with the developer Linkedin link.
 
 ![alt text](image-5.png)
 
@@ -95,9 +95,9 @@ Additionally, there is an underfooter with the 'PlaceMark' clickable logo to boo
 
 - https://bulma.io/documentation/layout/footer/
 
-# Lifestyle page
+## Lifestyle page
 
-#### (\*This page is part of a previous assignment for web-dev 1)
+(\*This page is part of a previous assignment for web-dev 1)
 
 This page is basically a blog embedded into the website and users can supposedly use the search bar on the top to search for a tourist destination (I found it interesting to combine the placemark subject with the tourist one).
 It shows a variegated layout (**lifestyle-view.hbs**).
@@ -110,7 +110,7 @@ It shows a variegated layout (**lifestyle-view.hbs**).
 All images have been taken from:
 https://pixabay.com/ and used availing of the IMGBB image hosting app in https://imgbb.com/ .
 
-# News
+## News page
 
 (\*This page is part of a previous assignment web-dev 1)
 
@@ -123,11 +123,11 @@ This page is supposed to be a 'news' page to get travelers up to speed with the 
 All images have been taken from:
 https://pixabay.com/ and used availing of the IMGBB image hosting app in https://imgbb.com/ .
 
-# About page
+## About page
 
-This is just a simple and plain page with a centered copy (header and paraghraph, **about-view.hbs**) contained in a class 'box':
+This is just a simple and plain page with a centered copy (header and paraghraph, **about-view.hbs**) contained in a 'box':
 
-# Log in page
+## Log in page
 
 The 'Log in' page is a 2 column layout with a Bulma form on the left column and the PlaceMark logo on the right (**login-view**):
 
@@ -169,7 +169,7 @@ and its view is rendered by the **accounts-controller.js**
     },
 ```
 
-Once the user prompts the log in action, their data will be verified by the above 'handler' which will check email and password. The below function, instead, will validate whether the user exists by checking that the 'payload' of the variable 'UserCredentialsSpec' (Joi schema).
+Once the user prompts the log in action, their data will be verified by the above 'handler' which will check email and password. The below function, instead, will validate whether the user exists by checking the 'payload' of the variable 'UserCredentialsSpec' (Joi schema).
 
 ```
  /**
@@ -192,7 +192,7 @@ Once the user prompts the log in action, their data will be verified by the abov
 Plane image taken from:
 https://fontawesome.com/v4/icons/
 
-# Sign up page
+## Sign up page
 
 ![alt text](image-7.png)
 
@@ -230,7 +230,7 @@ and its view is rendered by the **accounts-controller.js**
   },
 ```
 
-Once a new user object is created, the validation() function will check the Joi scema UserSpec data, and if it comes across any issues, the failAction method will be called in and redirects the page to the how the errors.
+Once a new user object is created, the 'validation()' function will check the Joi schemas 'UserSpec' data, and if it comes across any issues, the failAction method will be called in, and will redirect the page to the errors.
 
 The user data will, then, be stored into one of the stores being used by the app administrator:
 
@@ -248,14 +248,14 @@ The user data will, then, be stored into one of the stores being used by the app
 
 The way that we tie these database logics is via the **db.js**, which is basically a facade from which we can choose the database we want the app to use.
 
-#### Source attribution
+### Source attribution
 
 - https://www.mongodb.org
 - https://robomongo.org
 
 ## Joi Schemas
 
-The information the user will be inputting is defined in the Joi Schemas file **joi-schema.js** which indicates 'string', 'number', 'date' fields with certain value ranges which might or might not be indicated as well as whether they are required or not. Ex.:
+The information the user will be inputting is defined in the Joi Schemas file **joi-schema.js**, which indicates 'string', 'number', 'date' fields with value ranges when needed. Ex.:
 
 ```
 export const UserSpec = UserCredentialsSpec.keys({
@@ -276,7 +276,7 @@ The same logic applies to the 'categories' and 'placemarks' data.
 
 ## Joi Error Reporting
 
-Furthermore, we have introduced the 'Joi Error Reporting' as Joi can generate human readable errors. Therefore, **error.hbs** partial was created in which errors are looped through and a handlebar will enable to show errors on the UX:
+Furthermore, the 'Joi Error Reporting' was introduced, as Joi can generate human readable errors. Therefore, **error.hbs** partial was created in which errors are looped through and a handlebar will enable errors to show on the UX:
 
 ```
 {{#if errors}}
@@ -292,6 +292,7 @@ Furthermore, we have introduced the 'Joi Error Reporting' as Joi can generate hu
 
 ```
 
+The error.hbs file is added as a handlebar to the main.hbd template to ensure that the 'Joi Error Reporting' method is active throughout the app.
 Additionally, the errors are passed from Joi to the view on any 'controller' actions where it is relevant:
 
 ```
@@ -308,15 +309,15 @@ validate: {
 
 ![alt text](image-27.png)
 
-# Account page
+## Account page
 
-This page is where the user can check their personal details, and, also, update them via a Bulma form, which will show in aa pop-up:
+This page is where the user can check their personal details, and, also, update them via a Bulma form, which will show in a pop-up:
 
 ![alt text](image-10.png)
 
 ![alt text](image-11.png)
 
-The **accounts-controller.js** renders the page through the below 'showAccount' handler
+The **accounts-controller.js** renders the page through the below 'showAccount' route:
 
 ```
  showAccount: {
@@ -362,9 +363,13 @@ The **accounts-controller.js** renders the page through the below 'showAccount' 
   },
 ```
 
-After requesting the autorized credentials, I retrieve the 'categories' of the loggedInUser as well as their 'userDetails'. The userDetails const retrieves all information from the userStore, and, then, the const 'viewData' will itemize it to get rendered on the account-view.
+After requesting the authorized credentials, I retrieve the 'categories' of the 'loggedInUser' as well as their 'userDetails'. The userDetails const retrieves all added user data from the userStore, and, then, the const 'viewData' will itemize them in order to, then, be rendered on the account page via handlebars.
 
-If the user wished to update their details, or even delet the account altogether, the below handlers will make the above-mentioned actions possible:
+![alt text](image-36.png)
+
+**user-details.hbs**
+
+If the user wished to update their details, or even delete the account altogether, the below routes will make the above-mentioned actions possible:
 
 ```
 deleteAccount: {
@@ -473,7 +478,7 @@ async updateUser(user, updatedUser) {
   },
 ```
 
-It is worth spending a few lines on a few variables created an itemized in the 'viewData' variable:
+It is worth spending a few lines on a few variables created and itemized in the 'viewData' variable:
 
 ```
 const accCat0 = await somethingAnalytics.getAccountCategories0(categories);
@@ -486,7 +491,7 @@ const accCat3 = await somethingAnalytics.getAccountCategories3(categories);
 const accCatId3 = await somethingAnalytics.getAccountCategoriesId3(categories);
 ```
 
-Here, the objective is to retrieve the titles of the categories as well as their ids since the partial **stats-account.hbs** embedded in the **account-view.hbs** will show the categories that the user added. In the example below there is an extract of the functions created in the **something-analytics.js** util file to achieve just that:
+Here, the objective is to retrieve the name of the categories as well as their ids since the partial **stats-account.hbs** embedded in the **account-view.hbs** will show the categories that the user added. In the example below, there is an extract of the functions created in the **something-analytics.js** util file to achieve just that:
 
 ```
  getAccountCategories0(categories) {
@@ -526,7 +531,7 @@ Here, the objective is to retrieve the titles of the categories as well as their
   },
 ```
 
-The 'categories' value is passed along the parameter 'categories' in the above function, and then through iteration we fetch the category values we need to show in the account page, namely the 'title' of the category as well as its id which is needed to create a URL to make the title clickable (see the **stats-account.hbs**):
+The 'categories' value is passed along the parameter 'categories' in the above function, and then through iteration, the category values are fetched to be show in the account page. The category values are the 'title' of the category as well as its id which is needed to create the category URL and make the title clickable (see the **stats-account.hbs**):
 
 ```
  <section class = "content pl-4">
@@ -547,7 +552,7 @@ The 'categories' value is passed along the parameter 'categories' in the above f
 The **joi-schemas.js** also contains the below line which produces a 'time stamp' of when the account was created:
 
 ```
-createdTimeStamp: JoiExtended.date().default(() => new Date()),
+createdTimeStamp: JoiExtended.date().default(() => new Date().toLocaleString("en-IE")),
 
 ```
 
@@ -557,7 +562,7 @@ This is the list of the HTML files created for the account page:
 - user-deatils.hbs
 - stats-account.hbs
 
-and this is the list of the routes in **web-routse.js**:
+and this is the list of the routes in **web-routes.js** for the account page:
 
 ```
  { method: "GET", path: "/", config: accountsController.index },
@@ -581,15 +586,15 @@ and this is the list of the routes in **web-routse.js**:
 
 ### Bugs/Defects
 
-- The purpose of having the user add their location geocoordinates was for them to be utilized for the calculation of the distance bewteen the user and the placemark locations. However, I was unable to find a way to inject the user geocoordinates into any util files to create an ad hoc function. Therefore, I am having the user add their location geocoordinates again whenever they add a new category in the dashboard.
+- The purpose of having the user add their location geocoordinates was for them to be utilized for the calculation of the distance bewteen the user's and the placemark locations. However, I was unable to find a way to inject the user geocoordinates into any util files to create an ad hoc function. Therefore, I am having the user add their location geocoordinates again whenever they add a new category in the dashboard.
 
-# Dahboard
+## Dahboard
 
-As the user logs in, they will land to the dashboard view where they can select one of the 4 available categories (Restaurants, Museums, Parks, Beaches) from a dropdown menu in a form. They will also have the chance to add notes about the use of the category, and their location geeocordinates. The latter will be used in functions in the 'utils' files to calculate the distance between the user and the placemarks locations:
+As the user logs in, they will land to the dashboard view where they can select one of the 4 available categories (Restaurants, Museums, Parks, Beaches) from a dropdown menu in a form. They will also have the chance to add notes about the use of the category, and their location geocordinates. The latter will be used in functions in the 'utils' files to calculate the distance between the user and the placemarks locations:
 
 ![alt text](image-13.png)
 
-The first thing to notice is that the user won't be able to add the same category twice, which is a paramount feature because we don't want them to get unnecessary duplicates. To achieve that, a few lines of code have been injected into the 'addCategory' handler aiming at checking that category just added by the user is not already stored in the 'categoryStore' :
+The first thing to notice is that the user won't be able to add the same category twice, which is a paramount feature since we don't want the user to get unnecessary duplicates. For this purpose, a few lines of code have been injected into the 'addCategory' route aiming at checking that the category just added by the user is not already stored in the 'categoryStore' :
 
 ```
 addCategory: {
@@ -681,9 +686,11 @@ export const CategoryArraySpec = Joi.array().items(CategorySpecPlus).label("Cate
 
 ```
 
-A category can also be deleted if needed. Once the user is ready, they can click on the 'folder' icon and start addig placemarks.
+A category can also be deleted if needed.
 
-The dashboard view is routed va the below lines in **web-routes.js**:
+Once the user is ready, they can click on the 'folder' icon and start adding placemarks.
+
+The dashboard view is routed via the below lines in **web-routes.js**:
 
 ```
 { method: "GET", path: "/dashboard", config: dashboardController.index },
@@ -696,7 +703,7 @@ The dashboard view is routed va the below lines in **web-routes.js**:
 
 - https://bulma.io/documentation/form/
 
-# Category page
+## Category page
 
 The Category view is the page where the user lands on when clicking on the 'folder' icon at the botttom of a category in the dahboard:
 

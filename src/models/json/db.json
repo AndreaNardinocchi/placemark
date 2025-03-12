@@ -1,6 +1,51 @@
 {
   "users": [
     {
+      "firstName": "Homer",
+      "lastName": "Simpson",
+      "userLat": 51.8985136,
+      "userLong": -8.4726423,
+      "country": "Ireland",
+      "street": "Campus",
+      "addressCode": "T34R56W",
+      "DOB": "1976-02-13",
+      "phoneNumber": 1222222222,
+      "email": "homer@simpson.com",
+      "password": "Yoestoy",
+      "createdTimeStamp": "12/3/2025, 21:39:15",
+      "_id": "c5b25f1e-6aa1-4a63-bf4d-974a0b432829"
+    },
+    {
+      "firstName": "Margie",
+      "lastName": "Simpson",
+      "userLat": 52.2609997,
+      "userLong": -7.1119081,
+      "country": "Ireland",
+      "street": "2 La calle Iglesia, Waterford",
+      "addressCode": "B12YNOK",
+      "DOB": "1980-02-13",
+      "phoneNumber": 1995627281,
+      "email": "margie@simpson.com",
+      "password": "Yoestoy",
+      "createdTimeStamp": "12/3/2025, 21:39:15",
+      "_id": "67ed240b-3bef-4f9e-a208-dd1e6c12a956"
+    },
+    {
+      "firstName": "Bart",
+      "lastName": "Simpson",
+      "userLat": 52.0595746,
+      "userLong": -9.505322,
+      "country": "Ireland",
+      "street": "3 Wonderful Days, Killarney",
+      "addressCode": "LO78UO",
+      "DOB": "1992-02-13",
+      "phoneNumber": 125622222,
+      "email": "bart@simpson.com",
+      "password": "Yoestoy",
+      "createdTimeStamp": "12/3/2025, 21:39:15",
+      "_id": "4facde63-21e2-4993-9d45-74bc03e99bcf"
+    },
+    {
       "firstName": "Maggie",
       "lastName": "Simpson",
       "userLat": 51.8985136,
@@ -12,10 +57,59 @@
       "phoneNumber": 122224444,
       "email": "maggie@simpson.com",
       "password": "Yoestoy",
-      "createdTimeStamp": "2025-03-08T11:38:10.702Z",
-      "_id": "9f6b69cb-9b83-4fa9-b629-a07238307237"
+      "createdTimeStamp": "12/3/2025, 21:39:15",
+      "_id": "31079641-ca5f-424c-a9e7-ea46bd9d4cd7"
     }
   ],
-  "categories": [],
-  "placemarks": []
+  "categories": [
+    {
+      "title": "Art galleries",
+      "userLat": 40.7127281678,
+      "userLong": -74.00601529056,
+      "notes": "This category is used to note down all museums I would like to visit",
+      "userid": "5250e52e-177c-4cf0-9afb-186c0be91045",
+      "_id": "c95149b2-035a-4745-8c48-8d8cfdfaa5ad"
+    }
+  ],
+  "placemarks": [
+    {
+      "title": "El Parque del Buen Retiro",
+      "lat": 40.41541290283203,
+      "long": -3.684231996536255,
+      "address": "Plaza de la Independencia, 728001",
+      "country": "Spain",
+      "phone": 89672435,
+      "website": "https://bit.ly/3bGwJUl",
+      "visited": "Yes",
+      "description": "Covering over 125 hectares and comprising more than 15,000 trees, El Retiro Park–recently named a UNESCO World Heritage Site–is a green oasis in the heart of the city. And more!!!",
+      "_id": "045d4930-9347-479b-aba2-9c66997c24cd",
+      "categoryid": "c95149b2-035a-4745-8c48-8d8cfdfaa5ad"
+    },
+    {
+      "title": "Central Park, New York",
+      "lat": 40.79431915283203,
+      "long": -43.9548110961914,
+      "address": "102nd Street Crossing, New York, NY 10026",
+      "country": "United States",
+      "phone": 2123106600,
+      "website": "https://www.centralparknyc.org",
+      "visited": "No",
+      "description": "When it comes to having the perfect Park day, preparation is key—especially when there are 843 acres to explore. Whether you're a seasoned regular or a first-time visitor, familiarize yourself with the ins and outs....",
+      "_id": "a6e465ac-5504-47b0-8ac3-544ca6a1b8e6",
+      "categoryid": "c95149b2-035a-4745-8c48-8d8cfdfaa5ad"
+    },
+    {
+      "title": "Santa Monica",
+      "lat": 35.00535425523,
+      "long": -10.226577489,
+      "address": "Main Campus Marsille",
+      "country": "United States",
+      "phone": 1256789569,
+      "website": "https://www.loveholidays.ie/sem/santa-monica.html",
+      "visited": "No",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "_id": "561d8acd-ecc5-4d08-b298-0dc35ad33a38",
+      "categoryid": "c95149b2-035a-4745-8c48-8d8cfdfaa5ad"
+    }
+  ]
 }
