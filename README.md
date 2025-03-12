@@ -43,11 +43,11 @@ Technical challenges at this stage of my study are not always easy to overcome. 
 
 # How users can get started with the project
 
-## Home page
+# Home page
 
 As a user opens up the **PlaceMark** app, they will see a sticky nav bar on the top for an easy navigation throughout the website.
 
-### Navigation bars
+## Navigation bars
 
 The Navbar shows all items that the user needs for a comfortable and friendly navigation.
 The **welcome-menu.hbs** partial is the one that the user will see in the 'log out' state (it also contains the PlaceMark logo, which is clickable and links to the Homepage **main.hbs**.):,
@@ -62,7 +62,7 @@ Last, but not least, the navbar is responsive and mobile-friendly:
 
 ![alt text](image-3.png)
 
-#### Source attribution
+### Source attribution
 
 Apart from the lecturer examples in the lab, the official bulma documentation in:
 https://bulma.io/documentation/components/navbar/
@@ -77,13 +77,13 @@ As the user scrolls down, they will bump into a paragraph inviting the user to l
 
 This is just a nice, easy on the eye grid to get the user familiarized with the categories they might want to use.
 
-#### Source attribution
+### Source attribution
 
 - https://bulma.io/documentation/columns/basics/
 - https://bulma.io/documentation/components/card/#examples
 - https://www.freepik.com/
 
-### Footer
+## Footer
 
 At the bottom of the page, there is a footer (**footer.hbs** partial), with a 2 column layout.
 While the first column shows an Irish address, the column on the right shows nav items/links.
@@ -91,18 +91,18 @@ Additionally, there is an underfooter with the 'PlaceMark' clickable logo to boo
 
 ![alt text](image-5.png)
 
-#### Source attribution
+### Source attribution
 
 - https://bulma.io/documentation/layout/footer/
 
-## Lifestyle page
+# Lifestyle page
 
 #### (\*This page is part of a previous assignment for web-dev 1)
 
 This page is basically a blog embedded into the website and users can supposedly use the search bar on the top to search for a tourist destination (I found it interesting to combine the placemark subject with the tourist one).
 It shows a variegated layout (**lifestyle-view.hbs**).
 
-#### Source attribution
+### Source attribution
 
 - https://bulma.io/documentation/elements/box/
 - https://bulma.io/documentation/elements/image/#arbitrary-ratios-with-any-
@@ -110,24 +110,24 @@ It shows a variegated layout (**lifestyle-view.hbs**).
 All images have been taken from:
 https://pixabay.com/ and used availing of the IMGBB image hosting app in https://imgbb.com/ .
 
-## News
+# News
 
 (\*This page is part of a previous assignment web-dev 1)
 
 This page is supposed to be a 'news' page to get travelers up to speed with the latest news about tourist destinations (**news-view.hbs**).
 
-#### Source attribution
+### Source attribution
 
 - https://bulma.io/documentation/elements/box/
 
 All images have been taken from:
 https://pixabay.com/ and used availing of the IMGBB image hosting app in https://imgbb.com/ .
 
-## About page
+# About page
 
 This is just a simple and plain page with a centered copy (header and paraghraph, **about-view.hbs**) contained in a class 'box':
 
-## Log in
+# Log in page
 
 The 'Log in' page is a 2 column layout with a Bulma form on the left column and the PlaceMark logo on the right (**login-view**):
 
@@ -187,12 +187,12 @@ Once the user prompts the log in action, their data will be verified by the abov
   },
 ```
 
-#### Source attribution
+### Source attribution
 
 Plane image taken from:
 https://fontawesome.com/v4/icons/
 
-## Sign up
+# Sign up page
 
 ![alt text](image-7.png)
 
@@ -308,7 +308,7 @@ validate: {
 
 ![alt text](image-27.png)
 
-## Account page
+# Account page
 
 This page is where the user can check their personal details, and, also, update them via a Bulma form, which will show in aa pop-up:
 
@@ -572,7 +572,7 @@ and this is the list of the routes in **web-routse.js**:
   { method: "POST", path: "/account/updateuser/", config: accountsController.updateAccount },
 ```
 
-#### Source attribution
+### Source attribution
 
 - https://bulma.io/documentation/form/
 - https://bulma.io/documentation/components/modal/
@@ -583,7 +583,7 @@ and this is the list of the routes in **web-routse.js**:
 
 - The purpose of having the user add their location geocoordinates was for them to be utilized for the calculation of the distance bewteen the user and the placemark locations. However, I was unable to find a way to inject the user geocoordinates into any util files to create an ad hoc function. Therefore, I am having the user add their location geocoordinates again whenever they add a new category in the dashboard.
 
-## Dahboard
+# Dahboard
 
 As the user logs in, they will land to the dashboard view where they can select one of the 4 available categories (Restaurants, Museums, Parks, Beaches) from a dropdown menu in a form. They will also have the chance to add notes about the use of the category, and their location geeocordinates. The latter will be used in functions in the 'utils' files to calculate the distance between the user and the placemarks locations:
 
@@ -692,11 +692,11 @@ The dashboard view is routed va the below lines in **web-routes.js**:
 
 ```
 
-#### Source attribution
+### Source attribution
 
 - https://bulma.io/documentation/form/
 
-## Category page
+# Category page
 
 The Category view is the page where the user lands on when clicking on the 'folder' icon at the botttom of a category in the dahboard:
 
@@ -1459,7 +1459,7 @@ index: {
   },
 ```
 
-#### Source attribution
+### Source attribution
 
 - https://cloudinary.com/
 - https://www.freepik.com/
@@ -1470,7 +1470,7 @@ index: {
 - https://bulma.io/documentation/form/file/
 - https://chatgpt.com/
 
-## Placemark page
+# Placemark page
 
 The purpose of this landing page is just to provide some more info about the placemark selected. A user will land to this one after clicking on a placemark title on the category-view page.
 
@@ -1708,7 +1708,7 @@ Finally, this is the route that enables the placemark page to show:
 
 - https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6
 
-## TDD (Test-driven development)
+# TDD (Test-driven development)
 
 This app development has been guided by the TDD principles, hence, any feature development has been tested, and, where needed, the code has been refactored.
 
@@ -1735,7 +1735,7 @@ If the Mocha Test Explorer plugin is installed, and the tests are run via the la
 
 ![alt text](image-26.png)
 
-### MongoDB, Robo 3T, Mongoose
+## MongoDB, Robo 3T, Mongoose
 
 To connect MongoDb (https://www.mongodb.org) database service to the PlaceMark app, we are using the Robo 3T app https://robomongo.org. At that point the Mongoose library has been installed ``npm install mongoose``` and imported into mongo models files :
 
@@ -1982,9 +1982,9 @@ The tests were, then, successful (Ex. below):
 
 ![alt text](image-33.png)
 
-#### Bug, defects
+### Bug, defects
 
-Unfortunately, the create category does hsow a 503 error, which I was unable to resolve:
+Unfortunately, the create category does show a 503 error, which I was unable to resolve:
 
 ![alt text](image-32.png)
 
@@ -1992,6 +1992,24 @@ Unfortunately, the create category does hsow a 503 error, which I was unable to 
 
 - https://github.com/dwyl/hapi-auth-jwt2
 - https://github.com/auth0/node-jsonwebtoken
+
+# Mongo database on Cloud Atlas
+
+The PlaceMark app has been connected to the Mono database on Cloud Atlas, which is in sync with the Robo T3 database:
+
+Ex.
+
+![Alt](image-34.png)
+
+**Robo T3** user 'Homer Simpson'
+
+![alt text](image-35.png)
+
+**Cloud Atlas** user 'Homer Simpson'
+
+# Deployment
+
+ddddddddddddd
 
 # Who maintains and contributes to the project
 
