@@ -1788,7 +1788,7 @@ As we wanted to expose our app to APIs, we first installed the boom module `npm 
 - category-api.js: implementation of the Category API
 - placemark-api.js: implementation of the Placemark API
 
-Next step was to create a set of API file tests in the 'model' folder:
+Next step was to create a set of API file tests in the 'test/api' folder:
 
 - category-api-test.js
 - placemark-api-test.js
@@ -2018,6 +2018,10 @@ Ex.
 ![alt text](image-35.png)
 
 **Cloud Atlas** user 'Homer Simpson'
+
+## Bugs and efects
+
+The Json stores kept showing errors for the 'model' test, and due to tim constraints and lest I would compromise the MongoDB successful tests (Mongo is the primary base that this app uses), I resolved to no longer maintain the Json tests.
 
 # Deployment
 

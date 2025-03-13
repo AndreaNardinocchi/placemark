@@ -33,7 +33,7 @@ export const UserSpec = UserCredentialsSpec.keys({
   addressCode: Joi.string().min(3).max(15).example("T12Y2NE").required(),
   DOB: JoiExtended.date().raw().format().required(),
   phoneNumber: Joi.number().example(892356189).required(),
-  createdTimeStamp: JoiExtended.date().default(() => new Date().toLocaleString("en-IE")),
+  createdTimeStamp: JoiExtended.date().default(() => new Date()), // .toLocaleString("en-IE")
 }).label("UserDetails");
 
 export const UserSpecPlus = UserSpec.keys({
