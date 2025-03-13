@@ -134,7 +134,7 @@ export const categoryAnalytics = {
       }
     }
     // https://www.w3schools.com/howto/howto_js_remove_decimals.as
-    let resultMax = Math.trunc(Math.max(...maxDistance));
+    let resultMax = Math.trunc(Math.max(...maxDistance) * 10) / 10;
     if (resultMax === -Infinity) {
       resultMax = 0;
     } else {
@@ -180,7 +180,7 @@ export const categoryAnalytics = {
     }
     // https://www.w3schools.com/howto/howto_js_remove_decimals.asp
     console.log(minDistance);
-    let resultMin = Math.trunc(Math.min(...minDistance));
+    let resultMin = Math.trunc(Math.min(...minDistance) * 10) / 10;
     if (resultMin === Infinity) {
       resultMin = 0;
     } else {
