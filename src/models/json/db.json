@@ -69,6 +69,14 @@
       "notes": "This category is used to note down all museums I would like to visit",
       "userid": "5250e52e-177c-4cf0-9afb-186c0be91045",
       "_id": "c95149b2-035a-4745-8c48-8d8cfdfaa5ad"
+    },
+    {
+      "userid": "31079641-ca5f-424c-a9e7-ea46bd9d4cd7",
+      "title": "Restaurants",
+      "userLat": 23.89999999999999,
+      "userLong": -23.939393939,
+      "notes": "This is the category where I will be adding those popular restaurants I would like to dine in.",
+      "_id": "4a98e2d4-9543-4533-94a1-64155e53acaf"
     }
   ],
   "placemarks": [

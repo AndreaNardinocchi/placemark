@@ -705,7 +705,9 @@ The dashboard view is routed via the below lines in **web-routes.js**:
 
 ## Category page
 
-The Category view is the page where the user lands on when clicking on the 'folder' icon at the botttom of a category in the dahboard:
+The Category view is the page where the user lands on when clicking on the 'folder' icon at the botttom of a category in the dahboard page:
+
+![alt text](image-37.png)
 
 On top of the page, the user will see a banner whose background color and image are customized according to the type of category. Ex.:
 
@@ -754,11 +756,11 @@ This particular feature has been achieved via 2 functions set up in the **catego
 
 ```
 
-The **getImageCode(category)** function will set the image into the banner based upon the category title inputted by the user. The images are all stored in the ImgBB free image hosting site [https://imgbb.com/](https://imgbb.com/).
+The 'getImageCode(category)' function will set the image into the banner based upon the category title selected by the user (namely Restaurants, Beaches, Museums, Beaches). The images are all stored in the ImgBB free image hosting site [https://imgbb.com/](https://imgbb.com/).
 
-The background color of the banner is set by the **getBackgroundColor(category)**.
+The background color of the banner is set by the the 'getBackgroundColor(category)' function.
 
-The 'index' handler in the **category-controller.js** will handle the view of the category page, and it is in there that the 'imageCode', and 'backgroundColor' are retrieved from the **category-analytics.js** to be shown on the page:
+The 'index' route in the **category-controller.js** will handle the view of the category page, and it is in there that the 'imageCode', and 'backgroundColor' are retrieved from the **category-analytics.js** to, then, be shown on the category page:
 
 ```
 index: {
@@ -770,14 +772,14 @@ index: {
 
 ```
 
-Moving down to the bottom of the page, above the footer, the user will be presented with a form to fill out in order to start adding up their placemarks. As soon as the user submit the placemark details, the action tag in thr form element will 'post' them:
+Moving down to the bottom of the page, above the footer, the user will be presented with a form to fill out in order to start adding up their placemarks. As soon as the user submits the placemark details, the action property in the form will 'post' them:
 
 ```
 <form class="box" action="/category/{{category._id}}/addplacemark" method="POST">
 
 ```
 
-The addPlacemark handler in the **category-controller.js** will handle the placemark creation and addition. The payload will be made of the PlacemarkSpec data retrieved from the **joi-schema.js** file:
+The 'addPlacemark' route in the **category-controller.js** will handle the placemark creation and addition. The payload will be made of the 'PlacemarkSpec' data retrieved from the **joi-schemas.js** file:
 
 ```
 export const PlacemarkSpec = Joi.object()
@@ -875,19 +877,19 @@ async addPlacemark(categoryId, placemark) {
 
 ```
 
-As the categoryId, and placemark are passed along as parameters, a new object nePlacemark is created, and save din the MongoDB store, and it will return a new placemark 'id'. The same type of logic will apply to the other placemarks stote (json and mem).
+As the categoryId, and placemark are passed along as parameters, a new object 'newPlacemark' is created, and saved in the MongoDB store, and it will return a new placemark 'id'. The same type of logic will apply to the other placemarks stores (json and mem).
 
 The **list-placemarks.hbs** is the the file that determines the layout of the placemarks, and it is made of a Bulma card. It also iterates the placemarks array via the '#each' helper in order to show all placemarks on the category page.
 
-These are the routes to delete a placemark:
+These are the routes to add and view placemarks:
 
 ```
-{ method: "POST", path: "/category/{categoryid}/deleteplacemark/{id}", config: categoryController.deletePlacemark },
-  { method: "GET", path: "/category/{id}/deleteplacemark/{placemarkid}", config: categoryController.deletePlacemark },
+{ method: "GET", path: "/category/{id}", config: categoryController.index },
+  { method: "POST", path: "/category/{id}/addplacemark", config: categoryController.addPlacemark },
 
 ```
 
-Right into the footer of the placemark card, two icons will enable the user to update or delete the placemark:
+Right down into the footer of the placemark card, two icons will enable the user to update or delete the placemark:
 
 ![alt text](image-15.png)
 
@@ -907,14 +909,14 @@ Right into the footer of the placemark card, two icons will enable the user to u
 
 ```
 
-The updatePlacemark handler is in the **placemark-controller.js** file, and gets evoked by the form action in **edit-placemark.hbs** :
+The updatePlacemark route is in the **placemark-controller.js** file, and gets evoked by the form action in **edit-placemark.hbs** :
 
 ```
 <form class="box" action="/category/{{category._id}}/updateplacemark/{{placemark._id}}" method="POST">
 
 ```
 
-Therefore, upon clicking on the placemark update icon, the user lands on anew route/page inside the placemark itself:
+Therefore, upon clicking on the placemark update icon, the user lands on a new route/page inside the placemark itself:
 
 ```
   { method: "GET", path: "/category/{categoryid}/editplacemark/{placemarkid}", config: placemarkController.index },
@@ -968,11 +970,11 @@ updatePlacemark: {
 
 ```
 
-Another feature added to the category page is the one that lets the user add an image to the category page. Its widget, generated byt the partial **category-image.hbs** is positioned right below the form used to add placemarks:
+Another feature added to the category page is the one that lets the user add an image to the category page. Its widget, generated by the partial **category-image.hbs** is positioned right below the form used to add placemarks:
 
 ![alt text](image-16.png)
 
-However, the Bulma upload file component in [https://bulma.io/documentation/form/file/](https://bulma.io/documentation/form/file/) provides a script which shows an empty image before a user upload thier own image. I found it as not a great user experience, and consulted ChatGPT [https://chatgpt.com/](https://chatgpt.com/) to enhance the script to the extent that now the image card no longer shows the empty image icon when no image is uploaded.
+However, the Bulma upload file component in [https://bulma.io/documentation/form/file/](https://bulma.io/documentation/form/file/) provides a script which shows an empty image before an image gets uploaded. I found it not as a great user experience, and consulted ChatGPT [https://chatgpt.com/](https://chatgpt.com/) to enhance the script to the extent that now the image card no longer shows the empty image icon when no image is uploaded.
 
 ```
 <script>
@@ -1017,10 +1019,13 @@ However, the Bulma upload file component in [https://bulma.io/documentation/form
 ```
 
 ![alt text](image-17.png)
+No image.
 
 ![alt text](image-18.png)
 
-The upladImage and deleteImage handlers are in the **category-controller.js** file:
+Image uploaded.
+
+The uploadImage and deleteImage handlers are in the **category-controller.js** file:
 
 ```
 uploadImage: {
@@ -1067,7 +1072,15 @@ uploadImage: {
 
 The functions updateImage() and deleteImage() are called in from the **image-store.js** file from which the images will be uploaded or delete into the [Cloudinary](https://console.cloudinary.com/) account of the app administrator.
 
-As **category.js** file also shows a field for the image:
+These are the routes used to upload or delete an image in the category page:
+
+```
+  { method: "POST", path: "/category/{id}/uploadimage", config: categoryController.uploadImage },
+  { method: "GET", path: "/category/{id}/deleteimage", config: categoryController.deleteImage },
+
+```
+
+As **category.js** file also shows a field for the image,
 
 ```
 const categorySchema = new Schema({
@@ -1081,14 +1094,6 @@ const categorySchema = new Schema({
     ref: "User",
   },
 });
-
-```
-
-These are the routes used to upload or delete an image in the category page:
-
-```
-  { method: "POST", path: "/category/{id}/uploadimage", config: categoryController.uploadImage },
-  { method: "GET", path: "/category/{id}/deleteimage", config: categoryController.deleteImage },
 
 ```
 
@@ -1111,7 +1116,7 @@ This section is a 4 column box with some analytics of the placemarks in the cate
 
 ![alt text](image-20.png)
 
-The user will have a simple report with the total number of placemarks added, the number of those already visited, those yet to be visited, the distance measured in km of the furthest placemark as well that of the nearest one, and finally, a count of those that are local versus those that are situated abroad.
+The user will have a simple report with the total number of placemarks added, the number of those already visited, those yet to be visited, the distance measured in km of the furthest placemark as well as that of the nearest one, and finally, a count of those that are 'local' versus those that are situated abroad.
 
 It is worth spending a few lines now on the functions created to achieve the placemarks analytics report, which are listed into the **category-analytics.js** file.
 
@@ -1185,7 +1190,7 @@ The countPlacemarks() is a basic one to count the total number of placemarks in 
 
 ```
 
-getYesCounting() and getNoCounting(category) functions will count the placemarks that have already been visited versus those that have yet to be. In a nutshell, the logic followed here is create a couple of lists, one for 'yes' and one for 'no', then iterate through all placemarks, and assign values to the variable 'visit'. If 'visit' gets assigned the value 'no', then, this value is 'pushed' to the 'no' list and viceversa. In the end, the 'no' or 'yes' lists will be counting by appending 'length' and 'returned'.
+getYesCounting() and getNoCounting() functions will count the placemarks that have already been visited versus those that have yet to be. In a nutshell, the logic followed here is create a couple of lists, one for 'yes' and one for 'no', then iterate through all placemarks, and assign values to the variable 'visit'. If 'visit' gets assigned the value 'no', then, this value is 'pushed' to the 'no' list and viceversa. In the end, the 'no' or 'yes' lists will be counted by appending 'length' and, then, will be 'returned'.
 
 The below functions instead will calculate the 'furthest' and 'closest' placemarks:
 
@@ -1282,7 +1287,7 @@ The below functions instead will calculate the 'furthest' and 'closest' placemar
 
 ```
 
-These are functions that I built on the following source [https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates](https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates), and adjusted to fit for the PlaceMark app purposes. We are basically retrieving the userLat and userLong variable values from the category added by the user, iterating through the placemarks, appplying a range of calculations to achieve the 'distance' value, which will, in turn, get pushed to a list called minDistance or maxDistance. At this point, the 'Math.min()' or 'Math.max()' functions will pull the min or max distance and returned.
+These are functions that I built on the following source [https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates](https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates), and adjusted to fit for the PlaceMark app purposes. We are basically retrieving the userLat and userLong variable values from the category, added by the user. Then, there is an iteration through the placemarks, and a range of calculations will enable us to achieve the 'distance' value, which will, in turn, get pushed to a list called minDistance or maxDistance, based upon which function we are in. At this point, the 'Math.min()' or 'Math.max()' functions will pull the min or max distance, which will ultimately get returned.
 
 The below function will count the number of local or abroad placemarks :
 
@@ -1337,7 +1342,7 @@ The below function will count the number of local or abroad placemarks :
 
 ```
 
-The below functions will make an Irish or a globe icon show to signal whether the placemark is locally or abroad located:
+The below functions will make an Irish or a globe icon show on the page to signal whether the placemark is locally or abroad located:
 
 ```
 
@@ -1423,7 +1428,7 @@ getLocalTravelIcon(category) {
 
 ```
 
-All of these functions follow the same logic previously set out essentially. Last but not least, they are injected into the category-view page through the **category-controller.js**:
+All of these functions follow the same logic as previously set out, essentially. Last but not least, the above-mentioned functions are injected into category-view page through the **category-controller.js**:
 
 ```
 index: {
@@ -1477,9 +1482,9 @@ index: {
 - https://bulma.io/documentation/form/file/
 - https://chatgpt.com/
 
-# Placemark page
+## Placemark page
 
-The purpose of this landing page is just to provide some more info about the placemark selected. A user will land to this one after clicking on a placemark title on the category-view page.
+The purpose of this landing page is just to provide some more info about the placemark selected. A user will land to this page after clicking on a placemark title on the category-view page.
 
 ![alt text](image-21.png)
 
@@ -1522,7 +1527,7 @@ Handlebars in the **placemark.hbs** file will help us convey some of the informa
 
 ```
 
-However,there is also an attempt to enrich the user experienceby providing some additional information via a couple of functions pulled from the **category-analytics.js** file:
+However, there is also an attempt to enrich the user experience by providing some additional information via a couple of functions pulled from the **category-analytics.js** file:
 
 ```
 / eslint-disable-next-line consistent-return
@@ -1560,9 +1565,9 @@ However,there is also an attempt to enrich the user experienceby providing some 
 ![alt text](image-22.png)
 ![alt text](image-23.png)
 
-As one can see above, this banner content will suggest the user the travel means they need to travel to the destination based upon whether they are located in Ireland or abroad (Ireland, of course, is an island so one needs to jump on a plane to travel abroad, such as to Spain to visit the 'El Parque del Buen Retiro' in Madrid). Whereas traveling to Ireland can be done by bus, car or train, and if the destination has not been visited yet, a senetnce at the bottom will encourage the visit to go.
+As one can see above, this banner content will suggest the user the travel means they need to travel to the destination based upon whether they are located in Ireland or abroad. Ireland, of course, is an island so one needs to jump on a plane to travel abroad, such as to Spain to visit the 'El Parque del Buen Retiro' in Madrid. Whereas traveling to Ireland can be done by bus, car or train, and if the destination has not been visited yet, a sentence at the bottom will encourage the user to go.
 
-Particularly interesting is the feature that enables us to have the distance between the user's and the location distance whose code is embedded in the 'placemark' handler into the **placemark-controller.js** file:
+Particularly interesting is the feature that enables us to have the distance between the user's and the location distance, whose code is embedded in the 'placemark' handler into the **placemark-controller.js** file:
 
 ```
  placemark: {
@@ -1643,7 +1648,7 @@ The weather widget on top of the page is noteworthy too. The idea would be that 
 
 ![alt text](image-24.png)
 
-This is a widget I am bringing in from the SETU Computer Systems and Network module final assignment in https://instapi.glitch.me/ and it is based on JavaScript Fetch API. To make the weather widget get up and running, I educated myself through this guide https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6 and adjusted the code to serve the purposes of the PlaceMark app:
+This is a widget I am bringing in from the SETU Computer Systems and Network module final assignment in https://instapi.glitch.me/, and it is based on JavaScript Fetch API. To get the weather widget up and running, I educated myself through this guide https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6, and adjusted the code to serve the purposes of the PlaceMark app:
 
 ```
  <script>
@@ -1715,7 +1720,7 @@ Finally, this is the route that enables the placemark page to show:
 
 - https://medium.com/@ravipatel.it/a-comprehensive-guide-to-fetching-weather-data-using-javascript-fetch-api-13133d0bc2e6
 
-# TDD (Test-driven development)
+## TDD (Test-driven development)
 
 This app development has been guided by the TDD principles, hence, any feature development has been tested, and, where needed, the code has been refactored.
 
@@ -1742,9 +1747,9 @@ If the Mocha Test Explorer plugin is installed, and the tests are run via the la
 
 ![alt text](image-26.png)
 
-## MongoDB, Robo 3T, Mongoose
+### MongoDB, Robo 3T, Mongoose
 
-To connect MongoDb (https://www.mongodb.org) database service to the PlaceMark app, we are using the Robo 3T app https://robomongo.org. At that point the Mongoose library has been installed ``npm install mongoose``` and imported into mongo models files :
+To connect MongoDb (https://www.mongodb.org) database service to the PlaceMark app, we are using the Robo 3T app https://robomongo.org. At that point the Mongoose library has been installed `npm install mongoose`, and imported into the mongo models files :
 
 - user.js
 - user-mongo-store.js
@@ -1753,7 +1758,7 @@ To connect MongoDb (https://www.mongodb.org) database service to the PlaceMark a
 - placemark.js
 - placemark-mongo-store.js
 
-The Mongo conncetion has then been defined in the .env file using the below strings (the first one, which is commented out, is craeted for the MongoDB connection, whereas the second connects Atlas (https://cloud.mongodb.com/)):
+The Mongo connection has, then, been defined in the '.env' file using the below strings (the first one, which is commented out, is craeted for the MongoDB connection, whereas the second connects Atlas (https://cloud.mongodb.com/)):
 
 ```
 # db=mongodb://127.0.0.1:27017/placemark?directConnection=true
@@ -1762,7 +1767,7 @@ db=mongodb+srv://latinxxxxxxx:xxxxxxxxxx@cluster0.u8y0d.mongodb.net/?retryWrites
 
 ```
 
-Finally, the **connect.js** file was created establish a connection to the database and logging errors to the console.
+Finally, the **connect.js** file was created to establish a connection to the database, and logging errors to the console.
 The **db.js** is also updated to introduce an option to connect to mongo if selected.
 
 ### Source attribution
@@ -1773,24 +1778,24 @@ The **db.js** is also updated to introduce an option to connect to mongo if sele
 - https://mochajs.org/
 - https://www.chaijs.com/
 
-## REST API
+### REST API
 
 As we wanted to expose our app to APIs, we first installed the boom module `npm install @hapi/boom` to make it retiring HTTP code more convenient
-(https://hapi.dev/module/boom), and, then, to create the API for the PlaceMark app, the below modules were created:
+(https://hapi.dev/module/boom). Then, in order to create the API for the PlaceMark app, the below modules were created:
 
 - api-routes.js: a set of routes to service the api
 - users-api.js: implementation of the User API
 - category-api.js: implementation of the Category API
 - placemark-api.js: implementation of the Placemark API
 
-Next step was to create a set of API file tests was in the 'model' folder:
+Next step was to create a set of API file tests in the 'model' folder:
 
 - category-api-test.js
 - placemark-api-test.js
 - user-api-test.js
-- placemark-servive.js
+- placemark-service.js
 
-Additionally, as we needed a HTTP Client Library, 'axios' was installed (https://axios-http.com/docs/intro) and imported into the **placemark-servive.js** file, which is the encapsulation to access the api:
+Additionally, as we needed a HTTP Client Library, 'axios' was installed (https://axios-http.com/docs/intro) and imported into the **placemark-service.js** file, which is the encapsulation to access the api:
 
 ```
 import axios from "axios";
@@ -1810,7 +1815,7 @@ export const placemarkService = {
 
 As we are processing these API tests over HTTP, they require that the application be running (`npm run start`).
 
-However, to make the development experience a little more convenient, 'Nodemon' (https://github.com/remy/nodemon) was used to avoid having to restart the server every time a change made to its implementation.
+However, to make the development experience a little more convenient, 'Nodemon' (https://github.com/remy/nodemon) was used to avoid having to restart the server every time a change made was to its implementation.
 
 ### Source attribution
 
@@ -1818,24 +1823,24 @@ However, to make the development experience a little more convenient, 'Nodemon' 
 - https://axios-http.com/docs/intro
 - https://github.com/remy/nodemon
 
-## OpenAPI
+### OpenAPI
 
-To document the API, the route chosen was that of following a widely accepted stabdard:
+To document the API, the route chosen was that of following a widely accepted standard:
 
 - https://www.openapis.org/
 
 However, the tool used is Swagger (https://swagger.io/), which is an OpenAPI specification.
 
-To, then, create the metadata to document our API to support Swagger/OpenAPI standards, the hapi-swagger plugin https://github.com/glennjones/hapi-swagger was used.
+In order, then, to create the metadata to document our API to support Swagger/OpenAPI standards, the hapi-swagger plugin https://github.com/glennjones/hapi-swagger was used.
 
 At that point, the HAPI endpoints were annotated with all information needed, and, appropriate metadata conformant with Swagger/OpenAPI got generated.
 
-To ensure this all works, the Vision and Inert plugins were installed :
+To ensure this all works, the Vision and Inert plugins were installed too:
 
 - https://hapi.dev/module/inert
 - https://www.npmjs.com/package/@hapi/vision
 
-Whituot going into further details, once the annotations were added to the **user-api.js**, **category-api.js**, and **placemrk-api.js** files (user-api.js example below of the 'create' action):
+Withuot going into further details, once the annotations were added to the **user-api.js**, **category-api.js**, and **placemrk-api.js** files (user-api.js example below of the 'create' action):
 
 ```
   create: {
@@ -1859,7 +1864,7 @@ Whituot going into further details, once the annotations were added to the **use
   },
 ```
 
-the Swagger documentation would finally show for the user, category, and placemark endpoints, and would be available for testing:
+the Swagger documentation would finally show for the user, category, and placemark endpoints, and would be available for testing on a local server (ex. http://localhost:3000/documentation):
 
 ![alt text](image-28.png)
 
@@ -1880,13 +1885,13 @@ the Swagger documentation would finally show for the user, category, and placema
 - https://www.npmjs.com/package/@hapi/vision
 - https://github.com/glennjones/hapi-swagger
 
-## JSON Web Token (JWT)
+### JSON Web Token (JWT)
 
-The PlaceMark app also features a JSON Web Tokens (JWT), which provides a mechanism to authenticate users, validate identities, and secure a safe communication between clients and servers, staving off any unathorized access.
+The PlaceMark app also features a JSON Web Tokens (JWT), which provides a mechanism to authenticate users, validate identities, and secure a safe communication between clients, and servers, staving off any unathorized access.
 
-To that end, the **jwt-utils.js** was created into the 'api'folder to make a set of utilities available for encoding, decoding and validating tokens, while the JWT system was initialized by importing and registering into the **server.js**.
+To that end, the **jwt-utils.js** was created into the 'api' folder to make a set of utilities available for encoding, decoding and validating tokens, while the JWT system was initialized by importing and registering it into the **server.js**.
 
-Additionally, the **api-routers.js** file had to be enriched wu=ith the following route:
+Additionally, the **api-routers.js** file had to be enriched with the following route:
 
 ```
   { method: "POST", path: "/api/users/authenticate", config: userApi.authenticate },
@@ -1919,7 +1924,7 @@ import { createToken } from "./jwt-utils.js";
 
 ```
 
-Hence, if there is a matching user, a token gets created and returned.
+Hence, as per the above code, if there is a matching user, a token gets created and returned.
 
 The **placemark-service.js** was also extended to include the new methods to authenticate a user:
 
@@ -1935,11 +1940,11 @@ The **placemark-service.js** was also extended to include the new methods to aut
   }
 ```
 
-These methods set the appropriate HTTP parameters to include accessing the endpoint with a valid user and then the token header for all axios requests, until clearAuth is called.
+These methods set the appropriate HTTP parameters to include accessing the endpoint with a valid user as well as the token header for all axios requests, until clearAuth() is called.
 
 The **auth-api-test.js** was, then, created for the user testing.
 
-Finally, the authorization strategy was changed in all **xxx-api.js** files for all routes, expect for 'create', and 'authenticate' in the **user-api.js** file, otherwise there would be no endpoints for registration and authentiation (Ex. 'find' action below):
+Finally, the authorization strategy was changed in all **xxx-api.js** files for all routes, expect for 'create', and 'authenticate' in the **user-api.js** file, otherwise there would be no endpoints for registration and authentication (Ex. 'find' action below):
 
 ```
  find: {
@@ -1952,7 +1957,7 @@ Finally, the authorization strategy was changed in all **xxx-api.js** files for 
     ....
 ```
 
-At this point, because almost all routes are secured due to the above autorization strategy, a change was needed into the **server.js** **swaggerOptions** const to add some additional parameters:
+At this point, because almost all routes are secured due to the above authorization strategy, a change was needed into the **server.js** **swaggerOptions** const to add some additional parameters:
 
 ```
 ...
@@ -1977,7 +1982,7 @@ which, ultimately, led up to an 'Authorize' button to appear on the Swagger Plac
 
 ![alt text](image-29.png)
 
-Hence, once we create a new user in our local environment documentation http://localhost:3000/documentation#/api/postApiUsers :
+At this point, once a new user is created in our local environment documentation http://localhost:3000/documentation#/api/postApiUsers :
 
 ![alt text](image-30.png)
 
@@ -2000,9 +2005,9 @@ Unfortunately, the create category does show a 503 error, which I was unable to 
 - https://github.com/dwyl/hapi-auth-jwt2
 - https://github.com/auth0/node-jsonwebtoken
 
-# Mongo database on Cloud Atlas
+## Mongo database on Cloud Atlas
 
-The PlaceMark app has been connected to the Mono database on Cloud Atlas, which is in sync with the Robo T3 database:
+The PlaceMark app has been connected to the Mongo database on Cloud Atlas, which is in sync with the Robo T3 database:
 
 Ex.
 
@@ -2024,7 +2029,7 @@ This project will be maintained by myself only.
 
 # Acknowledgements
 
-My lecture Eamonn de Leastar provided all knowledge I needed to build and set up the app through the Full Stack WebDevelopment 1 module and tools such as HTML, Bulma CSS framework, Javascript, node.js, Hapi, Express/Handlebars, lowdb database, and sso on.
+My lecture Eamonn de Leastar provided all knowledge I needed to build and set up the app through the Full Stack WebDevelopment 1 module and tools such as HTML, Bulma CSS framework, Javascript, node.js, Hapi, Express/Handlebars, lowdb database, and so on.
 
 Special thanks to John Rellis too as he transferred plenty of the knowledge in the web development 2 needed for this project when working on the following assignment https://evanescent-mercury-naranja.glitch.me/ during summer 2024.
 
