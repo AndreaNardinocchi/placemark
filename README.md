@@ -1230,8 +1230,7 @@ The below functions instead will calculate the 'furthest' and 'closest' placemar
       }
     }
     // https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places
-    distance = Number(distance).toFixed(2);
-    let resultMax = Number(distance).toFixed(2);
+    let resultMax = Math.max(...maxDistance).toFixed(2);
     if (resultMax === -Infinity) {
       resultMax = 0;
     } else {
@@ -1276,9 +1275,7 @@ The below functions instead will calculate the 'furthest' and 'closest' placemar
       }
     }
     // https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places
-    distance = Number(distance).toFixed(2);
-    console.log(minDistance);
-    let resultMin = Number(distance).toFixed(2);
+    let resultMin = Math.min(...minDistance).toFixed(2);
     if (resultMin === Infinity) {
       resultMin = 0;
     } else {
