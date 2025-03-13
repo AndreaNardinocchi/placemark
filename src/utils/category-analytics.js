@@ -133,8 +133,9 @@ export const categoryAnalytics = {
         maxDistance.push(distance);
       }
     }
-    // https://www.w3schools.com/howto/howto_js_remove_decimals.as
-    let resultMax = Math.trunc(Math.max(...maxDistance) * 10) / 100;
+    // https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places
+    distance = Number(distance).toFixed(2);
+    let resultMax = Number(distance).toFixed(2);
     if (resultMax === -Infinity) {
       resultMax = 0;
     } else {
@@ -178,9 +179,10 @@ export const categoryAnalytics = {
         minDistance.push(distance);
       }
     }
-    // https://www.w3schools.com/howto/howto_js_remove_decimals.asp
+    // https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places
+    distance = Number(distance).toFixed(2);
     console.log(minDistance);
-    let resultMin = Math.trunc(Math.min(...minDistance) * 10) / 100;
+    let resultMin = Number(distance).toFixed(2);
     if (resultMin === Infinity) {
       resultMin = 0;
     } else {
