@@ -133,12 +133,13 @@ export const categoryAnalytics = {
         maxDistance.push(distance);
       }
     }
-    // https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places
-    let resultMax = Math.max(...maxDistance).toFixed(2);
+    // https://www.delftstack.com/howto/javascript/javascript-round-to-2-decimal-places/
+    let resultMax = Math.max(...maxDistance);
     if (resultMax === -Infinity) {
       resultMax = 0;
     } else {
-      resultMax = `${resultMax} km away`;
+      const maxRounded = resultMax.toFixed(2);
+      resultMax = `${maxRounded} km away`;
     }
     return resultMax;
   },
@@ -178,12 +179,13 @@ export const categoryAnalytics = {
         minDistance.push(distance);
       }
     }
-    // https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places
-    let resultMin = Math.min(...minDistance).toFixed(2);
+    // https://www.delftstack.com/howto/javascript/javascript-round-to-2-decimal-places/
+    let resultMin = Math.min(...minDistance);
     if (resultMin === Infinity) {
       resultMin = 0;
     } else {
-      resultMin = `${resultMin} km away`;
+      const minRounded = resultMin.toFixed(2);
+      resultMin = `${minRounded} km away`;
     }
     return resultMin;
   },
