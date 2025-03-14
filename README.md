@@ -2024,7 +2024,7 @@ The Json stores kept showing errors for the 'model' test, and due to tim constra
 
 # Deployment
 
-ddddddddddddd
+The app was deployed on https://dashboard.render.com/ and can be acceseed on https://placemark-v63d.onrender.com .
 
 # Who maintains and contributes to the project
 
