@@ -2022,7 +2022,7 @@ Ex.
 
 ## Bugs and efects
 
-The Json stores kept showing errors for the 'model' test, and due to tim constraints and lest I would compromise the MongoDB successful tests (Mongo is the primary base that this app uses), I resolved to no longer maintain the Json tests.
+The Json stores kept showing errors for the 'model' test, and due to time constraints, and lest I would compromise the MongoDB successful tests (Mongo is the primary base that this app uses), I resolved to no longer maintain the Json tests.
 
 # Deployment
 
