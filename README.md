@@ -1381,6 +1381,9 @@ index: {
           c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
           distance = R * c;
           allDistances.push(distance);
+          // This is just for comparison of the values between the above method with the module 'geolib' https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
+          const dist = getDistance({ latitude: lat1, longitude: long1 }, { latitude: lat2, longitude: long2 }) / 1000;
+          console.log(dist);
         }
       }
       // https://www.delftstack.com/howto/javascript/javascript-round-to-2-decimal-places/
@@ -1425,6 +1428,10 @@ index: {
     },
   },
 ```
+
+### Bugs and defects
+
+The method above used to calculate the distance is not always perfectly accurate, and may be sligthly off, as far as I can see by crossing the given results with what the search engines usually return for the same queries. However, I also did try other methods, and all of them return the same distances as the above method.
 
 ### Source attribution
 

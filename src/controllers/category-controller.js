@@ -1,3 +1,4 @@
+import { getDistance } from "geolib";
 import { db } from "../models/db.js";
 import { PlacemarkSpec, updatedPlacemarkSpec } from "../models/joi-schemas.js";
 import { categoryAnalytics } from "../utils/category-analytics.js";
@@ -55,6 +56,7 @@ export const categoryController = {
       // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
       const lat1 = userDetails.userLat;
       const long1 = userDetails.userLong;
+      console.log("coords", lat1, long1);
       const toRadians = (degrees) => degrees * (Math.PI / 180);
       const R = 6371; // Radius of the Earth in km
       // eslint-disable-next-line prefer-const
@@ -83,6 +85,9 @@ export const categoryController = {
           c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
           distance = R * c;
           allDistances.push(distance);
+          // This is just for comparison of the values between the above method with the module 'geolib' https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
+          const dist = getDistance({ latitude: lat1, longitude: long1 }, { latitude: lat2, longitude: long2 }) / 1000;
+          console.log(dist);
         }
       }
       // https://www.delftstack.com/howto/javascript/javascript-round-to-2-decimal-places/

@@ -158,3 +158,32 @@ Description:
 Fitzgerald's Park is the original site of the 1902 International Exhibition held in Cork and named after Lord Mayor, Edward Fitzgerald. It is located on the banks of the River Lee.
 
 Visited: Yes
+
+
+
+Phoenix Park, Dublin
+
+
+
+Placemark Name:
+Phoenix Park, Dublin
+
+Geolocation (lat/long):
+53.360001 / -6.325
+
+Address:
+Phoenix Park, Phoenix Park Ward 1986, Dublin
+
+Phone number:
+35318213021
+
+Country:
+Ireland
+
+Website:
+https://www.phoenixpark.ie/
+
+Description:
+It was originally formed as a royal hunting Park in the 1660s and opened to the public in 1747. A large herd of wild fallow deer still remain to this day. The Park is also home to the Phoenix Park Visitor Centre, Áras an Uachtaráin..
+
+Visited: Yes
