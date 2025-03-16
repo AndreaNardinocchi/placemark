@@ -106,3 +106,55 @@ Description:
 Crawford Art Gallery is one of Ireland’s National Cultural Institutions, charged with the care of over 3,500 diverse artworks from the National Collection, from 18th century Irish and European painting and sculpture, to contemporary ones.
 
 Visited: Yes
+
+Placemark Name:
+Central Park, New York
+
+Geolocation (lat/long):
+40.79431915283203 / -73.9548110961914
+
+Address:
+Central Park, Manhattan, New York, NY
+
+Phone number:
+2123106600
+
+Country:
+United States
+
+Website:
+https://www.centralpark.com/
+
+Description:
+Central Park is a visual masterpiece created by landscape designer Frederick Law Olmsted and architect Calvert Vaux. It has gone through major developments and restoration over time to carry on its initial purpose...
+
+Visited: No
+
+
+
+Fitzgerald's Park
+
+
+
+Placemark Name:
+Fitzgerald's Park
+
+Geolocation (lat/long):
+51.8959819 / -8.4958472
+
+Address:
+The Mardyke, Cork, County Cork
+
+Phone number:
+353214924000
+
+Country:
+Ireland
+
+Website:
+https://www.discoverireland.ie/cork/fitzgerald-s-park
+
+Description:
+Fitzgerald's Park is the original site of the 1902 International Exhibition held in Cork and named after Lord Mayor, Edward Fitzgerald. It is located on the banks of the River Lee.
+
+Visited: Yes

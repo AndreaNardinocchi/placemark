@@ -65,14 +65,30 @@ export const placemarkController = {
     handler: async function (request, h) {
       const categoryId = request.params.id;
       const placemarkId = request.params.placemarkid;
+      const loggedInUser = request.auth.credentials;
+      const userDetails = await db.userStore.getUserById(loggedInUser._id);
       const category = await db.categoryStore.getCategoryById(categoryId);
       const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
-      const travelMeans = categoryAnalytics.getTravelMeans(placemark);
       const youShouldVisit = categoryAnalytics.getYouShouldVisit(placemark);
 
+      /* --- This section will determine the means of transport to show based upon the user's location --- */
+      let travelMeans = "";
+      let destination = "";
+      if (placemark) {
+        destination = placemark.country;
+        destination = destination.toLowerCase().trim();
+        // eslint-disable-next-line prefer-const
+        let userCountry = userDetails.country.toLowerCase().trim();
+        if (destination === userCountry) {
+          travelMeans = "car, bus, or train";
+        } else {
+          travelMeans = "plane";
+        }
+      }
+
       /* --------- The below section calculates the distance between the user's and the placemark location ----- */
-      const lat1 = category.userLat;
-      const long1 = category.userLong;
+      const lat1 = userDetails.userLat;
+      const long1 = userDetails.userLong;
       const toRadians = (degrees) => degrees * (Math.PI / 180);
       const R = 6371; // Radius of the Earth in
       // eslint-disable-next-line prefer-const

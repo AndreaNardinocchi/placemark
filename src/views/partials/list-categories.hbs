@@ -1,52 +1,33 @@
 {{#each categories}}
-<div class="box box-link-hover-shadow">
-  <h2 class="title">
-    {{title}}
-  </h2>
-  <section class="columns pt-2">
-    <section class="column is-8">
-      <div class="notes">
-        <div class="content card-content">
-          <p class="subtitle"> {{notes}} </p>
-        </div>
-      </div>
-    </section>
-    <section class="column is-4">
-      <div class="card has-background-grey card-image pl-6 pr-6 pt-5 pb-5">
-          <p class="subtitle has-text-centered has-text-white is-size-5 ">You location coordinates </p>
-          <div class="columns">
-            <div class="column is-2">
-              <p class="has-text-white is-size-6">lat
-              </p>
-            </div>
-            <div class="column is-10">
-              <p class="title has-text-centered has-text-white is-size-4 ">
-                {{userLat}}
-            </div>
-          </div>
-          <div class="columns">
-            <div class="column is-2">
-              <p class="has-text-white is-size-6">long
-              </p>
-            </div>
-            <div class="column is-10">
-              <p class="title has-text-centered has-text-white is-size-4 ">
-                {{userLong}}
-            </div>
-          </div>
-        </figure>
-      </div>
-    </section>
+<section class="columns box pt-2 mx-1 mb-5">
+  <section class="column is-8">
+    <div class="box-link-hover-shadow">
+    <h2 class="title">
+      <a href="/category/{{_id}}" class="has-text-grey">{{title}}</a>
+    </h2>
+    <div class="notes">
+    <div class="content card-content">
+      <p class="subtitle"> {{notes}} </p>
+      <a href="/category/{{_id}}" class="button">
+      <span class="icon is-small">
+      <i class="fas fa-solid fa-folder-open"></i>
+      </span>
+      </a>
+      <a href="/dashboard/deletecategory/{{_id}}" class="button">
+      <span class="icon is-small">
+      <i class="fas fa-solid fa-trash"></i>
+      </span>
+      </a>
+    </div>
   </section>
-  <a href="/category/{{_id}}" class="button">
-  <span class="icon is-small">
-  <i class="fas fa-solid fa-folder-open"></i>
-  </span>
-  </a>
-  <a href="/dashboard/deletecategory/{{_id}}" class="button">
-  <span class="icon is-small">
-  <i class="fas fa-solid fa-trash"></i>
-  </span>
-  </a>
-</div>
+  <section class="column is-4">
+    <div class="card-image">
+      <a href="/category/{{_id}}">
+        <figure class="image is-264x264">
+          <img src="{{image}}" style="border-radius: 10px;" />
+        </figure>
+      </a>
+    </div>
+  </section>
+</section>
 {{/each}}

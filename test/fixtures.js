@@ -63,9 +63,8 @@ export const testUsers = [
 
 export const museums = {
   title: "Art galleries",
-  userLat: 40.7127281678,
-  userLong: -74.00601529056,
-  notes: "This category is used to note down all museums I would like to visit",
+  notes: "This is the category in which all worldwide famous museums or art galleries you wish to visit or you lready visited can be added to.",
+  image: "https://i.ibb.co/HD39FR6p/man-2590655-big.jpg",
 };
 
 export const elPradoMuseum = {
@@ -82,29 +81,25 @@ export const elPradoMuseum = {
 
 export const parks = {
   title: "Parks",
-  userLat: 10.71272819076,
-  userLong: -34.0060152989353,
   notes: "This category is used to note down all parks I would like to visit",
+  image: "https://i.ibb.co/pjbvydw1/parks.jpg",
 };
 
 export const testCategories = [
   {
     title: "Restaurants",
-    userLat: 10.712728164773,
-    userLong: -24.0060152245156,
-    notes: "This category is used to note down all restaurants I would like to try out",
+    notes: "All restaurants you would like to dine or you already had the pleasure to be in can be added and listed here. Just a handy note for your next trip.",
+    image: "https://i.ibb.co/gZjF0ppp/jerk-pasta-recipe.png",
   },
   {
     title: "Museums",
-    userLat: -10.7127281567747,
-    userLong: 74.006015225516,
-    notes: "This category is used to note down all museums I would like to visit",
+    notes: "This is the category in which all worldwide famous museums or art galleries you wish to visit or you lready visited can be added to.",
+    image: "https://i.ibb.co/HD39FR6p/man-2590655-big.jpg",
   },
   {
     title: "Beaches",
-    userLat: -3.712728164735647,
-    userLong: 14.00601527465352,
-    notes: "This category is used to note down all beaches I would like to go to",
+    notes: "There are surely so many beaches you would like to sunbath in and relish the sweet marine breeze caressing your skin. Why not list them all here?",
+    image: "https://i.ibb.co/LhrJWjcb/coast-7366616.jpg",
   },
 ];
 

@@ -4,10 +4,9 @@ const { Schema } = Mongoose;
 
 const categorySchema = new Schema({
   title: String,
-  userLat: Number,
-  userLong: Number,
   notes: String,
   img: String,
+  image: String,
   userid: {
     type: Schema.Types.ObjectId,
     ref: "User",

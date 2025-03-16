@@ -1,56 +1,30 @@
-<section class="content mt-6 mb-6 ">
+<section class="content mt-6 mb-5 mx-3">
   <article>
-    <p class = "subtitle has-text-weight-bold">About your geocoordinates</p>
-    <p>Ensure that your location geocoordinates are correct. Your location is the place where you currently are, and from which you are using the PlaceMark app. Vivamus lacinia odio vitae vestibulum vestibulum.
+    <p class="subtitle has-text-weight-bold">About your categories</p>
+    <p>Select your categories below where you can list all destinations you would like to visit soon!
     </p>
   </article>
 </section>
 <form action="/dashboard/addcategory" method="POST" class="box">
   <div class="field is-horizontal"></div>
   <div class="field">
-    <label class="label">Category Title - ** Only 4 Placemark categories are allowed 👮‍♂️**</label>
+    <label class="label">Category Title - ** Only 4 PlaceMark categories are allowed 👮‍♂️**</label>
     <select
       class="p-4"
       name="title"
       type="text"
       placeholder="Select your Category"
       style="font-size:100%; width: 100%; border-radius: 10px;   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.01), 0 6px 20px 0 rgba(0, 0, 0, 0.13); border-color: #d9d9d9 "
-      >
+    >
       <option value="Restaurants">Restaurants</option>
       <option value="Museums">Museums</option>
       <option value="Parks">Parks</option>
       <option value="Beaches">Beaches</option>
     </select>
-    <div class="field is-horizontal">
-      <div class="field-body">
-        <div class="field">
-          <div class="control">
-            <label class="label">Notes</label><textarea class="textarea" type="text" placeholder="Enter some notes about the use of this category for you" name="notes"></textarea>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
-  <div class="field-body">
-    <div class="field">
-      <label class="label">Your location latitude</label><input class="input" type="number" step="any" placeholder="Enter your location latitude" name="userLat" />
-    </div>
-    <div class="field">
-      <label class="label">Your location longitude</label><input class="input" type="number" step="any" placeholder="Enter your location longitude" name="userLong" />
-    </div>
-  </div>
-  <div class = "columns">
-    <div class = "column is-3">
+  <div class="columns">
+    <div class="column is-3">
       <button class="button is-info has-text-white mt-3">Add Category</button>
-    </div>
-    <div class = "column is-9 mt-5 pr-4">
-      <p class="has-text-right is-size-7">
-        *Find your exact location coordinates on
-        <a href="https://www.gps-coordinates.net/" target="_blank" class="has-text-grey">https://www.gps-coordinates.net/ </a>
-        <span class="ml-1 icon is-small">
-        <i class="fas fa-solid fa-folder-open"></i>
-        </span>
-        </span>
     </div>
   </div>
 </form>

@@ -99,10 +99,9 @@ export const PlacemarkArraySpec = Joi.array().items(PlacemarkSpecPlus).label("Pl
 export const CategorySpec = Joi.object()
   .keys({
     title: Joi.string().example("Museums").required(),
-    userLat: Joi.number().max(100).example(40.41541290283203).required(),
-    userLong: Joi.number().max(100).example(3.927241764598).required(),
     userid: IdSpec,
-    notes: Joi.string().min(20).max(1000).example("Here I will be adding all restaurants I would like to try out...").required(),
+    notes: Joi.string().min(20).max(1000).example("Here I will be adding all restaurants I would like to try out..."),
+    image: Joi.string(),
     placemarks: PlacemarkArraySpec,
   })
   .label("Category");

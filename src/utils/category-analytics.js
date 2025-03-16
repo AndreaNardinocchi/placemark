@@ -99,217 +99,133 @@ export const categoryAnalytics = {
     }
   },
 
-  // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
-  getMaxPOIdistance(category) {
-    const lat1 = category.userLat;
-    const long1 = category.userLong;
-    const toRadians = (degrees) => degrees * (Math.PI / 180);
-    const R = 6371; // Radius of the Earth in km
-    // eslint-disable-next-line prefer-const
-    let long2 = 0;
-    // eslint-disable-next-line prefer-const
-    let lat2 = 0;
-    let a = 0;
-    let c = 0;
-    let dLat = 0;
-    let dLong = 0;
-    let title = "";
-    let country = "";
-    // eslint-disable-next-line prefer-const, no-new-object
-    let maxDistance = [];
-    let distance = 0;
-    if (category.placemarks) {
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        long2 = category.placemarks[i].long;
-        lat2 = category.placemarks[i].lat;
-        title = category.placemarks[i].title;
-        country = category.placemarks[i].country;
-        dLat = toRadians(lat2 - lat1);
-        dLong = toRadians(long2 - long1);
-        // eslint-disable-next-line no-const-assign
-        a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
-        c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        distance = R * c;
-        maxDistance.push(distance);
-      }
-    }
-    // https://www.delftstack.com/howto/javascript/javascript-round-to-2-decimal-places/
-    let resultMax = Math.max(...maxDistance);
-    if (resultMax === -Infinity) {
-      resultMax = 0;
-    } else {
-      const maxRounded = resultMax.toFixed(2);
-      resultMax = `${maxRounded} km away`;
-    }
-    return resultMax;
-  },
+  // // eslint-disable-next-line consistent-return
+  // getLocal(category) {
+  //   if (category.placemarks) {
+  //     const abroad = [];
+  //     const local = [];
+  //     let localCounting = "";
+  //     let abroadCounting = "";
+  //     let destination = "";
+  //     // Loop through all placemarks in the category
+  //     for (let i = 0; i < category.placemarks.length; i += 1) {
+  //       destination = category.placemarks[i].country;
+  //       destination = destination.toLowerCase();
+  //       destination = destination.trim();
+  //       if (destination === "ireland") {
+  //         localCounting = "Yes";
+  //         local.push(localCounting);
+  //       } else {
+  //         abroadCounting = "Yes";
+  //         abroad.push(abroadCounting);
+  //       }
+  //     }
+  //     localCounting = local.length;
+  //     return localCounting;
+  //   }
+  // },
 
-  // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
-  getMinPOIdistance(category) {
-    const toRadians = (degrees) => degrees * (Math.PI / 180);
-    const R = 6371; // Radius of the Earth in kilometers
-    const lat1 = category.userLat;
-    const long1 = category.userLong;
-    const something = "";
-    // eslint-disable-next-line prefer-const
-    let long2 = 0;
-    // eslint-disable-next-line prefer-const
-    let lat2 = 0;
-    let a = 0;
-    let c = 0;
-    let dLat = 0;
-    let dLong = 0;
-    let title = "";
-    let country = "";
-    // eslint-disable-next-line prefer-const
-    let minDistance = [];
-    let distance = 0;
-    if (category.placemarks) {
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        long2 = category.placemarks[i].long;
-        lat2 = category.placemarks[i].lat;
-        title = category.placemarks[i].title;
-        country = category.placemarks[i].country;
-        dLat = toRadians(lat2 - lat1);
-        dLong = toRadians(long2 - long1);
-        // eslint-disable-next-line no-const-assign
-        a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
-        c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        distance = R * c;
-        minDistance.push(distance);
-      }
-    }
-    // https://www.delftstack.com/howto/javascript/javascript-round-to-2-decimal-places/
-    let resultMin = Math.min(...minDistance);
-    if (resultMin === Infinity) {
-      resultMin = 0;
-    } else {
-      const minRounded = resultMin.toFixed(2);
-      resultMin = `${minRounded} km away`;
-    }
-    return resultMin;
-  },
+  // // eslint-disable-next-line consistent-return
+  // getLocalTravelIcon(category) {
+  //   if (category.placemarks) {
+  //     let destination = "";
+  //     let localTravelIcon = "";
+  //     // Loop through all placemarks in the category
+  //     for (let i = 0; i < category.placemarks.length; i += 1) {
+  //       destination = category.placemarks[i].country;
+  //       destination = destination.toLowerCase().trim();
+  //       if (destination === "ireland") {
+  //         localTravelIcon = "fas fa-solid fa-car";
+  //       }
+  //     }
+  //     return localTravelIcon;
+  //   }
+  // },
 
-  // eslint-disable-next-line consistent-return
-  getLocal(category) {
-    if (category.placemarks) {
-      const abroad = [];
-      const local = [];
-      let localCounting = "";
-      let abroadCounting = "";
-      let destination = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
-          localCounting = "Yes";
-          local.push(localCounting);
-        } else {
-          abroadCounting = "Yes";
-          abroad.push(abroadCounting);
-        }
-      }
-      localCounting = local.length;
-      return localCounting;
-    }
-  },
+  // // eslint-disable-next-line consistent-return
+  // getLocalIcon(category) {
+  //   if (category.placemarks) {
+  //     let localIcon = "";
+  //     let abroadIcon = "";
+  //     let destination = "";
+  //     // Loop through all placemarks in the category
+  //     for (let i = 0; i < category.placemarks.length; i += 1) {
+  //       destination = category.placemarks[i].country;
+  //       destination = destination.toLowerCase().trim();
+  //       if (destination === "ireland") {
+  //         // eslint-disable-next-line quotes
+  //         localIcon = "https://i.ibb.co/Q7J1t5jt/102-lokasimanusia-mini.jpg";
+  //       } else {
+  //         abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
+  //       }
+  //     }
+  //     return localIcon;
+  //   }
+  // },
 
-  // eslint-disable-next-line consistent-return
-  getLocalTravelIcon(category) {
-    if (category.placemarks) {
-      let destination = "";
-      let localTravelIcon = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
-          localTravelIcon = "fas fa-solid fa-car";
-        }
-      }
-      return localTravelIcon;
-    }
-  },
+  // // eslint-disable-next-line consistent-return
+  // getAbroad(category) {
+  //   if (category.placemarks) {
+  //     const abroad = [];
+  //     const local = [];
+  //     let localCounting = "";
+  //     let abroadCounting = "";
+  //     let destination = "";
+  //     // Loop through all placemarks in the category
+  //     for (let i = 0; i < category.placemarks.length; i += 1) {
+  //       destination = category.placemarks[i].country;
+  //       destination = destination.toLowerCase().trim();
+  //       if (destination === "ireland") {
+  //         localCounting = "Yes";
+  //         local.push(localCounting);
+  //       } else {
+  //         abroadCounting = "No";
+  //         abroad.push(abroadCounting);
+  //       }
+  //     }
+  //     abroadCounting = abroad.length;
+  //     return abroadCounting;
+  //   }
+  // },
 
-  // eslint-disable-next-line consistent-return
-  getLocalIcon(category) {
-    if (category.placemarks) {
-      let localIcon = "";
-      let abroadIcon = "";
-      let destination = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
-          // eslint-disable-next-line quotes
-          localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
-        } else {
-          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
-        }
-      }
-      return localIcon;
-    }
-  },
+  // // eslint-disable-next-line consistent-return
+  // getAbroadIcon(category) {
+  //   if (category.placemarks) {
+  //     let localIcon = "";
+  //     let abroadIcon = "";
+  //     let destination = "";
+  //     // Loop through all placemarks in the category
+  //     for (let i = 0; i < category.placemarks.length; i += 1) {
+  //       destination = category.placemarks[i].country;
+  //       destination = destination.toLowerCase().trim();
+  //       if (destination === "ireland") {
+  //         localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
+  //       } else if (destination !== "Ireland") {
+  //         abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
+  //       } else {
+  //         abroadIcon = null;
+  //       }
+  //     }
+  //     return abroadIcon;
+  //   }
+  // },
 
-  // eslint-disable-next-line consistent-return
-  getAbroad(category) {
-    if (category.placemarks) {
-      const abroad = [];
-      const local = [];
-      let localCounting = "";
-      let abroadCounting = "";
-      let destination = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
-          localCounting = "Yes";
-          local.push(localCounting);
-        } else {
-          abroadCounting = "No";
-          abroad.push(abroadCounting);
-        }
-      }
-      abroadCounting = abroad.length;
-      return abroadCounting;
-    }
-  },
-
-  // eslint-disable-next-line consistent-return
-  getAbroadIcon(category) {
-    if (category.placemarks) {
-      let localIcon = "";
-      let abroadIcon = "";
-      let destination = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
-          localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
-        } else if (destination !== "Ireland") {
-          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
-        } else {
-          abroadIcon = null;
-        }
-      }
-      return abroadIcon;
-    }
-  },
-
-  // eslint-disable-next-line consistent-return
-  getAbroadTravelIcon(category) {
-    let destination = "";
-    if (category.placemarks) {
-      let abroadTravelIcon = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination !== "Ireland") {
-          abroadTravelIcon = "fas fa-solid fa-plane";
-        }
-      }
-      return abroadTravelIcon;
-    }
-  },
+  // // eslint-disable-next-line consistent-return
+  // getAbroadTravelIcon(category) {
+  //   let destination = "";
+  //   if (category.placemarks) {
+  //     let abroadTravelIcon = "";
+  //     // Loop through all placemarks in the category
+  //     for (let i = 0; i < category.placemarks.length; i += 1) {
+  //       destination = category.placemarks[i].country;
+  //       destination = destination.toLowerCase().trim();
+  //       if (destination !== "ireland") {
+  //         abroadTravelIcon = "fas fa-solid fa-plane";
+  //       }
+  //     }
+  //     return abroadTravelIcon;
+  //   }
+  // },
 
   // eslint-disable-next-line consistent-return
   getTravelMeans(placemark) {
@@ -317,8 +233,9 @@ export const categoryAnalytics = {
     let destination = "";
     if (placemark) {
       destination = placemark.country;
+      destination = destination.toLowerCase().trim();
       console.log("This is the destination: ", destination);
-      if (destination === "Ireland") {
+      if (destination === "ireland") {
         travelMeans = "car, bus, or train";
       } else {
         travelMeans = "plane";

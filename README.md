@@ -24,7 +24,7 @@ whose data can be manually submitted by the user, and fed into the app, and stor
 
 # What this project does
 
-Its purpose is simply to create and show placemarks or [points of interest](https://en.wikipedia.org/wiki/Point_of_interest) or destinations to the user, which, as mentioned earlier, are fed into the app by the user itself. In a nutshell, the user creates their own points of interest via a [Bulma form](https://bulma.io/documentation/form/). However, these placemarks will be 'categorized', namely they are created on the hill of categories selected by the user, which precedes them in the app hierarchy (user -> categories -> placemarks).
+Its purpose is simply to create and show placemarks or [points of interest](https://en.wikipedia.org/wiki/Point_of_interest) or destinations to the user, which, as mentioned earlier, are fed into the app by the user itself. In a nutshell, the user creates their own points of interest via a [Bulma form](https://bulma.io/documentation/form/). However, these placemarks will be 'categorized', namely created on the hill of categories selected by the user, since categories precede placemarks in the app hierarchy (user -> categories -> placemarks).
 Therefore, the user will first sign-up or log-in, then, they will create a category (only 4 categories are allowed per user), and, once the category is created, relevant placemarks will be added for each category (Ex. category 'Restaurants' -> placemark 'A Casa do Porco, São Paulo').
 
 In a nutshell, the user will have a dashboard with a list of categories they have added, and each of them will link out to a list of their placemarks. Additionaly, each placemark will link out to a simple dedicated and individual placemark landing page.
@@ -584,15 +584,11 @@ and this is the list of the routes in **web-routes.js** for the account page:
 - https://endgrate.com/blog/using-the-mongodb-api-to-create-or-update-records-(with-javascript-examples)
 - https://www.geeksforgeeks.org/how-to-set-minimum-and-maximum-date-in-html-date-picker/
 
-### Bugs/Defects
-
-- The purpose of having the user add their location geocoordinates was for them to be utilized for the calculation of the distance bewteen the user's and the placemark locations. However, I was unable to find a way to inject the user geocoordinates into any util files to create an ad hoc function. Therefore, I am having the user add their location geocoordinates again whenever they add a new category in the dashboard.
-
 ## Dahboard
 
-As the user logs in, they will land to the dashboard view where they can select one of the 4 available categories (Restaurants, Museums, Parks, Beaches) from a dropdown menu in a form. They will also have the chance to add notes about the use of the category, and their location geocordinates. The latter will be used in functions in the 'utils' files to calculate the distance between the user and the placemarks locations:
+As the user logs in, they will land to the dashboard view where they can select one of the 4 available categories (Restaurants, Museums, Parks, Beaches) from a dropdown menu in a form. Once the category is selected, 'notes' will show what the category is used for, and an image representative of the category will display on the right column.
 
-![alt text](image-13.png)
+![alt text](image-38.png)
 
 The first thing to notice is that the user won't be able to add the same category twice, which is a paramount feature since we don't want the user to get unnecessary duplicates. For this purpose, a few lines of code have been injected into the 'addCategory' route aiming at checking that the category just added by the user is not already stored in the 'categoryStore' :
 
@@ -609,21 +605,35 @@ addCategory: {
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
       const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
+      // 'if' condition to determine image and 'notes to show according to the 'title' selected
+      let image = "";
+      let notes = "";
       // eslint-disable-next-line prefer-destructuring
       let title = request.payload.title;
+      if (title === "Restaurants") {
+        image = "https://i.ibb.co/gZjF0ppp/jerk-pasta-recipe.png";
+        notes = "All restaurants you would like to dine or you already had the pleasure to be in can be added and listed here. Just a handy note for your next trip.";
+      } else if (title === "Museums") {
+        image = "https://i.ibb.co/HD39FR6p/man-2590655-big.jpg";
+        notes = "This is the category in which all worldwide famous museums or art galleries you wish to visit or you lready visited can be added to.";
+      } else if (title === "Beaches") {
+        image = "https://i.ibb.co/LhrJWjcb/coast-7366616.jpg";
+        notes = "There are surely so many beaches you would like to sunbath in and relish the sweet marine breeze caressing your skin. Why not list them all here?";
+      } else {
+        image = "https://i.ibb.co/pjbvydw1/parks.jpg";
+        notes = "Sometimes, there is no better thing to do than slipping in your running shoes for a jog in the park. Which park are gonna go next though?";
+      }
       const newCategory = {
         userid: loggedInUser._id,
         title: title,
-        userLat: Number(request.payload.userLat),
-        userLong: Number(request.payload.userLong),
-        notes: request.payload.notes,
+        notes: notes,
+        image: image,
       };
-
-     ================================= Checking that the added category does not exist in the categoryStore already =============================
 
       /** Checking on whether the category title already exists. This app will only allow the user to add
        * 4 categories in its 'basic' version.
        */
+
       let exTitle = "";
       // eslint-disable-next-line prefer-const
       let existingTitle = [];
@@ -640,9 +650,6 @@ addCategory: {
           return h.redirect("/dashboard");
         }
       }
-
-    ================================================================================================================================================
-
       await db.categoryStore.addCategory(newCategory);
       return h.redirect("/dashboard");
     },
@@ -669,10 +676,9 @@ The below lines show the CategorySpec const in the **joi-schemas.js** file
 export const CategorySpec = Joi.object()
   .keys({
     title: Joi.string().example("Museums").required(),
-    userLat: Joi.number().max(100).example(40.41541290283203).required(),
-    userLong: Joi.number().max(100).example(3.927241764598).required(),
     userid: IdSpec,
-    notes: Joi.string().min(20).max(1000).example("Here I will be adding all restaurants I would like to try out...").required(),
+    notes: Joi.string().min(20).max(1000).example("Here I will be adding all restaurants I would like to try out..."),
+    image: Joi.string(),
     placemarks: PlacemarkArraySpec,
   })
   .label("Category");
@@ -707,7 +713,7 @@ The dashboard view is routed via the below lines in **web-routes.js**:
 
 The Category view is the page where the user lands on when clicking on the 'folder' icon at the botttom of a category in the dahboard page:
 
-![alt text](image-37.png)
+![alt text](image-39.png)
 
 On top of the page, the user will see a banner whose background color and image are customized according to the type of category. Ex.:
 
@@ -827,7 +833,7 @@ export const PlacemarkArraySpec = Joi.array().items(PlacemarkSpecPlus).label("Pl
 We, then, retrieve the 'id' of the category where the placemark is being added, and request the payload of each placemark field the user added via the form:
 
 ```
- addPlacemark: {
+  addPlacemark: {
     validate: {
       payload: PlacemarkSpec,
       options: { abortEarly: false },
@@ -840,7 +846,7 @@ We, then, retrieve the 'id' of the category where the placemark is being added, 
       const category = await db.categoryStore.getCategoryById(request.params.id);
       const newPlacemark = {
         /** The inputted data from the form will get here (payload),
-         * and we stick them to a placemark object (title, artist, duration), and
+         * and we stick them to a placemark object, and
          * finally we add the placemark to the database (placemarkStore) via the category
          * with its specific 'id' */
         title: request.payload.title,
@@ -1080,15 +1086,14 @@ These are the routes used to upload or delete an image in the category page:
 
 ```
 
-As **category.js** file also shows a field for the image,
+As **category.js** file also shows a field for the image 'img',
 
 ```
-const categorySchema = new Schema({
+  const categorySchema = new Schema({
   title: String,
-  userLat: Number,
-  userLong: Number,
   notes: String,
   img: String,
+  image: String,
   userid: {
     type: Schema.Types.ObjectId,
     ref: "User",
@@ -1108,17 +1113,17 @@ async updateCategory(updatedCategory) {
   },
 ```
 
-![alt text](image-19.png)
+![alt text](image-20.png)
 
 ### Category page Analytics
 
 This section is a 4 column box with some analytics of the placemarks in the category.
 
-![alt text](image-20.png)
+![alt text](image-37.png)
 
 The user will have a simple report with the total number of placemarks added, the number of those already visited, those yet to be visited, the distance measured in km of the furthest placemark as well as that of the nearest one, and finally, a count of those that are 'local' versus those that are situated abroad.
 
-It is worth spending a few lines now on the functions created to achieve the placemarks analytics report, which are listed into the **category-analytics.js** file.
+It is worth spending a few lines now on the functions created to achieve the placemarks analytics report, which are listed into the **category-analytics.js** and into the **category-controller.js** files.
 
 ```
 
@@ -1192,262 +1197,211 @@ The countPlacemarks() is a basic one to count the total number of placemarks in 
 
 getYesCounting() and getNoCounting() functions will count the placemarks that have already been visited versus those that have yet to be. In a nutshell, the logic followed here is create a couple of lists, one for 'yes' and one for 'no', then iterate through all placemarks, and assign values to the variable 'visit'. If 'visit' gets assigned the value 'no', then, this value is 'pushed' to the 'no' list and viceversa. In the end, the 'no' or 'yes' lists will be counted by appending 'length' and, then, will be 'returned'.
 
-The below functions instead will calculate the 'furthest' and 'closest' placemarks:
-
-```
- // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
-  getMaxPOIdistance(category) {
-    const lat1 = category.userLat;
-    const long1 = category.userLong;
-    const toRadians = (degrees) => degrees * (Math.PI / 180);
-    const R = 6371; // Radius of the Earth in km
-    // eslint-disable-next-line prefer-const
-    let long2 = 0;
-    // eslint-disable-next-line prefer-const
-    let lat2 = 0;
-    let a = 0;
-    let c = 0;
-    let dLat = 0;
-    let dLong = 0;
-    let title = "";
-    let country = "";
-    // eslint-disable-next-line prefer-const, no-new-object
-    let maxDistance = [];
-    let distance = 0;
-    if (category.placemarks) {
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        long2 = category.placemarks[i].long;
-        lat2 = category.placemarks[i].lat;
-        title = category.placemarks[i].title;
-        country = category.placemarks[i].country;
-        dLat = toRadians(lat2 - lat1);
-        dLong = toRadians(long2 - long1);
-        // eslint-disable-next-line no-const-assign
-        a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
-        c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        distance = R * c;
-        maxDistance.push(distance);
-      }
-    }
-    // https://www.delftstack.com/howto/javascript/javascript-round-to-2-decimal-places/
-    let resultMax = Math.max(...maxDistance);
-    if (resultMax === -Infinity) {
-      resultMax = 0;
-    } else {
-      const maxRounded = resultMax.toFixed(2);
-      resultMax = `${maxRounded} km away`;
-    }
-    return resultMax;
-  },
-
-  // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
-  getMinPOIdistance(category) {
-    const toRadians = (degrees) => degrees * (Math.PI / 180);
-    const R = 6371; // Radius of the Earth in kilometers
-    const lat1 = category.userLat;
-    const long1 = category.userLong;
-    const something = "";
-    // eslint-disable-next-line prefer-const
-    let long2 = 0;
-    // eslint-disable-next-line prefer-const
-    let lat2 = 0;
-    let a = 0;
-    let c = 0;
-    let dLat = 0;
-    let dLong = 0;
-    let title = "";
-    let country = "";
-    // eslint-disable-next-line prefer-const
-    let minDistance = [];
-    let distance = 0;
-    if (category.placemarks) {
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        long2 = category.placemarks[i].long;
-        lat2 = category.placemarks[i].lat;
-        title = category.placemarks[i].title;
-        country = category.placemarks[i].country;
-        dLat = toRadians(lat2 - lat1);
-        dLong = toRadians(long2 - long1);
-        // eslint-disable-next-line no-const-assign
-        a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
-        c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        distance = R * c;
-        minDistance.push(distance);
-      }
-    }
-    // https://www.delftstack.com/howto/javascript/javascript-round-to-2-decimal-places/
-    let resultMin = Math.min(...minDistance);
-    if (resultMin === Infinity) {
-      resultMin = 0;
-    } else {
-      const minRounded = resultMin.toFixed(2);
-      resultMin = `${minRounded} km away`;
-    }
-    return resultMin;
-  },
+The below function instead will calculate the 'furthest' and 'closest' placemarks, and it is embedded into the 'index' route in the **category-controller.js**:
 
 ```
 
-These are functions that I built on the following source [https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates](https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates), and adjusted to fit for the PlaceMark app purposes. We are basically retrieving the userLat and userLong variable values from the category, added by the user. Then, there is an iteration through the placemarks, and a range of calculations will enable us to achieve the 'distance' value, which will, in turn, get pushed to a list called minDistance or maxDistance, based upon which function we are in. At this point, the 'Math.min()' or 'Math.max()' functions will pull the min or max distance, which will ultimately get returned.
+      /* --------- The below section calculates the distance between the user's and the furthest and closets placemark locations ----- */
 
-The below function will count the number of local or abroad placemarks :
-
-```
-  // eslint-disable-next-line consistent-return
-  getLocal(category) {
-    if (category.placemarks) {
-      const abroad = [];
-      const local = [];
-      let localCounting = "";
-      let abroadCounting = "";
-      let destination = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
-          localCounting = "Yes";
-          local.push(localCounting);
-        } else {
-          abroadCounting = "Yes";
-          abroad.push(abroadCounting);
+      // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
+      const lat1 = userDetails.userLat;
+      const long1 = userDetails.userLong;
+      const toRadians = (degrees) => degrees * (Math.PI / 180);
+      const R = 6371; // Radius of the Earth in km
+      // eslint-disable-next-line prefer-const
+      let long2 = 0;
+      // eslint-disable-next-line prefer-const
+      let lat2 = 0;
+      let a = 0;
+      let c = 0;
+      let dLat = 0;
+      let dLong = 0;
+      let title = "";
+      let country = "";
+      // eslint-disable-next-line prefer-const, no-new-object
+      let allDistances = [];
+      let distance = 0;
+      if (category.placemarks) {
+        for (let i = 0; i < category.placemarks.length; i += 1) {
+          long2 = category.placemarks[i].long;
+          lat2 = category.placemarks[i].lat;
+          title = category.placemarks[i].title;
+          country = category.placemarks[i].country;
+          dLat = toRadians(lat2 - lat1);
+          dLong = toRadians(long2 - long1);
+          // eslint-disable-next-line no-const-assign
+          a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+          c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          distance = R * c;
+          allDistances.push(distance);
         }
       }
-      localCounting = local.length;
-      return localCounting;
-    }
-  },
+      // https://www.delftstack.com/howto/javascript/javascript-round-to-2-decimal-places/
+      let resultMax = Math.max(...allDistances);
+      console.log("MaxDist", allDistances);
+      if (resultMax === -Infinity) {
+        resultMax = 0;
+      } else {
+        const maxRounded = resultMax.toFixed(2);
+        resultMax = `${maxRounded} km away`;
+      }
 
-  // eslint-disable-next-line consistent-return
-  getAbroad(category) {
-    if (category.placemarks) {
-      const abroad = [];
-      const local = [];
+      let resultMin = Math.min(...allDistances);
+      console.log("MinDist", allDistances);
+      if (resultMin === -Infinity) {
+        resultMin = 0;
+      } else {
+        const minRounded = resultMin.toFixed(2);
+        resultMin = `${minRounded} km away`;
+      }
+
+```
+
+This section was built on the following source [https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates](https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates), and adjusted to fit for the PlaceMark app purposes. We are basically retrieving the userLat and userLong variable values from the user account. Then, there is an iteration through the placemarks, and a range of calculations will enable us to achieve the 'distance' value, which will, in turn, get pushed to a list called minDistance or maxDistance, based upon which function we are in. At this point, the 'Math.min()' or 'Math.max()' functions will pull the min or max distance, which will ultimately get returned.
+
+The below function will count the number of local, abroad placemarks, and assign icons :
+
+```
+  /* --- Setting variables for counting abroad and local counts and icons ----*/
+
+      let localTravelIcon = "";
+      let abroadTravelIcon = "";
+      // eslint-disable-next-line prefer-const
+      let local = [];
+      // eslint-disable-next-line prefer-const
+      let abroad = [];
       let localCounting = "";
       let abroadCounting = "";
+      let localIcon = "";
+      let abroadIcon = "";
       let destination = "";
       // Loop through all placemarks in the category
       for (let i = 0; i < category.placemarks.length; i += 1) {
         destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
+        destination = destination.toLowerCase().trim();
+        // eslint-disable-next-line prefer-const
+        let userCountry = userDetails.country.toLowerCase().trim();
+        if (destination === userCountry) {
+          // eslint-disable-next-line quotes
+          localIcon = "https://i.ibb.co/Q7J1t5jt/102-lokasimanusia-mini.jpg";
           localCounting = "Yes";
           local.push(localCounting);
+          localTravelIcon = "fas fa-solid fa-car";
         } else {
+          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
           abroadCounting = "No";
           abroad.push(abroadCounting);
-        }
-      }
-      abroadCounting = abroad.length;
-      return abroadCounting;
-    }
-  },
-
-```
-
-The below functions will make an Irish or a globe icon show on the page to signal whether the placemark is locally or abroad located:
-
-```
-
-  // eslint-disable-next-line consistent-return
-  getLocalIcon(category) {
-    if (category.placemarks) {
-      let localIcon = "";
-      let abroadIcon = "";
-      let destination = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
-          // eslint-disable-next-line quotes
-          localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
-        } else {
-          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
-        }
-      }
-      return localIcon;
-    }
-  },
-
-  // eslint-disable-next-line consistent-return
-  getAbroadIcon(category) {
-    if (category.placemarks) {
-      let localIcon = "";
-      let abroadIcon = "";
-      let destination = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
-          localIcon = "https://i.ibb.co/212J0q6c/ireland-mini-1.png";
-        } else if (destination !== "Ireland") {
-          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
-        } else {
-          abroadIcon = null;
-        }
-      }
-      return abroadIcon;
-    }
-  },
-
-```
-
-Finally, the below functions will show transport means icons (car or plane based upon whether the placemark is locally or abroad located):
-
-```
-getLocalTravelIcon(category) {
-    if (category.placemarks) {
-      let destination = "";
-      let localTravelIcon = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination === "Ireland") {
-          localTravelIcon = "fas fa-solid fa-car";
-        }
-      }
-      return localTravelIcon;
-    }
-  },
-
-
-
-  // eslint-disable-next-line consistent-return
-  getAbroadTravelIcon(category) {
-    let destination = "";
-    if (category.placemarks) {
-      let abroadTravelIcon = "";
-      // Loop through all placemarks in the category
-      for (let i = 0; i < category.placemarks.length; i += 1) {
-        destination = category.placemarks[i].country;
-        if (destination !== "Ireland") {
           abroadTravelIcon = "fas fa-solid fa-plane";
         }
       }
-      return abroadTravelIcon;
-    }
-  },
-
+      localCounting = local.length;
+      abroadCounting = abroad.length;
 
 ```
 
-All of these functions follow the same logic as previously set out, essentially. Last but not least, the above-mentioned functions are injected into category-view page through the **category-controller.js**:
+All of these functions follow the same logic as previously set out, essentially. Below is the whole 'index' route in the **category-controller.js** file
 
 ```
 index: {
     handler: async function (request, h) {
+      const loggedInUser = request.auth.credentials;
+      const userDetails = await db.userStore.getUserById(loggedInUser._id);
       const category = await db.categoryStore.getCategoryById(request.params.id);
       const imageCode = categoryAnalytics.getImageCode(category);
       const backgroundColor = categoryAnalytics.getBackgroundColor(category);
       const placemarkSum = categoryAnalytics.countPlacemarks(category);
       const yesCounting = categoryAnalytics.getYesCounting(category);
       const noCounting = categoryAnalytics.getNoCounting(category);
-      const localTravelIcon = categoryAnalytics.getLocalTravelIcon(category);
-      const abroadTravelIcon = categoryAnalytics.getAbroadTravelIcon(category);
-      const maxDistance = categoryAnalytics.getMaxPOIdistance(category);
-      const minDistance = categoryAnalytics.getMinPOIdistance(category);
-      const localCounting = categoryAnalytics.getLocal(category);
-      const abroadCounting = categoryAnalytics.getAbroad(category);
-      const localIcon = categoryAnalytics.getLocalIcon(category);
-      const abroadIcon = categoryAnalytics.getAbroadIcon(category);
+
+      /* --- Setting variables for counting abroad and local counts and icons ----*/
+
+      let localTravelIcon = "";
+      let abroadTravelIcon = "";
+      // eslint-disable-next-line prefer-const
+      let local = [];
+      // eslint-disable-next-line prefer-const
+      let abroad = [];
+      let localCounting = "";
+      let abroadCounting = "";
+      let localIcon = "";
+      let abroadIcon = "";
+      let destination = "";
+      // Loop through all placemarks in the category
+      for (let i = 0; i < category.placemarks.length; i += 1) {
+        destination = category.placemarks[i].country;
+        destination = destination.toLowerCase().trim();
+        // eslint-disable-next-line prefer-const
+        let userCountry = userDetails.country.toLowerCase().trim();
+        if (destination === userCountry) {
+          // eslint-disable-next-line quotes
+          localIcon = "https://i.ibb.co/Q7J1t5jt/102-lokasimanusia-mini.jpg";
+          localCounting = "Yes";
+          local.push(localCounting);
+          localTravelIcon = "fas fa-solid fa-car";
+        } else {
+          abroadIcon = "https://i.ibb.co/mVhwZKmD/international-mini-1.png";
+          abroadCounting = "No";
+          abroad.push(abroadCounting);
+          abroadTravelIcon = "fas fa-solid fa-plane";
+        }
+      }
+      localCounting = local.length;
+      abroadCounting = abroad.length;
+
+      /* --------- The below section calculates the distance between the user's and the furthest and closets placemark locations ----- */
+
+      // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
+      const lat1 = userDetails.userLat;
+      const long1 = userDetails.userLong;
+      const toRadians = (degrees) => degrees * (Math.PI / 180);
+      const R = 6371; // Radius of the Earth in km
+      // eslint-disable-next-line prefer-const
+      let long2 = 0;
+      // eslint-disable-next-line prefer-const
+      let lat2 = 0;
+      let a = 0;
+      let c = 0;
+      let dLat = 0;
+      let dLong = 0;
+      let title = "";
+      let country = "";
+      // eslint-disable-next-line prefer-const, no-new-object
+      let allDistances = [];
+      let distance = 0;
+      if (category.placemarks) {
+        for (let i = 0; i < category.placemarks.length; i += 1) {
+          long2 = category.placemarks[i].long;
+          lat2 = category.placemarks[i].lat;
+          title = category.placemarks[i].title;
+          country = category.placemarks[i].country;
+          dLat = toRadians(lat2 - lat1);
+          dLong = toRadians(long2 - long1);
+          // eslint-disable-next-line no-const-assign
+          a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+          c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          distance = R * c;
+          allDistances.push(distance);
+        }
+      }
+      // https://www.delftstack.com/howto/javascript/javascript-round-to-2-decimal-places/
+      let resultMax = Math.max(...allDistances);
+      console.log("MaxDist", allDistances);
+      if (resultMax === -Infinity) {
+        resultMax = 0;
+      } else {
+        const maxRounded = resultMax.toFixed(2);
+        resultMax = `${maxRounded} km away`;
+      }
+
+      let resultMin = Math.min(...allDistances);
+      console.log("MinDist", allDistances);
+      if (resultMin === -Infinity) {
+        resultMin = 0;
+      } else {
+        const minRounded = resultMin.toFixed(2);
+        resultMin = `${minRounded} km away`;
+      }
+
       // We are showing/passing the category in the view
       const viewData = {
         title: `Placemark ${category.title}`,
@@ -1459,12 +1413,12 @@ index: {
         noCounting: noCounting,
         localTravelIcon: localTravelIcon,
         abroadTravelIcon: abroadTravelIcon,
-        maxDistance: maxDistance,
-        minDistance: minDistance,
         localCounting: localCounting,
         abroadCounting: abroadCounting,
         localIcon: localIcon,
         abroadIcon: abroadIcon,
+        resultMax: resultMax,
+        resultMin: resultMin,
       };
       // category-view.hbs is returned
       return h.view("category-view", viewData);
@@ -1528,47 +1482,53 @@ Handlebars in the **placemark.hbs** file will help us convey some of the informa
 
 ```
 
-However, there is also an attempt to enrich the user experience by providing some additional information via a couple of functions pulled from the **category-analytics.js** file:
+However, there is also an attempt to enrich the user experience by providing some additional information using some functions in the **category-analytics.js** and **placemarks-controller.js** file:
 
 ```
-/ eslint-disable-next-line consistent-return
-  getTravelMeans(placemark) {
-    let travelMeans = "";
-    let destination = "";
-    if (placemark) {
-      destination = placemark.country;
-      console.log("This is the destination: ", destination);
-      if (destination === "Ireland") {
-        travelMeans = "car, bus, or train";
-      } else {
-        travelMeans = "plane";
+ /* --- This section will determine the means of transport to show based upon the user's location --- */
+      let travelMeans = "";
+      let destination = "";
+      if (placemark) {
+        destination = placemark.country;
+        destination = destination.toLowerCase().trim();
+        // eslint-disable-next-line prefer-const
+        let userCountry = userDetails.country.toLowerCase().trim();
+        if (destination === userCountry) {
+          travelMeans = "car, bus, or train";
+        } else {
+          travelMeans = "plane";
+        }
       }
-    }
-    return travelMeans;
-  },
-
-  // eslint-disable-next-line consistent-return
-  getYouShouldVisit(placemark) {
-    let youShouldVisit = "";
-    let visit = "";
-    if (placemark) {
-      visit = placemark.visited;
-      if (visit === "No") {
-        youShouldVisit = "What are you waiting for? Time to pay a visit to ";
-      } else {
-        youShouldVisit = "Although you have already been there, it is never a bad idea to visit again the ";
-      }
-    }
-    return youShouldVisit;
-  },
 ```
+
+placemark-controller.js
+
+```
+
+// eslint-disable-next-line consistent-return
+getYouShouldVisit(placemark) {
+  let youShouldVisit = "";
+  let visit = "";
+  if (placemark) {
+    visit = placemark.visited;
+    if (visit === "No") {
+      youShouldVisit = "What are you waiting for? Time to pay a visit to ";
+    } else {
+      youShouldVisit = "Although you have already been there, it is never a bad idea to visit again the ";
+    }
+  }
+  return youShouldVisit;
+},
+```
+
+category-analytics.js
 
 ![alt text](image-22.png)
 ![alt text](image-23.png)
 
-As one can see above, this banner content will suggest the user the travel means they need to travel to the destination based upon whether they are located in Ireland or abroad. Ireland, of course, is an island so one needs to jump on a plane to travel abroad, such as to Spain to visit the 'El Parque del Buen Retiro' in Madrid. Whereas traveling to Ireland can be done by bus, car or train, and if the destination has not been visited yet, a sentence at the bottom will encourage the user to go.
+As one can see above, this banner content will suggest the travel means the user might need to travel to the destination based upon whether they are located in the user's country or abroad. While traveling to a destination within the user's country borders can be done by bus, car or train, if the destination is abroad, the user gets tha advice of getting on a plane. Also, if the destination has not been visited yet, a sentence at the bottom will encourage the user to go.
 
-Particularly interesting is the feature that enables us to have the distance between the user's and the location distance, whose code is embedded in the 'placemark' handler into the **placemark-controller.js** file:
+Particularly interesting is the feature that enables us to get the distance between the user's and the destination location, whose code is embedded in the 'placemark' handler into the **placemark-controller.js** file:
 
 ```
  placemark: {
@@ -1640,8 +1600,6 @@ Particularly interesting is the feature that enables us to have the distance bet
   },
 
 ```
-
-It is very much alike the function getMaxPOIdistance(), although we are not closing it with a Math.max() function this time.
 
 As far as the images shown in the banner and grid, they are just placeholders since the intention here is to further develop this section for the next assignment, and, maybe, have images dynamically showing up for each placemark.
 
