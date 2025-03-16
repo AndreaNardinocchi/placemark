@@ -1985,7 +1985,7 @@ Ex.
 
 **Cloud Atlas** user 'Homer Simpson'
 
-## Bugs and efects
+## Bugs and defects
 
 The Json stores kept showing errors for the 'model' test, and due to time constraints, and lest I would compromise the MongoDB successful tests (Mongo is the primary base that this app uses), I resolved to no longer maintain the Json tests.
 
