@@ -1,36 +1,61 @@
 {
   "users": [
     {
-      "firstName": "Homer",
+      "firstName": "Maggie",
       "lastName": "Simpson",
       "userLat": 51.8985136,
       "userLong": -8.4726423,
       "country": "Ireland",
-      "street": "Campus",
-      "addressCode": "T34R56W",
-      "DOB": "1976-02-13",
-      "phoneNumber": 1222222222,
-      "email": "homer@simpson.com",
+      "street": "Waterford",
+      "addressCode": "T12BNE",
+      "DOB": "1990-01-13",
+      "phoneNumber": 122224444,
+      "email": "maggie@simpson.com",
       "password": "Yoestoy",
-      "createdTimeStamp": "2025-03-13T18:16:46.224Z",
-      "_id": "ecb411b4-d533-4bfa-83f9-d1c9e24446a1"
-    },
-    {
-      "firstName": "Margie",
-      "lastName": "Simpson",
-      "userLat": 52.2609997,
-      "userLong": -7.1119081,
-      "country": "Ireland",
-      "street": "2 La calle Iglesia, Waterford",
-      "addressCode": "B12YNOK",
-      "DOB": "1980-02-13",
-      "phoneNumber": 1995627281,
-      "email": "margie@simpson.com",
-      "password": "Yoestoy",
-      "createdTimeStamp": "2025-03-13T18:16:46.232Z",
-      "_id": "8449c0cc-df4a-494a-84ef-4d34268c4082"
+      "createdTimeStamp": "2025-03-17T11:06:48.887Z",
+      "_id": "5a7b255b-f7b6-4892-a4a7-4792ae20211a"
     }
   ],
   "categories": [],
-  "placemarks": []
+  "placemarks": [
+    {
+      "title": "El Parque del Buen Retiro",
+      "lat": 40.41541290283203,
+      "long": -3.684231996536255,
+      "address": "Plaza de la Independencia, 728001",
+      "country": "Spain",
+      "phone": 89672435,
+      "website": "https://bit.ly/3bGwJUl",
+      "visited": "Yes",
+      "description": "Covering over 125 hectares and comprising more than 15,000 trees, El Retiro Park–recently named a UNESCO World Heritage Site–is a green oasis in the heart of the city. And more!!!",
+      "_id": "89274973-c196-4b44-8de5-7cdf5a4f0797",
+      "categoryid": "53230fee-ea25-41b1-af17-3b56f21cb2d4"
+    },
+    {
+      "title": "Central Park, New York",
+      "lat": 40.79431915283203,
+      "long": -43.9548110961914,
+      "address": "102nd Street Crossing, New York, NY 10026",
+      "country": "United States",
+      "phone": 2123106600,
+      "website": "https://www.centralparknyc.org",
+      "visited": "No",
+      "description": "When it comes to having the perfect Park day, preparation is key—especially when there are 843 acres to explore. Whether you're a seasoned regular or a first-time visitor, familiarize yourself with the ins and outs....",
+      "_id": "6177575d-ffcc-41cf-a2ea-ded4cf848a8b",
+      "categoryid": "53230fee-ea25-41b1-af17-3b56f21cb2d4"
+    },
+    {
+      "title": "Santa Monica",
+      "lat": 35.00535425523,
+      "long": -10.226577489,
+      "address": "Main Campus Marsille",
+      "country": "United States",
+      "phone": 1256789569,
+      "website": "https://www.loveholidays.ie/sem/santa-monica.html",
+      "visited": "No",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "_id": "1b32d1e4-d788-4cfb-ada9-eac013a2e3e6",
+      "categoryid": "53230fee-ea25-41b1-af17-3b56f21cb2d4"
+    }
+  ]
 }

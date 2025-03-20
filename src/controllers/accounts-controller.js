@@ -38,8 +38,27 @@ export const accountsController = {
       },
     },
     handler: async function (request, h) {
+      const users = await db.userStore.getAllUsers();
       const user = request.payload;
-      console.log("This is the currentHour: ", user);
+      // eslint-disable-next-line prefer-destructuring
+      let email = request.payload.email;
+      let exEmail = "";
+      // eslint-disable-next-line prefer-const
+      let existingEmail = [];
+      // eslint-disable-next-line no-shadow
+      users.forEach((user) => {
+        exEmail = user.email;
+        console.log("Existing email", exEmail);
+        existingEmail.push(exEmail);
+      });
+      let existingEmailNow = "";
+      for (let i = 0; i < existingEmail.length; i += 1) {
+        existingEmailNow = existingEmail[i];
+        if (existingEmail[i] === email) {
+          email = null;
+          return h.redirect("/taken-email");
+        }
+      }
       await db.userStore.addUser(user);
       return h.redirect("/");
     },
@@ -176,6 +195,17 @@ export const accountsController = {
       };
       await db.userStore.updateUser(user, updatedUser);
       return h.redirect("/account");
+    },
+  },
+
+  takenEmail: {
+    /**
+     * This turns off the session strategy - so these routes can work
+     * (and the users can signup/login).
+     */
+    auth: false,
+    handler: function (request, h) {
+      return h.view("taken-email", { title: "Your email is taken already" });
     },
   },
 };
