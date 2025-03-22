@@ -55,7 +55,8 @@ export const accountsController = {
       for (let i = 0; i < existingEmail.length; i += 1) {
         existingEmailNow = existingEmail[i];
         if (existingEmail[i] === email) {
-          email = null;
+          email = existingEmailNow;
+          console.log("existingEmailNow", existingEmailNow);
           return h.redirect("/taken-email");
         }
       }
@@ -199,10 +200,6 @@ export const accountsController = {
   },
 
   takenEmail: {
-    /**
-     * This turns off the session strategy - so these routes can work
-     * (and the users can signup/login).
-     */
     auth: false,
     handler: function (request, h) {
       return h.view("taken-email", { title: "Your email is taken already" });

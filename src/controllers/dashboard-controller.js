@@ -55,7 +55,7 @@ export const dashboardController = {
         notes = "There are surely so many beaches you would like to sunbath in and relish the sweet marine breeze caressing your skin. Why not list them all here?";
       } else {
         image = "https://i.ibb.co/pjbvydw1/parks.jpg";
-        notes = "Sometimes, there is no better thing to do than slipping in your running shoes for a jog in the park. Which park are gonna go next though?";
+        notes = "Sometimes, there is no better thing to do than slipping in your running shoes for a jog in the park. Which park are you gonna go next though?";
       }
       const newCategory = {
         userid: loggedInUser._id,

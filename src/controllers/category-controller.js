@@ -102,7 +102,7 @@ export const categoryController = {
 
       let resultMin = Math.min(...allDistances);
       console.log("MinDist", allDistances);
-      if (resultMin === -Infinity) {
+      if (resultMin === Infinity) {
         resultMin = 0;
       } else {
         const minRounded = resultMin.toFixed(2);

@@ -187,3 +187,108 @@ Description:
 It was originally formed as a royal hunting Park in the 1660s and opened to the public in 1747. A large herd of wild fallow deer still remain to this day. The Park is also home to the Phoenix Park Visitor Centre, Áras an Uachtaráin..
 
 Visited: Yes
+
+Placemark Name:
+Santa Monica beach
+
+Geolocation (lat/long):
+34.0171018 / -118.5061976
+
+Address:
+Santa Monica State Beach, Santa Monica, California
+
+Phone number:
+3104588300
+
+Country:
+United States
+
+Website:
+https://www.parks.ca.gov/?page_id=624
+
+Description:
+This beach is two miles long, has a picnic area, shops and pier. Visitor activities include volleyball, basketball and a running strip along the beach. This site is operated by Los Angeles County.
+
+Visited: No
+
+
+Location Name:
+Tortoreto Lido beach
+
+Geolocation (lat/long):
+42.8039627 / 13.9432708
+
+Address:
+64018 Tortoreto TE, Italy
+
+Phone number:
+390861785317
+
+Country:
+Italy
+
+Website:
+http://www.beach-on-map.com/tortoreto-lido.html
+
+Description:
+Tortoreto Lido is a beach in the north of Adriatic coast, Abruzzo region, Italy. The key feature is an upscale palmed promenade.
+
+Visited: No
+
+
+Elbow Lane Brew & Smoke House
+
+
+
+Placemark Name:
+Elbow Lane Brew & Smoke House
+
+Geolocation (lat/long):
+51.89842224121094 / -8.468008041381836
+
+Address:
+4 Oliver Plunkett Street, Cork, T12YH24
+
+Phone number:
+353212390479
+
+Country:
+Ireland
+
+Website:
+https://www.elbowlane.ie/
+
+Description:
+Set in a handsome building at the end of Oliver Plunkett street in Cork city, our restaurant combines an in-house nano brewery with a smoke house serving exciting food and drinks...
+
+Visited: Yes
+
+Map Placeholder:
+
+
+La Cosmopolita Malagueña
+
+
+
+Placemark Name:
+La Cosmopolita Malagueña
+
+Geolocation (lat/long):
+36.72187423706055 / -4.420060157775879
+
+Address:
+Calle Jose Denis Belgrano, 3, 29015, Malaga
+
+Phone number:
+34952215827
+
+Country:
+Spain
+
+Website:
+https://www.lacosmopolita.es/
+
+Description:
+More than 40 years of experience, forged in the best candles of this country, had their result in our house. A place where the market dictates what is there, and what is not.
+
+Visited: No
