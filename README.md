@@ -252,7 +252,7 @@ and its view is rendered by the **accounts-controller.js**
       await db.userStore.addUser(user);
       return h.redirect("/");
     },
-  },
+  }
 ```
 
 Once a new user object is created, the 'validation()' function will check the Joi schemas 'UserSpec' data, and if it comes across any issues, the failAction method will be called in, and will redirect the page to the errors.
@@ -556,7 +556,7 @@ Here, the objective is to retrieve the name of the categories as well as their i
   },
 ```
 
-The 'categories' value is passed along the parameter 'categories' in the above function, and then through iteration, the category values are fetched to be show in the account page. The category values are the 'title' of the category as well as its id which is needed to create the category URL and make the title clickable (see the **stats-account.hbs**):
+The 'categories' value is passed along the parameter 'categories' in the above function, and then through iteration, the category values are fetched to be shown in the account page. The category values are the 'title' of the category as well as its id which is needed to create the category URL and make the title clickable (see the **stats-account.hbs**):
 
 ```
  <section class = "content pl-4">
@@ -1101,7 +1101,7 @@ uploadImage: {
   },
 ```
 
-The functions updateImage() and deleteImage() are called in from the **image-store.js** file from which the images will be uploaded or delete into the [Cloudinary](https://console.cloudinary.com/) account of the app administrator.
+The functions updateImage() and deleteImage() are called in from the **image-store.js** file from which the images will be uploaded or deleted into the [Cloudinary](https://console.cloudinary.com/) account of the app administrator.
 
 These are the routes used to upload or delete an image in the category page:
 
@@ -1273,7 +1273,7 @@ The below function instead will calculate the 'furthest' and 'closest' placemark
 
       let resultMin = Math.min(...allDistances);
       console.log("MinDist", allDistances);
-      if (resultMin === -Infinity) {
+      if (resultMin === Infinity) {
         resultMin = 0;
       } else {
         const minRounded = resultMin.toFixed(2);
@@ -1558,7 +1558,7 @@ category-analytics.js
 ![alt text](image-22.png)
 ![alt text](image-23.png)
 
-As one can see above, this banner content will suggest the travel means the user might need to travel to the destination based upon whether they are located in the user's country or abroad. While traveling to a destination within the user's country borders can be done by bus, car or train, if the destination is abroad, the user gets tha advice of getting on a plane. Also, if the destination has not been visited yet, a sentence at the bottom will encourage the user to go.
+As one can see above, this banner content will suggest the travel means the user might need to travel to the destination based upon whether they are located in the user's country or abroad. While traveling to a destination within the user's country borders can be done by bus, car or train, if the destination is abroad, the user gets the advice of getting on a plane. Also, if the destination has not been visited yet, a sentence at the bottom will encourage the user to go.
 
 Particularly interesting is the feature that enables us to get the distance between the user's and the destination location, whose code is embedded in the 'placemark' handler into the **placemark-controller.js** file:
 
@@ -1635,7 +1635,7 @@ Particularly interesting is the feature that enables us to get the distance betw
 
 As far as the images shown in the banner and grid, they are just placeholders since the intention here is to further develop this section for the next assignment, and, maybe, have images dynamically showing up for each placemark.
 
-The weather widget on top of the page is noteworthy too. The idea would be that the user might want to take a quick pick of the current weather conditions in the destination they aim to visit:
+The weather widget on top of the page is noteworthy too. The idea would be that the user might want to take a quick peek of the current weather conditions in the destination they aim to visit:
 
 ![alt text](image-24.png)
 
@@ -1749,7 +1749,7 @@ To connect MongoDb (https://www.mongodb.org) database service to the PlaceMark a
 - placemark.js
 - placemark-mongo-store.js
 
-The Mongo connection has, then, been defined in the '.env' file using the below strings (the first one, which is commented out, is craeted for the MongoDB connection, whereas the second connects Atlas (https://cloud.mongodb.com/)):
+The Mongo connection has, then, been defined in the '.env' file using the below strings (the first one, which is commented out, is created for the MongoDB connection, whereas the second connects Atlas (https://cloud.mongodb.com/)):
 
 ```
 # db=mongodb://127.0.0.1:27017/placemark?directConnection=true
@@ -1831,7 +1831,7 @@ To ensure this all works, the Vision and Inert plugins were installed too:
 - https://hapi.dev/module/inert
 - https://www.npmjs.com/package/@hapi/vision
 
-Withuot going into further details, once the annotations were added to the **user-api.js**, **category-api.js**, and **placemrk-api.js** files (user-api.js example below of the 'create' action):
+Without going into further details, once the annotations were added to the **user-api.js**, **category-api.js**, and **placemrk-api.js** files (user-api.js example below of the 'create' action):
 
 ```
   create: {
@@ -1855,7 +1855,7 @@ Withuot going into further details, once the annotations were added to the **use
   },
 ```
 
-the Swagger documentation would finally show for the user, category, and placemark endpoints, and would be available for testing on a local server (ex. http://localhost:3000/documentation):
+the Swagger documentation would finally display for the user, category, and placemark endpoints, and would be available for testing on a local server (ex. http://localhost:3000/documentation):
 
 ![alt text](image-28.png)
 
@@ -1935,7 +1935,7 @@ These methods set the appropriate HTTP parameters to include accessing the endpo
 
 The **auth-api-test.js** was, then, created for the user testing.
 
-Finally, the authorization strategy was changed in all **xxx-api.js** files for all routes, expect for 'create', and 'authenticate' in the **user-api.js** file, otherwise there would be no endpoints for registration and authentication (Ex. 'find' action below):
+Finally, the authorization strategy was changed in all **xxx-api.js** files for all routes, except for 'create', and 'authenticate' in the **user-api.js** file, otherwise there would be no endpoints for registration and authentication (Ex. 'find' action below):
 
 ```
  find: {
@@ -1973,11 +1973,11 @@ which, ultimately, led up to an 'Authorize' button to appear on the Swagger Plac
 
 ![alt text](image-29.png)
 
-At this point, once a new user is created in our local environment documentation http://localhost:3000/documentation#/api/postApiUsers :
+At this point, once a new user is created in our Swagger documentation http://localhost:3000/documentation#/api/postApiUsers,
 
 ![alt text](image-30.png)
 
-We could then use the created token to authorize the rest of the Swagger tests:
+we could then use the created token to authorize the rest of the Swagger tests:
 
 ![alt text](image-31.png)
 
