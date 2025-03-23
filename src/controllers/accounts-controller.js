@@ -40,8 +40,15 @@ export const accountsController = {
     handler: async function (request, h) {
       const users = await db.userStore.getAllUsers();
       const user = request.payload;
-      // eslint-disable-next-line prefer-destructuring
-      let email = request.payload.email;
+
+      /**
+       * The below lines of code will verify whether the email inputted by the user to sign up
+       * is already in the user store or not.
+       * If the email is taken, the user will get redirected to the taken-email.hbs page, and advised
+       * to use a different email to sign up.
+       */
+
+      let { email } = request.payload;
       let exEmail = "";
       // eslint-disable-next-line prefer-const
       let existingEmail = [];
