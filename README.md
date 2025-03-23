@@ -203,7 +203,7 @@ It is routed as per the below line of code in **web-routes.js**
 and its view is rendered by the **accounts-controller.js**
 
 ```
-  signup: {
+   signup: {
     auth: false,
     /**
      * validate object specifying our validation schema
@@ -220,8 +220,35 @@ and its view is rendered by the **accounts-controller.js**
       },
     },
     handler: async function (request, h) {
+      const users = await db.userStore.getAllUsers();
       const user = request.payload;
-      console.log("This is the currentHour: ", user);
+
+      /**
+       * The below lines of code will verify whether the email inputted by the user to sign up
+       * is already in the user store or not.
+       * If the email is taken, the user will get redirected to the taken-email.hbs page, and advised
+       * to use a different email to sign up.
+       */
+
+      let { email } = request.payload;
+      let exEmail = "";
+      // eslint-disable-next-line prefer-const
+      let existingEmail = [];
+      // eslint-disable-next-line no-shadow
+      users.forEach((user) => {
+        exEmail = user.email;
+        console.log("Existing email", exEmail);
+        existingEmail.push(exEmail);
+      });
+      let existingEmailNow = "";
+      for (let i = 0; i < existingEmail.length; i += 1) {
+        existingEmailNow = existingEmail[i];
+        if (existingEmail[i] === email) {
+          email = existingEmailNow;
+          console.log("existingEmailNow", existingEmailNow);
+          return h.redirect("/taken-email");
+        }
+      }
       await db.userStore.addUser(user);
       return h.redirect("/");
     },
