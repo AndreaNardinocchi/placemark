@@ -37,8 +37,6 @@ Apart from all of the above, the very main purpose of the project was for the wr
 
 The ultimate idea here would have also been to expand the website insofar that it would have included a Google map indicating the geolocation of each placemark right inside each placemark card (the map currently in the placemark card is just a placeholder).
 
-In addition to that, the objective I had was for the user geocoordinates values, added when signing up, to be used in a function that calculates the distance from the user's to the placemark location. Alás, I did not get that far, hence, the user will have to add their location geocoordinates to the category they add as well to ensure that they will at least get a calculation of the furthest and nearest placemark in their list in the analytics banner in the category page.
-
 Technical challenges at this stage of my study are not always easy to overcome. Nevertheless, I count on the lectures to come to be able to fill my knowledge gaps, and being able to ultimately revisit and enhance the app soon.
 
 # How users can get started with the project

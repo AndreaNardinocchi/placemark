@@ -51,7 +51,7 @@ export const categoryController = {
       localCounting = local.length;
       abroadCounting = abroad.length;
 
-      /* --------- The below section calculates the distance between the user's and the furthest and closets placemark locations ----- */
+      /* --------- The below section calculates the distance between the user's and the furthest and closest placemark locations ----- */
 
       // https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
       const lat1 = userDetails.userLat;
