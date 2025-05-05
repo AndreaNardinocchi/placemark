@@ -19,14 +19,20 @@ import { validate } from "./api/jwt-utils.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+function importEnvs() {
+  const result = dotenv.config();
+  if (result.error) {
+    console.log(result.error.message);
+    // process.exit(1);
+  }
+}
+
 // https://tutors.dev/lab/wit-hdip-comp-sci-2024-full-stack-1/topic-02-hapi/unit-2/book-1-playtime-0-2-0/Exercises and https://github.com/motdotla/dotenv#readme
 
-const result = dotenv.config();
-
-if (result.error) {
-  console.log(result.error.message);
-  // process.exit(1);
-}
+// if (result.error) {
+//   console.log(result.error.message);
+//   // process.exit(1);
+// }
 
 const swaggerOptions = {
   info: {
@@ -44,15 +50,29 @@ const swaggerOptions = {
 };
 
 async function init() {
+  importEnvs();
   const server = Hapi.server({
     port: process.env.PORT || 3000,
-    // port: 3000,
-    // host: "localhost",
+    routes: {
+      cors: {
+        origin: ["*"], // Replace with your frontend's URL
+        credentials: true,
+        headers: ["Accep", "Authorization", "Content-Type"],
+        additionalHeaders: ["X-Requested-With"],
+      },
+    },
+    // routes: {
+    //   cors: {
+    //     // origin: ["http://localhost:5173"], // You can replace "*" with ["http://localhost:5173"] for more security
+    //     // additionalHeaders: ["cache-control", "x-requested-with"],
+    //     credentials: true, // Only if you're using cookies/auth
+    //   },
+    // },
   });
 
   await server.register(Cookie); // registering the plugin
-  server.validator(Joi); // We are setting the validator after we have registered the plugins.
   await server.register(jwt); // Import and register the plugin
+  server.validator(Joi); // We are setting the validator after we have registered the plugins.
 
   await server.register([
     Inert,

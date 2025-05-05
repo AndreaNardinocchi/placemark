@@ -15,6 +15,17 @@ export const placemarkService = {
     return res.data;
   },
 
+  /// NEW
+  async getUserCategories(id) {
+    try {
+      const res = await axios.get(`${this.placemarkUrl}/api/users/${id}/categories`);
+      return res.data; // Return the fetched categories
+    } catch (error) {
+      console.log("Error fetching user categories:", error);
+      throw error; // Rethrow to allow handling at higher levels
+    }
+  },
+
   async getAllUsers() {
     const res = await axios.get(`${this.placemarkUrl}/api/users`);
     return res.data;

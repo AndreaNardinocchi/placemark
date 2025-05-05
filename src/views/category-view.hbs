@@ -1,3 +1,7 @@
+{{!-- <script id="category-data" type="application/json">
+  {{{json this}}}
+</script> --}}
+
 {{> menu}}
 <section class="section mt-6">
   <div class="{{backgroundColor}}">
@@ -36,11 +40,11 @@
               <hr class="mr-6 pr-4">
               <article class="card-content">
                 <p class="content is-size-6 pt-1">
-                  <span class=" has-text-weight-bold is-size-6">Placemarks:</span> {{placemarkSum}}<br>
-                  <span class=" has-text-weight-bold is-size-6">Visited:</span> {{yesCounting}}<br>
-                  <span class="has-text-weight-bold is-size-6"> To visit:</span> {{noCounting}}<br>
-                  <span class=" has-text-weight-bold is-size-6">Furthest placemark:</span><br> {{resultMax}}<br> 
-                  <span class=" has-text-weight-bold is-size-6">Closest placemark:</span><br> {{resultMin}}
+                  <span class=" has-text-weight-bold is-size-6" id="placenarkSum">Placemarks:</span> {{placemarkSum}}<br>
+                  <span class=" has-text-weight-bold is-size-6" id="yesCounting">Visited:</span> {{yesCounting}}<br>
+                  <span class="has-text-weight-bold is-size-6" id="noCounting"> To visit:</span> {{noCounting}}<br>
+                  <span class=" has-text-weight-bold is-size-6" id="resultMax">Furthest placemark:</span><br> {{resultMax}}<br> 
+                  <span class=" has-text-weight-bold is-size-6" id="resultMin">Closest placemark:</span><br> {{resultMin}}
                 </p>
                 </p>
                 </p>
@@ -69,11 +73,11 @@
               <hr class="mr-6 pr-6">
               <article class="card-content">
                 <p class="content is-size-6 pt-1">
-                <p><span class="has-text-weight-bold is-size-6">Local:</span> {{localCounting}}     
-                  <img src="{{localIcon}}" alt=""   border="0"> <i class="{{localTravelIcon}}"></i> 
+                <p id="localCounting"><span class="has-text-weight-bold is-size-6" >Local:</span> {{localCounting}}     
+                  <img src="{{localIcon}}" alt=""   border="0"> <i class="{{localTravelIcon}}" id="localTravelIcon"></i> 
                 </p>
-                <p><span class=" has-text-weight-bold is-size-6">Abroad:</span> {{abroadCounting}} 
-                  <img src="{{abroadIcon}}" class = "mt-2" alt=""   border="0"> <i class="{{abroadTravelIcon}} "></i>    
+                <p id="abroadCounting"><span class=" has-text-weight-bold is-size-6">Abroad:</span> {{abroadCounting}} 
+                  <img src="{{abroadIcon}}" class = "mt-2" alt=""  id="abroadCounting" border="0"> <i class="{{abroadTravelIcon}} " id="abroadTravelIcon"></i>    
                 </p>
                 </p>
                 </p>
@@ -89,4 +93,5 @@
   {{> list-placemarks}}
   {{> add-placemark}}
   {{> category-image }}
+  {{> placemark-image}}
 </section>

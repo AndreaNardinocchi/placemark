@@ -292,3 +292,23 @@ Description:
 More than 40 years of experience, forged in the best candles of this country, had their result in our house. A place where the market dictates what is there, and what is not.
 
 Visited: No
+
+
+================= Changes post-launch to help Svelte front end retrieve data    ======================
+
+- Changes made in user-api.js to enable to retrieve name and userid in Svelte. 
+- The uploadImage imageStore has been updated to enable the uploading of more than one image and achieve a gallery.
+- The server.js has been updated here to allow retrieval of data from Svelte and do away tith the CORS error: 
+
+routes: {
+      cors: {
+        origin: ["*"], // Replace with your frontend's URL
+        credentials: true,
+        headers: ["Accep", "Authorization", "Content-Type"],
+        additionalHeaders: ["X-Requested-With"],
+      },
+
+- The placemark.hbs has been updated to add a widget at the bottom of it and enable the uploading of images.
+- placemark-image.hbs have been added for the same purpose as staed above.
+- test-controller.js have been added to handle the functions uploadImage and deleteImage in the placemark.
+

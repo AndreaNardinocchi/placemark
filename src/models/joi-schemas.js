@@ -66,6 +66,8 @@ export const PlacemarkSpec = Joi.object()
     phone: Joi.number().example(89672435).required(),
     website: Joi.string().example("https://bit.ly/3bGwJUlrequired").required(),
     visited: Joi.string().min(2).max(3).example("Yes").required(),
+    // https://examplejavascript.com/joi/array/
+    img: Joi.array().items(Joi.string().uri()).optional(),
     description: Joi.string()
       .min(100)
       .max(250)
@@ -117,5 +119,7 @@ export const JwtAuth = Joi.object()
   .keys({
     success: Joi.boolean().example("true").required(),
     token: Joi.string().example("eyJhbGciOiJND.g5YmJisIjoiaGYwNTNjAOhE.gCWGmY5-YigQw0DCBo").required(),
+    name: Joi.string().required(), // Add this
+    _id: IdSpec,
   })
   .label("JwtAuth");

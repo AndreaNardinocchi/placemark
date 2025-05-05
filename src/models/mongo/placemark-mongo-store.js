@@ -20,12 +20,18 @@ export const placemarkMongoStore = {
 
   async getPlacemarksByCategoryId(id) {
     const placemarks = await Placemark.find({ categoryid: id }).lean();
-    return placemarks;
+    return placemarks.map((p) => ({
+      ...p,
+      img: Array.isArray(p.img) ? p.img : [],
+    }));
   },
 
   async getPlacemarkById(id) {
     if (id) {
       const placemark = await Placemark.findOne({ _id: id }).lean();
+      if (placemark) {
+        placemark.img = Array.isArray(placemark.img) ? placemark.img : [];
+      }
       return placemark;
     }
     return null;
@@ -43,23 +49,19 @@ export const placemarkMongoStore = {
     await Placemark.deleteMany({});
   },
 
-  async updatePlacemark(placemark, updatedPlacemark) {
+  async updatePlacemark(placemark) {
     const placemarkDoc = await Placemark.findOne({ _id: placemark._id });
-    if (placemarkDoc) {
-      placemarkDoc.title = updatedPlacemark.title;
-      placemarkDoc.lat = updatedPlacemark.lat;
-      placemarkDoc.long = updatedPlacemark.long;
-      placemarkDoc.address = updatedPlacemark.address;
-      placemarkDoc.country = updatedPlacemark.country;
-      placemarkDoc.phone = updatedPlacemark.phone;
-      placemarkDoc.website = updatedPlacemark.website;
-      placemarkDoc.visited = updatedPlacemark.visited;
-      placemarkDoc.description = updatedPlacemark.description;
-      await placemarkDoc.save();
-      // Or throw an error depending on your needs
-    } else {
-      placemarkNotFound = "Placemark not found";
-    }
+    placemarkDoc.title = placemark.title;
+    placemarkDoc.lat = placemark.lat;
+    placemarkDoc.long = placemark.long;
+    placemarkDoc.address = placemark.address;
+    placemarkDoc.country = placemark.country;
+    placemarkDoc.phone = placemark.phone;
+    placemarkDoc.website = placemark.website;
+    placemarkDoc.visited = placemark.visited;
+    placemarkDoc.description = placemark.description;
+    placemarkDoc.img = placemark.img;
+    await placemarkDoc.save();
     return placemarkDoc;
   },
 };

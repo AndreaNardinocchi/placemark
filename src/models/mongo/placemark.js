@@ -12,6 +12,12 @@ const placemarkSchema = new Schema({
   website: String,
   visited: String,
   description: String,
+  // img: [String],
+  img: {
+    type: [String], // Array of strings (URLs or image paths)
+    default: undefined, // Default is undefined, not an empty array
+    required: false, // It's optional
+  },
   categoryid: {
     type: Schema.Types.ObjectId,
     ref: "Category",

@@ -33,6 +33,10 @@ export const categoryController = {
       for (let i = 0; i < category.placemarks.length; i += 1) {
         destination = category.placemarks[i].country;
         destination = destination.toLowerCase().trim();
+
+        // Check if img exists for this placemark, if not, set a default image
+        const placemarkImg = category.placemarks[i].img && category.placemarks[i].img[0] ? category.placemarks[i].img[0] : "default-image-url"; // Replace 'default-image-url' with an actual image URL
+
         // eslint-disable-next-line prefer-const
         let userCountry = userDetails.country.toLowerCase().trim();
         if (destination === userCountry) {
@@ -157,6 +161,7 @@ export const categoryController = {
         website: request.payload.website,
         visited: request.payload.visited,
         description: request.payload.description,
+        img: request.payload.img || [], // Ensure img is either provided or defaults to an empty array
       };
       await db.placemarkStore.addPlacemark(category._id, newPlacemark);
       return h.redirect(`/category/${category._id}`);

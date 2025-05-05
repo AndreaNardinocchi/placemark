@@ -94,7 +94,8 @@ export const userApi = {
           return Boom.unauthorized("Invalid password");
         }
         const token = createToken(user);
-        return h.response({ success: true, token: token }).code(201);
+        // This fields have been added to ensure they could be retrieved in Svelte front end
+        return h.response({ success: true, token: token, name: `${user.firstName} ${user.lastName}`, _id: user._id }).code(201);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
       }
