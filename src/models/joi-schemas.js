@@ -26,8 +26,8 @@ export const UserCredentialsSpec = Joi.object()
 export const UserSpec = UserCredentialsSpec.keys({
   firstName: Joi.string().min(3).max(30).example("Homer").required(),
   lastName: Joi.string().min(3).max(30).example("Simpson").required(),
-  userLat: Joi.number().max(100).example(40.41541290283203),
-  userLong: Joi.number().max(100).example(-3.684231996536255),
+  userLat: Joi.number().max(200).example(40.41541290283203),
+  userLong: Joi.number().max(200).example(-3.684231996536255),
   country: Joi.string().min(3).max(150).example("Portugal").required(),
   street: Joi.string().min(3).max(50).example("Rua das Flores, 4").required(),
   addressCode: Joi.string().min(3).max(15).example("T12Y2NE").required(),
@@ -42,8 +42,8 @@ export const UserSpecPlus = UserSpec.keys({
 }).label("UserDetailsPlus");
 
 export const updatedUserSpec = {
-  userLat: Joi.number().max(100).example(40.41541290283203),
-  userLong: Joi.number().max(100).example(-3.684231996536255),
+  userLat: Joi.number().max(200).example(40.41541290283203),
+  userLong: Joi.number().max(200).example(-3.684231996536255),
   country: Joi.string().min(3).max(150).required(),
   street: Joi.string().min(3).max(50).required(),
   addressCode: Joi.string().min(3).max(15).required(),
@@ -59,8 +59,8 @@ export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
 export const PlacemarkSpec = Joi.object()
   .keys({
     title: Joi.string().min(3).max(30).example("El Parque del Buen Retiro").required(),
-    lat: Joi.number().max(100).example(40.41541290283203).required(),
-    long: Joi.number().max(100).example(-3.684231996536255).required(),
+    lat: Joi.number().max(200).example(40.41541290283203).required(),
+    long: Joi.number().max(200).example(-3.684231996536255).required(),
     address: Joi.string().min(3).max(150).example("Plaza de la Independencia, 728001").required(),
     country: Joi.string().min(3).max(150).example("Spain").required(),
     phone: Joi.number().example(89672435).required(),
@@ -81,8 +81,8 @@ export const PlacemarkSpec = Joi.object()
 
 export const updatedPlacemarkSpec = {
   title: Joi.string().min(3).max(30).required(),
-  lat: Joi.number().max(100).required(),
-  long: Joi.number().max(100).required(),
+  lat: Joi.number().max(200).required(),
+  long: Joi.number().max(200).required(),
   address: Joi.string().min(3).max(150).required(),
   country: Joi.string().min(3).max(150).required(),
   phone: Joi.number().required(),
