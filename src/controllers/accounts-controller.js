@@ -48,25 +48,33 @@ export const accountsController = {
        * to use a different email to sign up.
        */
 
-      let { email } = request.payload;
-      let exEmail = "";
-      // eslint-disable-next-line prefer-const
-      let existingEmail = [];
-      // eslint-disable-next-line no-shadow
-      users.forEach((user) => {
-        exEmail = user.email;
-        console.log("Existing email", exEmail);
-        existingEmail.push(exEmail);
-      });
-      let existingEmailNow = "";
-      for (let i = 0; i < existingEmail.length; i += 1) {
-        existingEmailNow = existingEmail[i];
-        if (existingEmail[i] === email) {
-          email = existingEmailNow;
-          console.log("existingEmailNow", existingEmailNow);
-          return h.redirect("/taken-email");
-        }
+      // let { email } = request.payload;
+      // let exEmail = "";
+      // // eslint-disable-next-line prefer-const
+      // let existingEmail = [];
+      // // eslint-disable-next-line no-shadow
+      // users.forEach((user) => {
+      //   exEmail = user.email;
+      //   console.log("Existing email", exEmail);
+      //   existingEmail.push(exEmail);
+      // });
+      // let existingEmailNow = "";
+      // for (let i = 0; i < existingEmail.length; i += 1) {
+      //   existingEmailNow = existingEmail[i];
+      //   if (existingEmail[i] === email) {
+      //     email = existingEmailNow;
+      //     console.log("existingEmailNow", existingEmailNow);
+      //     return h.redirect("/taken-email");
+      //   }
+      // }
+
+      const existingUser = await db.userStore.getUserByEmail(user.email);
+
+      if (existingUser) {
+        return h.redirect("/taken-email");
+        // return h.response({ error: "Email is already taken" }).code(409);
       }
+
       await db.userStore.addUser(user);
       return h.redirect("/");
     },
