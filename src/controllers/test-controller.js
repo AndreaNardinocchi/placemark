@@ -5,64 +5,8 @@ import { PlacemarkSpec, updatedPlacemarkSpec } from "../models/joi-schemas.js";
 import { categoryAnalytics } from "../utils/category-analytics.js";
 import { imageStore } from "../models/image-store.js";
 
-export const placemarkController = {
+export const testController = {
   index: {
-    handler: async function (request, h) {
-      // We are retrieving/extracting the placemark
-      const categoryId = request.params.categoryid;
-      const placemarkId = request.params.placemarkid;
-      const category = await db.categoryStore.getCategoryById(categoryId);
-      const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
-      // We are showing/passing the category in the view
-      const viewData = {
-        title: `Edit Placemark ${placemark.title}`,
-        category: category,
-        placemark: placemark,
-      };
-      return h.view("placemark-view", viewData);
-    },
-  },
-
-  updatePlacemark: {
-    validate: {
-      payload: updatedPlacemarkSpec,
-      options: { abortEarly: false },
-      failAction: function (request, h, error) {
-        return h.view("placemark-view", { title: "Update placemark details error", errors: error.details }).takeover().code(400);
-      },
-    },
-    handler: async function (request, h) {
-      const categoryId = request.params.categoryid;
-      const category = await db.categoryStore.getCategoryById(categoryId);
-      const placemarkId = request.params.placemarkid;
-      const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
-      const updatedTitle = request.payload.title;
-      const updatedLat = request.payload.lat;
-      const updatedLong = request.payload.long;
-      const updatedAddress = request.payload.address;
-      const updatedCountry = request.payload.country;
-      const updatedPhone = request.payload.phone;
-      const updatedWebsite = request.payload.website;
-      const updatedVisited = request.payload.visited;
-      const updatedDescription = request.payload.description;
-      const updatedPlacemark = {
-        title: updatedTitle,
-        lat: updatedLat,
-        long: updatedLong,
-        address: updatedAddress,
-        country: updatedCountry,
-        phone: updatedPhone,
-        website: updatedWebsite,
-        visited: updatedVisited,
-        description: updatedDescription,
-        _id: placemark._id,
-      };
-      await db.placemarkStore.updatePlacemark(placemark, updatedPlacemark);
-      return h.redirect(`/category/${categoryId}`);
-    },
-  },
-
-  placemark: {
     handler: async function (request, h) {
       const categoryId = request.params.id;
       const placemarkId = request.params.placemarkid;
@@ -138,6 +82,8 @@ export const placemarkController = {
         description: placemark.description,
         categoryId: categoryId,
         placemarkId: placemarkId,
+        category: category, // ← Add this line
+        placemark: placemark, // ← Add this line
         travelMeans: travelMeans,
         youShouldVisit: youShouldVisit,
         distance: distance,
@@ -146,31 +92,33 @@ export const placemarkController = {
     },
   },
 
-  /** Upload and delete image test
-   */
-
   uploadImage: {
     handler: async function (request, h) {
       try {
         const loggedInUser = request.auth.credentials;
-        const userDetails = await db.userStore.getUserById(loggedInUser._id);
+        let userDetails = null;
+
+        if (loggedInUser) {
+          userDetails = await db.userStore.getUserById(loggedInUser._id);
+        }
+
         const categoryId = request.params.id;
-        console.log("This is the placemark image category id: ", categoryId);
         const placemarkId = request.params.placemarkid;
         const category = await db.categoryStore.getCategoryById(categoryId);
         const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
+
         if (placemark) {
           const file = request.payload.imagefile;
 
-          if (Object.keys(file).length > 0) {
+          if (file && Object.keys(file).length > 0) {
             const url = await imageStore.uploadImage(file);
-            placemark.img = url;
-            console.log("This is the placemark image URL: ", url);
-            await db.placemarkStore.updatePlacemark(placemark, placemark); // Updating with the same object but now including `img`
+            placemark.img = placemark.img || [];
+            placemark.img.push(url);
+            await db.placemarkStore.updatePlacemark(placemark, placemark);
           }
         }
 
-        return h.redirect(`/category/${categoryId}/placemark/${placemarkId}`);
+        return h.redirect(`/category/${category._id}/placemark/${placemark._id}`);
       } catch (err) {
         console.log("Error uploading image:", err);
         return h.redirect(`/category/${request.params.id}/placemark/${request.params.placemarkid}`);
@@ -187,19 +135,20 @@ export const placemarkController = {
   deleteImage: {
     handler: async function (request, h) {
       try {
-        const categoryId = request.params.id;
-        const placemarkId = request.params.placemarkid;
+        const { id: categoryId, placemarkid: placemarkId, index } = request.params;
         const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
 
-        if (placemark.img) {
-          await imageStore.deleteImage(placemark.img);
-          placemark.img = null;
+        if (placemark && placemark.img && placemark.img[index]) {
+          const imageUrl = placemark.img[index];
+          await imageStore.deleteImage(imageUrl); // Optional if you have external image storage
+
+          placemark.img.splice(index, 1); // Remove the image from the array
           await db.placemarkStore.updatePlacemark(placemark, placemark);
         }
 
         return h.redirect(`/category/${categoryId}/placemark/${placemarkId}`);
       } catch (err) {
-        console.log("Error deleting image:", err);
+        console.log("Error deleting image at index:", err);
         return h.redirect(`/category/${request.params.id}/placemark/${request.params.placemarkid}`);
       }
     },

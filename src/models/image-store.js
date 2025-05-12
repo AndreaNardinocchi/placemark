@@ -20,8 +20,16 @@ export const imageStore = {
   uploadImage: async function (imagefile) {
     writeFileSync("./public/temp.img", imagefile);
     const response = await cloudinary.v2.uploader.upload("./public/temp.img");
-    return response.url;
+    return response.secure_url;
   },
+
+  // uploadImage: async function (imagefile) {
+  //   const buffer = imagefile._data; // Hapi stores raw file data here
+
+  //   writeFileSync("./public/temp.img", buffer); // Write buffer to temp file
+  //   const response = await cloudinary.v2.uploader.upload("./public/temp.img"); // Upload to Cloudinary
+  //   return response.secure_url; // Return the image URL
+  // },
 
   deleteImage: async function (img) {
     await cloudinary.v2.uploader.destroy(img, {});

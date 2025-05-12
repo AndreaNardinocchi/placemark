@@ -88,6 +88,7 @@
             </p>
             <p class="subtitle has-text-centered mb-6">
               InstaMark your instaPlaces
+           
             </p>
           </div>
         </div>
@@ -115,67 +116,35 @@
       <section class="section">
         <div class="container">
           <h5 class="has-text-centered">@{{titleShort}}</h5>
+
+        
+
           <div class="columns is-multiline pt-3">
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
-            <div class="column is-4">
-              <figure class="image">
-                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
-              </figure>
-            </div>
+              {{#each placemark.img}}
+  <div class="column is-4">
+
+    <div class="card">
+  <div class="card-image">
+    <figure class="image">
+      <img src="{{this}}" alt="Placemark Image" />
+      {{!-- style="border-radius: 10px;"  --}}
+    </figure>
+    <footer class="card-footer">
+    
+     
+      <a href="/category/{{../category._id}}/placemark/{{../placemark._id}}/deleteimage/{{@index}}" class="button card-footer-item has-text-gray"> <span class="icon is-small">
+    <i class="fas fa-solid fa-trash"></i>
+    </span></a>
+
+     
+    
+  </footer>
+  </div>
+</div>
+   
+  </div>
+{{/each}}
+            
           </div>
         </div>
         <div class ="columns">
@@ -189,8 +158,77 @@
             </div>
           </div>
           <div class ="column is-4 has-text-centered">
+            
           </div>
         </div>
+        {{> placemark-image}}
       </section>
+      
   </section>
+  
+ 
+
+
+
 </body>
+
+{{!-- <div class="column is-4">
+              <figure class="image">
+                <img src={{placemark.img}} style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src={{placemark.img}} style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div>
+            <div class="column is-4">
+              <figure class="image">
+                <img src="https://i.ibb.co/M66kktn/travel.jpg" style="border-radius: 10px;" alt="Image 1">
+              </figure>
+            </div> --}}

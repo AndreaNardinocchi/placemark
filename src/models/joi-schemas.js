@@ -26,9 +26,9 @@ export const UserCredentialsSpec = Joi.object()
 export const UserSpec = UserCredentialsSpec.keys({
   firstName: Joi.string().min(3).max(30).example("Homer").required(),
   lastName: Joi.string().min(3).max(30).example("Simpson").required(),
-  userLat: Joi.number().max(100).example(40.41541290283203),
-  userLong: Joi.number().max(100).example(-3.684231996536255),
-  country: Joi.string().min(3).max(30).example("Portugal").required(),
+  userLat: Joi.number().max(200).example(40.41541290283203),
+  userLong: Joi.number().max(200).example(-3.684231996536255),
+  country: Joi.string().min(3).max(150).example("Portugal").required(),
   street: Joi.string().min(3).max(50).example("Rua das Flores, 4").required(),
   addressCode: Joi.string().min(3).max(15).example("T12Y2NE").required(),
   DOB: JoiExtended.date().raw().format().required(),
@@ -42,9 +42,9 @@ export const UserSpecPlus = UserSpec.keys({
 }).label("UserDetailsPlus");
 
 export const updatedUserSpec = {
-  userLat: Joi.number().max(100).example(40.41541290283203),
-  userLong: Joi.number().max(100).example(-3.684231996536255),
-  country: Joi.string().min(3).max(30).required(),
+  userLat: Joi.number().max(200).example(40.41541290283203),
+  userLong: Joi.number().max(200).example(-3.684231996536255),
+  country: Joi.string().min(3).max(150).required(),
   street: Joi.string().min(3).max(50).required(),
   addressCode: Joi.string().min(3).max(15).required(),
   phoneNumber: Joi.number().example(892356189).required(),
@@ -59,13 +59,15 @@ export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
 export const PlacemarkSpec = Joi.object()
   .keys({
     title: Joi.string().min(3).max(30).example("El Parque del Buen Retiro").required(),
-    lat: Joi.number().max(100).example(40.41541290283203).required(),
-    long: Joi.number().max(100).example(-3.684231996536255).required(),
+    lat: Joi.number().max(200).example(40.41541290283203).required(),
+    long: Joi.number().max(200).example(-3.684231996536255).required(),
     address: Joi.string().min(3).max(150).example("Plaza de la Independencia, 728001").required(),
-    country: Joi.string().min(3).max(30).example("Spain").required(),
+    country: Joi.string().min(3).max(150).example("Spain").required(),
     phone: Joi.number().example(89672435).required(),
     website: Joi.string().example("https://bit.ly/3bGwJUlrequired").required(),
     visited: Joi.string().min(2).max(3).example("Yes").required(),
+    // https://examplejavascript.com/joi/array/
+    img: Joi.array().items(Joi.string().uri()).optional(),
     description: Joi.string()
       .min(100)
       .max(250)
@@ -79,10 +81,10 @@ export const PlacemarkSpec = Joi.object()
 
 export const updatedPlacemarkSpec = {
   title: Joi.string().min(3).max(30).required(),
-  lat: Joi.number().max(100).required(),
-  long: Joi.number().max(100).required(),
+  lat: Joi.number().max(200).required(),
+  long: Joi.number().max(200).required(),
   address: Joi.string().min(3).max(150).required(),
-  country: Joi.string().min(3).max(30).required(),
+  country: Joi.string().min(3).max(150).required(),
   phone: Joi.number().required(),
   website: Joi.string().required(),
   visited: Joi.string().min(2).max(3).required(),
@@ -117,5 +119,7 @@ export const JwtAuth = Joi.object()
   .keys({
     success: Joi.boolean().example("true").required(),
     token: Joi.string().example("eyJhbGciOiJND.g5YmJisIjoiaGYwNTNjAOhE.gCWGmY5-YigQw0DCBo").required(),
+    name: Joi.string().required(), // Add this
+    _id: IdSpec,
   })
   .label("JwtAuth");

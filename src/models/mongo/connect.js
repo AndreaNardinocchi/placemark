@@ -6,7 +6,7 @@
 
 import * as dotenv from "dotenv";
 import Mongoose from "mongoose";
-// import * as mongooseSeeder from "mais-mongoose-seeder";
+import * as mongooseSeeder from "mais-mongoose-seeder";
 // import { seedData } from "./seed-data.js";
 
 // const seedLib = mongooseSeeder.default;
@@ -34,6 +34,6 @@ export function connectMongo() {
 
   db.once("open", function () {
     console.log(`database connected to ${this.name} on ${this.host}`);
-    // seed();
+    //  seed();
   });
 }

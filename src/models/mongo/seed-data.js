@@ -1,3 +1,124 @@
+// export const seedData = {
+//   users: {
+//     _model: "User",
+//     homer: {
+//       firstName: "Homer",
+//       lastName: "Simpson",
+//       userLat: 51.8985136,
+//       userLong: -8.4726423,
+//       country: "Ireland",
+//       street: "Campus",
+//       addressCode: "T34R56W",
+//       DOB: "1976-02-13",
+//       phoneNumber: 1222222222,
+//       email: "homer@simpson.com",
+//       password: "Yoestoy",
+//     },
+//     margie: {
+//       firstName: "Margie",
+//       lastName: "Simpson",
+//       userLat: 52.2609997,
+//       userLong: -7.1119081,
+//       country: "Ireland",
+//       street: "2 La calle Iglesia, Waterford",
+//       addressCode: "B12YNOK",
+//       DOB: "1980-02-13",
+//       phoneNumber: 1995627281,
+//       email: "margie@simpson.com",
+//       password: "Yoestoy",
+//     },
+//     bart: {
+//       firstName: "Bart",
+//       lastName: "Simpson",
+//       userLat: 52.0595746,
+//       userLong: -9.505322,
+//       country: "Ireland",
+//       street: "3 Wonderful Days, Killarney",
+//       addressCode: "LO78UO",
+//       DOB: "1992-02-13",
+//       phoneNumber: 125622222,
+//       email: "bart@simpson.com",
+//       password: "Yoestoy",
+//     },
+//   },
+//   categories: {
+//     _model: "Category",
+//     park: {
+//       title: "Parks",
+//       notes: "This category is used to note down all parks I would like to visit",
+//       image: "https://i.ibb.co/pjbvydw1/parks.jpg",
+//       userid: "->users.bart",
+//     },
+//     beach: {
+//       title: "Beaches",
+//       notes: "There are surely so many beaches you would like to sunbath in and relish the sweet marine breeze caressing your skin. Why not list them all here?",
+//       image: "https://i.ibb.co/LhrJWjcb/coast-7366616.jpg",
+//       userid: "->users.homer",
+//     },
+//     museum: {
+//       title: "Museums",
+//       notes: "This is the category in which all worldwide famous museums or art galleries you wish to visit or you lready visited can be added to.",
+//       image: "https://i.ibb.co/HD39FR6p/man-2590655-big.jpg",
+//       userid: "->users.margie",
+//     },
+//   },
+//   placemarks: {
+//     _model: "Placemark",
+//     placemark_1: {
+//       title: "El Parque del Buen Retiro",
+//       lat: 40.414946,
+//       long: -3.6832845,
+//       address: "Plaza de la Independencia, 728001",
+//       country: "Spain",
+//       phone: 34915280938,
+//       website: "https://bit.ly/3bGwJUl",
+//       visited: "Yes",
+//       description:
+//         "Covering over 125 hectares and comprising more than 15,000 trees, El Retiro Park–recently named a UNESCO World Heritage Site–is a green oasis in the heart of the city. And more!!!",
+//       categoryid: "->categories.park",
+//     },
+//     placemark_2: {
+//       title: "Santa Monica beach",
+//       lat: 34.0171018,
+//       long: -118.5061976,
+//       address: "Santa Monica State Beach, Santa Monica, California",
+//       country: "United States",
+//       phone: 3104588300,
+//       website: "https://www.parks.ca.gov/?page_id=624",
+//       visited: "No",
+//       description:
+//         "This beach is two miles long, has a picnic area, shops and pier. Visitor activities include volleyball, basketball and a running strip along the beach. This site is operated by Los Angeles County.",
+//       categoryid: "->categories.beach",
+//     },
+//     placemark_3: {
+//       title: "National Gallery of London",
+//       lat: 51.508881,
+//       long: -0.1283826,
+//       address: "Trafalgar Square, London, WC2N 5DN",
+//       country: "United Kingdom",
+//       phone: 442077472885,
+//       website: "https://www.nationalgallery.org.uk/",
+//       visited: "Yes",
+//       description:
+//         "We are home to the national collection of paintings in the Western European tradition from the 13th to the 19th centuries. Our paintings are on show 361 days a year, free of charge.",
+//       categoryid: "->categories.museum",
+//     },
+//     placemark_4: {
+//       title: "Phoenix Park, Dublin",
+//       lat: 53.3589378,
+//       long: -6.3307105,
+//       address: "Phoenix Park, Phoenix Park Ward 1986, Dublin",
+//       country: "Ireland",
+//       phone: 35318213021,
+//       website: "https://www.phoenixpark.ie/",
+//       visited: "Yes",
+//       description:
+//         "The Phoenix Park is one of the largest enclosed public parks in any capital city in Europe. It was originally formed as a royal hunting Park in the 1660s and opened to the public in 1747.",
+//       categoryid: "->categories.park",
+//     },
+//   },
+// };
+
 export const seedData = {
   users: {
     _model: "User",
@@ -75,6 +196,7 @@ export const seedData = {
       visited: "Yes",
       description:
         "Covering over 125 hectares and comprising more than 15,000 trees, El Retiro Park–recently named a UNESCO World Heritage Site–is a green oasis in the heart of the city. And more!!!",
+      img: ["https://i.ibb.co/LHxQqpW/the-parque-del-retiro-in-madri-1549013.jpg", "https://i.ibb.co/DDwHN4my/parque-del-retiro-1346216.jpg"],
       categoryid: "->categories.park",
     },
     placemark_2: {
@@ -88,6 +210,12 @@ export const seedData = {
       visited: "No",
       description:
         "This beach is two miles long, has a picnic area, shops and pier. Visitor activities include volleyball, basketball and a running strip along the beach. This site is operated by Los Angeles County.",
+      img: [
+        "https://i.ibb.co/G3pp0cvs/california-4601314-1280.jpg",
+        "https://i.ibb.co/S4x3j9pT/santa-monica-pier-1630451-1280.jpg",
+        "https://i.ibb.co/pv0qYVNw/santa-monica-834004-1280.jpg",
+        "https://i.ibb.co/B5CNL5z8/santa-monica-3111328-1280.jpg",
+      ],
       categoryid: "->categories.beach",
     },
     placemark_3: {
@@ -101,6 +229,12 @@ export const seedData = {
       visited: "Yes",
       description:
         "We are home to the national collection of paintings in the Western European tradition from the 13th to the 19th centuries. Our paintings are on show 361 days a year, free of charge.",
+      img: [
+        "https://i.ibb.co/CsK1Cnhw/national-gallery-2533907-1280.jpg",
+        "https://i.ibb.co/bMjrfvnL/gallery-2932005-1280.jpg",
+        "https://i.ibb.co/VWDJvn0G/british-museum-6561029-1280.jpg",
+        "https://i.ibb.co/tMNZQzFw/art-gallery-4242219-1280.jpg",
+      ],
       categoryid: "->categories.museum",
     },
     placemark_4: {
@@ -114,6 +248,7 @@ export const seedData = {
       visited: "Yes",
       description:
         "The Phoenix Park is one of the largest enclosed public parks in any capital city in Europe. It was originally formed as a royal hunting Park in the 1660s and opened to the public in 1747.",
+      img: ["https://i.ibb.co/fGYB6M14/deer-3478740-1280.jpg", "https://i.ibb.co/b5LZ1x3s/deer-3113623-1280.jpg"],
       categoryid: "->categories.park",
     },
   },
