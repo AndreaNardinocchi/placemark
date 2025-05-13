@@ -5,10 +5,22 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const credentials = {
-  cloud_name: process.env.cloudinary_name,
-  api_key: process.env.cloudinary_key,
-  api_secret: process.env.cloudinary_secret,
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
 };
+
+console.log("Cloudinary ENV check:", {
+  name: process.env.CLOUDINARY_NAME,
+  key: process.env.CLOUDINARY_KEY ? "✅" : "❌ MISSING",
+  secret: process.env.CLOUDINARY_SECRET ? "✅" : "❌ MISSING",
+});
+
+// const credentials = {
+//   cloud_name: process.env.cloudinary_name,
+//   api_key: process.env.cloudinary_key,
+//   api_secret: process.env.cloudinary_secret,
+// };
 cloudinary.config(credentials);
 
 export const imageStore = {
