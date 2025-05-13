@@ -55,8 +55,7 @@ async function init() {
     port: process.env.PORT || 3000,
     routes: {
       cors: {
-        origin: ["https://placemarkyourjourney.netlify.app"],
-        // "http://localhost:5173",
+        origin: ["http://localhost:5173", "https://placemarkyourjourney.netlify.app"],
         credentials: true,
         headers: ["Accept", "Authorization", "Content-Type"],
         additionalHeaders: ["X-Requested-With"],
