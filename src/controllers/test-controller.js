@@ -109,10 +109,13 @@ export const testController = {
 
         if (placemark) {
           const file = request.payload.imagefile;
+          console.log("File:", file);
 
           if (file && Object.keys(file).length > 0) {
             const url = await imageStore.uploadImage(file);
+            console.log("Image url:", url);
             placemark.img = placemark.img || [];
+            console.log("placemark.img:", placemark.img);
             placemark.img.push(url);
             await db.placemarkStore.updatePlacemark(placemark, placemark);
           }
