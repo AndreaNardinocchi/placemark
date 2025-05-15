@@ -107,16 +107,23 @@ export const testController = {
         const category = await db.categoryStore.getCategoryById(categoryId);
         const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
 
+        // If the placemark exists, proceed with the image upload process
         if (placemark) {
+          // Get the uploaded file from the payload
           const file = request.payload.imagefile;
           console.log("File:", file);
 
+          // Ensuring a file was uploaded and it's not an empty object
           if (file && Object.keys(file).length > 0) {
+            // Uploading the image using the image store service and get the URL
             const url = await imageStore.uploadImage(file);
             console.log("Image url:", url);
+            // Initializing the placemark's image array if it doesn't exist
             placemark.img = placemark.img || [];
             console.log("placemark.img:", placemark.img);
+            // Adding the new image URL to the placemark's image array
             placemark.img.push(url);
+            // Updating the placemark in the database with the new image array
             await db.placemarkStore.updatePlacemark(placemark, placemark);
           }
         }
@@ -141,11 +148,12 @@ export const testController = {
         const { id: categoryId, placemarkid: placemarkId, index } = request.params;
         const placemark = await db.placemarkStore.getPlacemarkById(placemarkId);
 
+        // Checking whether the placemark and the specific image index exist
         if (placemark && placemark.img && placemark.img[index]) {
           const imageUrl = placemark.img[index];
-          await imageStore.deleteImage(imageUrl); // Optional if you have external image storage
+          await imageStore.deleteImage(imageUrl);
 
-          placemark.img.splice(index, 1); // Remove the image from the array
+          placemark.img.splice(index, 1); // Removing the image from the array
           await db.placemarkStore.updatePlacemark(placemark, placemark);
         }
 

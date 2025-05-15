@@ -46,6 +46,7 @@ export const webRoutes = [
   { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } },
 
   { method: "POST", path: "/category/{id}/placemark/{placemarkid}/uploadimage", config: testController.uploadImage },
+
   { method: "GET", path: "/category/{id}/placemark/{placemarkid}/deleteimage/{index}", config: testController.deleteImage },
 ];
 
