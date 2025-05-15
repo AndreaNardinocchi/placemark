@@ -54,21 +54,22 @@ async function init() {
   const server = Hapi.server({
     port: process.env.PORT || 3000,
     routes: {
+      // Enabling Cross-Origin Resource Sharing (CORS)
       cors: {
-        origin: ["http://localhost:5173", "https://placemarkyourjourney.netlify.app"],
+        // Allowing requests from these specified origins (local dev and deployed frontend)
+        origin: [
+          "http://localhost:5173", // Local development frontend (
+          "https://placemarkyourjourney.netlify.app", // Production frontend on Netlify
+        ],
+        // Allowing redentials to be sent with requests
         credentials: true,
+        // Specifying allowed headers from client requests
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Allow-Headers
         headers: ["Accept", "Authorization", "Content-Type"],
+        // Including any additional custom headers required by the client
         additionalHeaders: ["X-Requested-With"],
       },
     },
-
-    // routes: {
-    //   cors: {
-    //     // origin: ["http://localhost:5173"], // You can replace "*" with ["http://localhost:5173"] for more security
-    //     // additionalHeaders: ["cache-control", "x-requested-with"],
-    //     credentials: true, // Only if you're using cookies/auth
-    //   },
-    // },
   });
 
   await server.register(Cookie); // registering the plugin
@@ -127,6 +128,7 @@ async function init() {
   db.init("mongo");
   server.route(webRoutes);
   server.route(apiRoutes);
+
   await server.start();
 
   console.log("Server running on %s", server.info.uri);
