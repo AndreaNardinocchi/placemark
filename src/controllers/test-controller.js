@@ -82,8 +82,8 @@ export const testController = {
         description: placemark.description,
         categoryId: categoryId,
         placemarkId: placemarkId,
-        category: category, // ← Add this line
-        placemark: placemark, // ← Add this line
+        category: category,
+        placemark: placemark,
         travelMeans: travelMeans,
         youShouldVisit: youShouldVisit,
         distance: distance,
