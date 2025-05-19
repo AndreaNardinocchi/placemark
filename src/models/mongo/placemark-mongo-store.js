@@ -49,19 +49,40 @@ export const placemarkMongoStore = {
     await Placemark.deleteMany({});
   },
 
-  async updatePlacemark(placemark) {
+  // async updatePlacemark(placemark) {
+  //   const placemarkDoc = await Placemark.findOne({ _id: placemark._id });
+  //   placemarkDoc.title = placemark.title;
+  //   placemarkDoc.lat = placemark.lat;
+  //   placemarkDoc.long = placemark.long;
+  //   placemarkDoc.address = placemark.address;
+  //   placemarkDoc.country = placemark.country;
+  //   placemarkDoc.phone = placemark.phone;
+  //   placemarkDoc.website = placemark.website;
+  //   placemarkDoc.visited = placemark.visited;
+  //   placemarkDoc.description = placemark.description;
+  //   placemarkDoc.img = placemark.img;
+  //   await placemarkDoc.save();
+  //   return placemarkDoc;
+  // },
+
+  async updatePlacemark(placemark, updatedPlacemark) {
     const placemarkDoc = await Placemark.findOne({ _id: placemark._id });
-    placemarkDoc.title = placemark.title;
-    placemarkDoc.lat = placemark.lat;
-    placemarkDoc.long = placemark.long;
-    placemarkDoc.address = placemark.address;
-    placemarkDoc.country = placemark.country;
-    placemarkDoc.phone = placemark.phone;
-    placemarkDoc.website = placemark.website;
-    placemarkDoc.visited = placemark.visited;
-    placemarkDoc.description = placemark.description;
-    placemarkDoc.img = placemark.img;
-    await placemarkDoc.save();
+    if (placemarkDoc) {
+      placemarkDoc.title = updatedPlacemark.title;
+      placemarkDoc.lat = updatedPlacemark.lat;
+      placemarkDoc.long = updatedPlacemark.long;
+      placemarkDoc.address = updatedPlacemark.address;
+      placemarkDoc.country = updatedPlacemark.country;
+      placemarkDoc.phone = updatedPlacemark.phone;
+      placemarkDoc.website = updatedPlacemark.website;
+      placemarkDoc.visited = updatedPlacemark.visited;
+      placemarkDoc.description = updatedPlacemark.description;
+      placemarkDoc.img = placemark.img;
+      await placemarkDoc.save();
+      // Or throw an error depending on your needs
+    } else {
+      placemarkNotFound = "Placemark not found";
+    }
     return placemarkDoc;
   },
 };

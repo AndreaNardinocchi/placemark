@@ -45,6 +45,7 @@ export const placemarkController = {
       const updatedWebsite = request.payload.website;
       const updatedVisited = request.payload.visited;
       const updatedDescription = request.payload.description;
+      const updatedImage = request.payload.img;
       const updatedPlacemark = {
         title: updatedTitle,
         lat: updatedLat,
@@ -55,6 +56,7 @@ export const placemarkController = {
         website: updatedWebsite,
         visited: updatedVisited,
         description: updatedDescription,
+        img: updatedImage,
         _id: placemark._id,
       };
       await db.placemarkStore.updatePlacemark(placemark, updatedPlacemark);
